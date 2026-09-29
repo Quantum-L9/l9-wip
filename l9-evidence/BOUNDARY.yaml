@@ -1,0 +1,33 @@
+schema: l9.devpack.repo-boundary/v1
+repo: Quantum-L9/l9-evidence
+class: runnable_node
+status: LOCKED_BOUNDARY_PROPOSED_LAYOUT
+owns:
+- Evidence records, content-addressed artifact references and integrity checks
+- Exact source revision/locator provenance
+- Evidence retention, owned-copy erasure and legal-hold metadata supplied by authority
+- Source-derived text/vector retrieval projections and projection lifecycle
+- Source access filtering and retrieval receipts
+- Queryable operation proof without declaring domain outcomes itself
+must_not_own:
+- Mutable Work Item state or approvals authority
+- Memory admission, preference inference or Graphiti truth
+- Agent cognition or cross-source context compilation
+- A replacement for Git, ERP, mailbox or other source systems
+- Consumer arbitrary Mongo/search-pipeline access
+- Independent ontology or source inventory duplicating topology owners
+dependency_direction:
+- 'Gate_SDK: node chassis and transport'
+- MongoDB metadata/projection adapter, first stack
+- Owner-controlled object storage for large binary/text artifacts
+- Optional Atlas vector/search adapter with deployment-specific capability probe
+ports:
+- EvidenceStorePort
+- ArtifactStorePort
+- ProjectionStorePort
+- SourceAuthorizationPort
+- ClockPort
+cross_node_transport: Gate_SDK -> Constellation.Gate only
+provider_independence: true
+credentials_scope: Only owned adapter credentials; never peer credentials.
+node_trust_source: Deployment identity and Gate admission; never AgentProfile or request payload.

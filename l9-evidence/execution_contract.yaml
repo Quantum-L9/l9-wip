@@ -1,0 +1,269 @@
+repo: Quantum-L9/l9-evidence
+status: planned
+unit_count: 3
+units:
+- id: EVID-01
+  repo: l9-evidence
+  title: Birth source/evidence retention contract
+  phase: 3
+  depends_on:
+  - AG-01
+  - SDK-02
+  - GATE-01
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - contracts/
+  - docs/
+  - pyproject.toml
+  - uv.lock
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - EvidenceService
+  - ArtifactRef/SourceRef contracts
+  - storage adapter ports
+  - retention receipts
+  steps:
+  - Finalize evidence identity, exact locator and artifact provenance.
+  - Separate source-owned truth from retained copies and view indexes.
+  - Implement staged blob finalize with integrity and quarantine on partial commit.
+  - Authenticate every resolve/get independent of reference possession.
+  acceptance:
+  - Accepted evidence resolves exact authorized bytes or a typed unavailable state.
+  - Evidence append does not authorize actions.
+  negative_proofs:
+  - Mismatched bytes/digest rejected.
+  - Bearer-like source URL cannot bypass policy or SSRF controls.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: EVID-02
+  repo: l9-evidence
+  title: Implement Mongo metadata and versioned search views
+  phase: 3
+  depends_on:
+  - EVID-01
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - contracts/
+  - docs/
+  - pyproject.toml
+  - uv.lock
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - Mongo metadata adapter
+  - approved vector/search adapter
+  - view registry
+  - embedding identity checks
+  steps:
+  - Pin storage/search product versions and approved deployment compatibility.
+  - Choose exact owner/executor for each view; accept deterministic representation from Ingest.
+  - Bind model revision, dimension, distance, normalization, scope and transform digest.
+  - Enforce filter-before-ranking and canonical evidence lifecycle recheck.
+  acceptance:
+  - Changing model/view contract builds a new view identity with controlled cutover.
+  - Raw observations cannot opt themselves into embedding.
+  negative_proofs:
+  - Wrong embedding space/query pair is refused.
+  - Same text across private scopes cannot share an unauthorized cache entry.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: EVID-03
+  repo: l9-evidence
+  title: Prove erasure, invalidation and rebuild behavior
+  phase: 4
+  depends_on:
+  - EVID-02
+  - GATE-02
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - contracts/
+  - docs/
+  - pyproject.toml
+  - uv.lock
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - owned-target erasure receipts
+  - invalidation catalog
+  - rebuild tests
+  steps:
+  - Enumerate evidence derivatives and required erasure targets.
+  - Make replay consult tombstone/retention state before materialization.
+  - Invalidate searchable copies without claiming upstream domain deletion.
+  - Demonstrate cache and source-version invalidation to Context.
+  acceptance:
+  - Erased evidence cannot reappear by source replay or stale view switch.
+  - Legal/policy hold is explicit state, not silent success.
+  negative_proofs:
+  - Simulated failed vector deletion leaves incomplete erasure receipt.
+  - Denied object remains inaccessible via context diagnostics.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: EVID-04
+  repo: l9-evidence
+  title: Retain and revoke communication/formal derivation artifacts
+  phase: 4
+  depends_on:
+  - EVID-03
+  - EXT-01
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - contracts/
+  - tests/
+  - docs/
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - evid-04-implementation-diff
+  - evid-04-contract-tests
+  - evid-04-evidence-receipt.json
+  steps:
+  - Admit receipt, source-coordinate and bounded witness/core artifact kinds without new truth ownership.
+  - Enforce artifact parent/source lineage and current rights.
+  - Propagate revocation to derived copies and cache references.
+  - Test optional no-raw-retention behavior and retained replay limitations.
+  acceptance:
+  - Media and proof artifacts share the existing Evidence authority.
+  - Deletion includes derived excerpts/witnesses when policy requires it.
+  negative_proofs:
+  - Receipt hash alone cannot restore revoked content.
+  - Provider retention disabled cannot be bypassed via an Evidence copy.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+pack_revision: 1.1.0

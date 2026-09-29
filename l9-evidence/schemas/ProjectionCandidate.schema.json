@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-evidence:ProjectionCandidate:0.1",
+  "title": "ProjectionCandidate",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "projection_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "source_ref": {
+      "$ref": "urn:l9:devpack:l9-evidence:SourceRef:0.1"
+    },
+    "view_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "transform_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "representation_ref": {
+      "$ref": "urn:l9:devpack:l9-evidence:ArtifactRef:0.1"
+    },
+    "space_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "permitted_use": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+      },
+      "minItems": 1,
+      "maxItems": 20
+    },
+    "source_evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 1,
+      "maxItems": 50
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    }
+  },
+  "required": [
+    "projection_id",
+    "scope_ref",
+    "source_ref",
+    "view_ref",
+    "transform_ref",
+    "representation_ref",
+    "permitted_use",
+    "source_evidence_refs",
+    "operation_id"
+  ]
+}

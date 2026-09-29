@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-evidence:EvidenceRecord:0.1",
+  "title": "EvidenceRecord",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. Acceptance is proof of retention under policy, not truth of the retained claim.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "evidence_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "source_ref": {
+      "$ref": "urn:l9:devpack:l9-evidence:SourceRef:0.1"
+    },
+    "artifact_ref": {
+      "$ref": "urn:l9:devpack:l9-evidence:ArtifactRef:0.1"
+    },
+    "classification": {
+      "enum": [
+        "public",
+        "internal",
+        "confidential",
+        "restricted"
+      ]
+    },
+    "purposes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+      },
+      "minItems": 1,
+      "maxItems": 20
+    },
+    "retention_policy_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "recorded_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "claim_status": {
+      "enum": [
+        "observed",
+        "asserted",
+        "derived",
+        "contested",
+        "unknown"
+      ]
+    },
+    "derivation_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 0,
+      "maxItems": 50
+    }
+  },
+  "required": [
+    "evidence_id",
+    "scope_ref",
+    "source_ref",
+    "artifact_ref",
+    "classification",
+    "purposes",
+    "retention_policy_ref",
+    "recorded_at",
+    "claim_status",
+    "derivation_refs"
+  ]
+}

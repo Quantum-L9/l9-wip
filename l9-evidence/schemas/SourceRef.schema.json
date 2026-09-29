@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-evidence:SourceRef:0.1",
+  "title": "SourceRef",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. Locator interpretation remains source-kind specific. No source coordinates are fabricated.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "enum": [
+        "git",
+        "document",
+        "structured_event",
+        "media",
+        "provider_record",
+        "interaction"
+      ]
+    },
+    "source_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "revision": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "content_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "locator": {
+      "type": "object",
+      "maxProperties": 100
+    },
+    "issuer_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "observed_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "kind",
+    "source_id",
+    "revision",
+    "content_digest",
+    "locator",
+    "issuer_ref",
+    "observed_at"
+  ]
+}
