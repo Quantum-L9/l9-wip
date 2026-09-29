@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-state:StateTransitionEvent:0.1",
+  "title": "StateTransitionEvent",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "state_ref": {
+      "$ref": "urn:l9:devpack:l9-state:StateRef:0.1"
+    },
+    "prior_revision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "transition_label": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "actor_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "committed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "causation_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    }
+  },
+  "required": [
+    "event_id",
+    "state_ref",
+    "prior_revision",
+    "transition_label",
+    "operation_id",
+    "actor_ref",
+    "committed_at"
+  ]
+}

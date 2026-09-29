@@ -1,0 +1,31 @@
+schema: l9.devpack.repo-boundary/v1
+repo: Quantum-L9/l9-state
+class: runnable_node
+status: LOCKED_BOUNDARY_PROPOSED_LAYOUT
+owns:
+- StateRecord, revision and operation identity
+- Atomic conditional commit of state, receipt and journal/outbox event
+- Checkpoints and bounded object history
+- Fenced claim acquisition, renewal, release and expiry
+- Committed transition journal, delivery cursor and deduplicated acknowledgement
+- Owned retention, tombstones, restore and schema-binding verification
+must_not_own:
+- Work Item meaning, business lifecycle or next-action selection
+- Source system business truth
+- Memory, context ranking or semantic extraction
+- Node/client trust grants
+- A global scheduler or authoritative Program Execution state machine
+- Generic public database queries, SQL or Mongo operators
+dependency_direction:
+- 'Gate_SDK: node chassis and transport'
+- MongoDB replica set through private StateStore adapter, first stack
+- Optional Evidence archival via Gate after local commit, never required for atomic State commit
+ports:
+- StateStorePort (unit-of-work owner)
+- ClockPort
+- SchemaCatalogPort
+- TransitionDeliveryPort
+cross_node_transport: Gate_SDK -> Constellation.Gate only
+provider_independence: true
+credentials_scope: Only owned adapter credentials; never peer credentials.
+node_trust_source: Deployment identity and Gate admission; never AgentProfile or request payload.

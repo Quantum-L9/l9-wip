@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-state:StateClaimReceipt:0.1",
+  "title": "StateClaimReceipt",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "receipt_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "request_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "object_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "status": {
+      "enum": [
+        "claimed",
+        "renewed",
+        "released",
+        "duplicate",
+        "refused",
+        "conflict",
+        "outcome_unknown"
+      ]
+    },
+    "claim_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "fencing_token": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "holder_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reason_codes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+      },
+      "minItems": 0,
+      "maxItems": 50
+    }
+  },
+  "required": [
+    "receipt_id",
+    "operation_id",
+    "request_digest",
+    "scope_ref",
+    "object_id",
+    "status",
+    "issued_at",
+    "reason_codes"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "claimed",
+              "renewed",
+              "released",
+              "duplicate"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "claim_id",
+          "fencing_token",
+          "holder_ref",
+          "expires_at"
+        ]
+      }
+    }
+  ]
+}

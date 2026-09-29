@@ -1,0 +1,15 @@
+{
+  "receipt_id": "state.receipt.1",
+  "operation_id": "op.transition.1",
+  "request_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "status": "committed",
+  "state_ref": {
+    "object_id": "work.1",
+    "scope_ref": "tenant.synthetic/subject.1",
+    "revision": 3,
+    "state_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "schema_ref": "urn:l9:devpack:l9-agentos:WorkItem:0.1"
+  },
+  "issued_at": "2026-09-25T20:00:00Z",
+  "reason_codes": []
+}

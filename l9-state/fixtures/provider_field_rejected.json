@@ -1,0 +1,30 @@
+{
+  "object_id": "work.1",
+  "scope_ref": "tenant.synthetic/subject.1",
+  "schema_ref": "urn:l9:devpack:l9-agentos:WorkItem:0.1",
+  "schema_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "payload": {
+    "work_item_id": "work.1",
+    "manifestation_id": "manifestation.1",
+    "objective_ref": "objective.1",
+    "profile_ref": "profile.synthetic@1",
+    "profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "scope_ref": "tenant.synthetic/subject.1",
+    "kind": "objective_fulfillment",
+    "lifecycle": "active",
+    "state_dimensions": {
+      "phase": "evaluating"
+    },
+    "payload": {
+      "summary": "Synthetic Work Item"
+    },
+    "dependency_refs": [],
+    "evidence_refs": [
+      "evidence.1"
+    ],
+    "context_refs": []
+  },
+  "operation_id": "op.create.1",
+  "retention_policy_ref": "retention.fixture@1",
+  "mongo_collection": "work"
+}

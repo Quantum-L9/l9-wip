@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-state:StateOperationInspectResult:0.1",
+  "title": "StateOperationInspectResult",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "status": {
+      "enum": [
+        "found",
+        "not_found",
+        "unknown"
+      ]
+    },
+    "request_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "receipt_schema_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "receipt": {
+      "type": "object",
+      "maxProperties": 100
+    }
+  },
+  "required": [
+    "scope_ref",
+    "operation_id",
+    "status"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "found"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "request_digest",
+          "receipt_schema_ref",
+          "receipt"
+        ]
+      }
+    }
+  ]
+}

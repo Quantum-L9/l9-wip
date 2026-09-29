@@ -1,0 +1,207 @@
+repo: Quantum-L9/l9-state
+status: planned
+unit_count: 3
+units:
+- id: STATE-01
+  repo: l9-state
+  title: Birth State contract and atomic persistence port
+  phase: 3
+  depends_on:
+  - AG-01
+  - SDK-02
+  - GATE-01
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - contracts/
+  - docs/
+  - pyproject.toml
+  - uv.lock
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - node skeleton via verified factory
+  - StateService contract
+  - unit-of-work port
+  - schema validation
+  steps:
+  - Birth only this node using verified chassis.
+  - Finalize state/reference/operation identity contracts and generic schema registry binding.
+  - Specify atomic commit of state, receipt, journal and outbox.
+  - Build in-process contract double with the same semantics for tests only.
+  acceptance:
+  - No Work Item kind or agent identity branch in State core.
+  - Same operation/different payload rejected.
+  negative_proofs:
+  - Payload attempts to supply actor/principal are not honored.
+  - Partial multi-store commit cannot produce committed receipt.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: STATE-02
+  repo: l9-state
+  title: Implement Mongo adapter with revision and fenced claim conformance
+  phase: 3
+  depends_on:
+  - STATE-01
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - contracts/
+  - docs/
+  - pyproject.toml
+  - uv.lock
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - Mongo adapter
+  - transaction/index migrations
+  - restart tests
+  - lease conformance
+  steps:
+  - Pin approved Mongo/PyMongo versions and replica-set deployment.
+  - Create private state, operation, journal/outbox and consumer-checkpoint collections with scoped uniqueness.
+  - Implement expected-revision conditional mutation and monotonic fencing in transactional unit of work.
+  - Test concurrent writers, lease expiry, paused old holder, transaction retries and network ambiguity.
+  acceptance:
+  - Only one concurrent mutation wins and receipt/event commit is atomic.
+  - No expired/reassigned holder can mutate under stale fence.
+  negative_proofs:
+  - Kill worker at each transaction boundary and verify all-or-none.
+  - Reusing operation id with new payload fails even after restart.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: STATE-03
+  repo: l9-state
+  title: Deliver committed events and exact recovery without provider leakage
+  phase: 3
+  depends_on:
+  - STATE-02
+  - GATE-02
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - contracts/
+  - docs/
+  - pyproject.toml
+  - uv.lock
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - event cursor contract
+  - outbox publisher
+  - checkpoint history
+  - scoped state enumeration and operation inspection
+  - cold-resume proof
+  steps:
+  - Use Mongo Change Streams only as wakeup, or bounded polling over durable journal.
+  - Persist scoped consumer checkpoint/ack separately from provider resume token.
+  - Define cursor expiry/resync and cancellation/tombstone behavior.
+  - Validate publication replay idempotency through Gate and isolated multi-manifestation access.
+  acceptance:
+  - Lost provider cursor can rebuild notification progress from canonical retained journal.
+  - Event stream never confuses later updateLookup with exact committed transition.
+  negative_proofs:
+  - Duplicate event does not duplicate downstream intent.
+  - Cross-consumer ack and out-of-scope cursor fail.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+pack_revision: 1.1.0
