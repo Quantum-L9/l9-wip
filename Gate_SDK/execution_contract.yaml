@@ -1,0 +1,198 @@
+repo: Quantum-L9/Gate_SDK
+status: planned
+unit_count: 2
+units:
+- id: SDK-01
+  repo: Gate_SDK
+  title: Mechanically separate authenticated application clients and nodes
+  phase: 2
+  depends_on:
+  - BASE-01
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/constellation_node_sdk/gate/
+  - src/constellation_node_sdk/transport/
+  - tests/
+  - contracts/
+  - docs/
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - client-role invocation contract
+  - role-mismatch fixtures
+  - client migration note
+  steps:
+  - Inspect execute/root builder and current role authentication at Gate.
+  - Define credential-bound client/node provenance mapping with Gate owner.
+  - Preserve one transport, no destination parameter and no hidden execution replay.
+  - Test both valid application and node paths from installed wheel.
+  acceptance:
+  - Ordinary client credentials cannot gain node capability by changing provenance.
+  - Current valid node routes remain compatible.
+  negative_proofs:
+  - Spoofed origin_kind=node fails with client identity.
+  - A profile node-mode string creates no trust.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: SDK-02
+  repo: Gate_SDK
+  title: Prove scoped response, child lineage and single-deadline contracts
+  phase: 2
+  depends_on:
+  - SDK-01
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - contracts/
+  - docs/
+  - pyproject.toml
+  - uv.lock
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - application conformance tests
+  - node-followup fixtures
+  - versioned public surface
+  steps:
+  - Exercise child request through existing packet derivation for node callers.
+  - Verify response correlation, source/destination, scope, signatures and operation identity.
+  - Expose only necessary ergonomic APIs; keep service-domain models out of SDK.
+  - Document canonical error taxonomy and no automatic execution retry.
+  acceptance:
+  - Every runtime capability call has one transport implementation and deadline.
+  - Normal responses to clients are legal but worker dispatch to clients is not.
+  negative_proofs:
+  - Wrong-correlation or cross-tenant response rejected.
+  - Timeout yields one network execution attempt.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: SDK-03
+  repo: Gate_SDK
+  title: Prove bounded semantic turn transport and close only real gaps
+  phase: 3
+  depends_on:
+  - SDK-02
+  - EXT-01
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - contracts/
+  - docs/
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - sdk-03-implementation-diff
+  - sdk-03-contract-tests
+  - sdk-03-evidence-receipt.json
+  steps:
+  - Inspect existing chunk/stream/session and child-lineage contracts.
+  - Prove single-budget bounded semantic operations and correlated responses.
+  - Where streaming is absent, require explicit unavailable/final-turn operation rather than alternate transport.
+  - Add only owner-native minimal protocol changes when separately justified by current evidence.
+  acceptance:
+  - One transport implementation and no peer connection escape.
+  - SDK remains domain-payload opaque.
+  negative_proofs:
+  - Provider-specific turn/payload classes do not enter SDK core.
+  - A client cannot become a node by requesting a session.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+pack_revision: 1.1.0
