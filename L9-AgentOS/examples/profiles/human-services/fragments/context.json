@@ -1,0 +1,15 @@
+{
+  "variants": [
+    {
+      "id": "reasoning",
+      "required_keys": [
+        "current_state",
+        "source_authority",
+        "approved_reference"
+      ],
+      "max_tokens": 4000,
+      "missing_required": "block"
+    }
+  ],
+  "owner": "l9-context"
+}

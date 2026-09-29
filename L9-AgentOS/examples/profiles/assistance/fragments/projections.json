@@ -1,0 +1,8 @@
+{
+  "work_item_label": "Work Item",
+  "output": [
+    "status",
+    "evidence_refs",
+    "unknowns"
+  ]
+}

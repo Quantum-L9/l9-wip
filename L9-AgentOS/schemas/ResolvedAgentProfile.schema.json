@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-agentos:ResolvedAgentProfile:0.1",
+  "title": "ResolvedAgentProfile",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. Resolved semantics, not deployment credentials or node trust.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "profile_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "profile_version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "source_manifest_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "profile_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "compiler_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "sections": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "identity": {
+          "$ref": "urn:l9:devpack:l9-agentos:ProfileIdentity:0.1"
+        },
+        "objectives": {
+          "$ref": "urn:l9:devpack:l9-agentos:ProfileObjectives:0.1"
+        },
+        "work_items": {
+          "$ref": "urn:l9:devpack:l9-agentos:ProfileWorkItems:0.1"
+        },
+        "observations": {
+          "$ref": "urn:l9:devpack:l9-agentos:ProfileObservations:0.1"
+        },
+        "state": {
+          "$ref": "urn:l9:devpack:l9-agentos:ProfileState:0.1"
+        },
+        "context": {
+          "$ref": "urn:l9:devpack:l9-agentos:ProfileContext:0.1"
+        },
+        "memory": {
+          "$ref": "urn:l9:devpack:l9-agentos:ProfileMemory:0.1"
+        },
+        "autonomy": {
+          "$ref": "urn:l9:devpack:l9-agentos:AutonomyProfile:0.1"
+        },
+        "capabilities": {
+          "$ref": "urn:l9:devpack:l9-agentos:ProfileCapabilities:0.1"
+        },
+        "interaction": {
+          "$ref": "urn:l9:devpack:l9-agentos:ProfileInteraction:0.1"
+        },
+        "delegation": {
+          "$ref": "urn:l9:devpack:l9-agentos:ProfileDelegation:0.1"
+        },
+        "projections": {
+          "$ref": "urn:l9:devpack:l9-agentos:ProfileProjections:0.1"
+        },
+        "governance": {
+          "$ref": "urn:l9:devpack:l9-agentos:ProfileGovernance:0.1"
+        }
+      },
+      "required": [
+        "identity",
+        "objectives",
+        "work_items",
+        "observations",
+        "state",
+        "context",
+        "memory",
+        "autonomy",
+        "capabilities",
+        "interaction",
+        "delegation",
+        "projections",
+        "governance"
+      ]
+    },
+    "source_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 1,
+      "maxItems": 100
+    }
+  },
+  "required": [
+    "profile_id",
+    "profile_version",
+    "source_manifest_digest",
+    "profile_digest",
+    "compiler_ref",
+    "sections",
+    "source_refs"
+  ]
+}

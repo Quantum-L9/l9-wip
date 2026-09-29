@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-agentos:AgentProfileSource:0.1",
+  "title": "AgentProfileSource",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. Thirteen separately identified sections in this baseline; safe compiler additionally checks uniqueness and path containment.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "profile_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "profile_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "source_schema": {
+      "const": "l9.agent-profile-source/0.1"
+    },
+    "fragments": {
+      "type": "array",
+      "items": {
+        "$ref": "urn:l9:devpack:l9-agentos:ProfileFragmentRef:0.1"
+      },
+      "minItems": 13,
+      "maxItems": 13
+    },
+    "compiler_contract_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    }
+  },
+  "required": [
+    "profile_id",
+    "profile_version",
+    "source_schema",
+    "fragments",
+    "compiler_contract_ref"
+  ]
+}

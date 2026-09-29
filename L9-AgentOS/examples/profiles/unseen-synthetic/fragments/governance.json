@@ -1,0 +1,6 @@
+{
+  "sample_only": true,
+  "production_activation": false,
+  "profile_grants_authority": false,
+  "node_role": "externally_admitted_only"
+}

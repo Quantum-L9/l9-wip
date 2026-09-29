@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-agentos:Delegation:0.1",
+  "title": "Delegation",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. Bounded references, not provider task formats or credentials.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "delegation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "parent_work_item_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "child_work_item_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "delegator_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "capability_action": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "grant_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "budget_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "allow_redelegation": {
+      "type": "boolean"
+    },
+    "profile_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "required": [
+    "delegation_id",
+    "parent_work_item_ref",
+    "child_work_item_ref",
+    "delegator_ref",
+    "capability_action",
+    "scope_ref",
+    "grant_ref",
+    "budget_ref",
+    "expires_at",
+    "allow_redelegation",
+    "profile_digest"
+  ]
+}

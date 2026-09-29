@@ -1,0 +1,11 @@
+{
+  "modalities": [
+    "text",
+    "audio",
+    "image",
+    "structured",
+    "document"
+  ],
+  "source_attribution": "required",
+  "operator_identity_inferred_from_message": false
+}

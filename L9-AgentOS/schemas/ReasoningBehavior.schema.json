@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-agentos:ReasoningBehavior:0.1",
+  "title": "ReasoningBehavior",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Owner payload, not a transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "behavior_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "semantics": {
+      "$ref": "urn:l9:devpack:l9-formal-reasoning:ReasoningSemantics:0.1"
+    },
+    "allowed_law_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 1,
+      "maxItems": 100
+    },
+    "context_policy_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "evidence_policy_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "on_missing_evidence": {
+      "const": "block"
+    },
+    "result_grants_authority": {
+      "const": false
+    }
+  },
+  "required": [
+    "behavior_ref",
+    "semantics",
+    "allowed_law_refs",
+    "context_policy_ref",
+    "evidence_policy_ref",
+    "on_missing_evidence",
+    "result_grants_authority"
+  ]
+}

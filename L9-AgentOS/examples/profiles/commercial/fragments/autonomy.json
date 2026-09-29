@@ -1,0 +1,11 @@
+{
+  "default": "deny",
+  "external_effects": "disabled",
+  "max_rounds": 3,
+  "allow": [
+    "context.compile",
+    "memory.search",
+    "state.get"
+  ],
+  "unknown_effect": "reconcile"
+}

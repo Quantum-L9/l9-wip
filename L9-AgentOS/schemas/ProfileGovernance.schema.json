@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-agentos:ProfileGovernance:0.1",
+  "title": "ProfileGovernance",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. Owner-local first-implementation profile section. More expressive policy vocabularies require versioned compiler admission; unknown keys fail closed.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "sample_only": {
+      "type": "boolean"
+    },
+    "production_activation": {
+      "type": "boolean"
+    },
+    "profile_grants_authority": {
+      "const": false
+    },
+    "node_role": {
+      "const": "externally_admitted_only"
+    }
+  },
+  "required": [
+    "sample_only",
+    "production_activation",
+    "profile_grants_authority",
+    "node_role"
+  ]
+}

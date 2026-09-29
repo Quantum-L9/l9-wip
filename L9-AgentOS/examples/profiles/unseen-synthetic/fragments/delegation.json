@@ -1,0 +1,5 @@
+{
+  "enabled": false,
+  "allow_redelegation": false,
+  "scope_rule": "attenuate_only"
+}

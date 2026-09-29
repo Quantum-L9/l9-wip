@@ -1,0 +1,14 @@
+{
+  "behavior_ref": "behavior:communication:1",
+  "allowed_execution_classes": [
+    "async_message",
+    "realtime"
+  ],
+  "required_features": [],
+  "recipient_policy_ref": "policy:recipient:1",
+  "perception_policy_ref": "policy:perception:1",
+  "recording_default": "disabled",
+  "evidence_policy_ref": "policy:evidence:1",
+  "provider_selection_owner": "l9-communication",
+  "profile_grants_authority": false
+}

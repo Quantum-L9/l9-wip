@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-agentos:AgentReconcileRequest:0.1",
+  "title": "AgentReconcileRequest",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "manifestation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "work_item_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "state_ref": {
+      "$ref": "urn:l9:devpack:l9-state:StateRef:0.1"
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "prior_intent_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "prior_operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "authority_evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 0,
+      "maxItems": 50
+    }
+  },
+  "required": [
+    "manifestation_id",
+    "scope_ref",
+    "work_item_ref",
+    "state_ref",
+    "operation_id",
+    "prior_intent_ref",
+    "prior_operation_id",
+    "authority_evidence_refs"
+  ]
+}

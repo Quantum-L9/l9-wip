@@ -1,0 +1,739 @@
+repo: Quantum-L9/L9-AgentOS
+status: planned
+unit_count: 8
+units:
+- id: BASE-01
+  repo: L9-AgentOS
+  title: Rehydrate authority and inspect current owners
+  phase: 0
+  depends_on: []
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - docs/architecture/
+  - contracts/
+  - validation/
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - baseline-census.json
+  - capability-owner-map.yaml
+  - birth-front-door-proof.json
+  - dependency-probe.json
+  steps:
+  - Read locked intent, decision register, repository maps, source baselines and relevant owner invariants.
+  - Resolve all current default-branch heads and existing open work affecting these seams; do not assume pinned
+    snapshots remain current.
+  - Verify whether target repos already exist and identify the current canonical runnable-node birth front
+    door without invoking publication.
+  - Probe installed/public dependencies and node action inventories. Separate observed, absent and inaccessible
+    resources.
+  - Record changes from this pack and route material conflicts to the architecture owner without re-deciding
+    explicit user locks.
+  acceptance:
+  - Every named repository/dependency has observed identity or a typed blocking absence for its dependent unit.
+  - No existing owner is silently replaced and no fabricated factory command is used.
+  negative_proofs:
+  - Stale source SHA must cause refresh/review, not silently pass.
+  - Unavailable provider cannot be recorded as validated.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: AG-01
+  repo: L9-AgentOS
+  title: Freeze universal semantic contracts and owner bindings
+  phase: 1
+  depends_on:
+  - BASE-01
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - contracts/
+  - docs/
+  - pyproject.toml
+  - uv.lock
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - semantic-contracts
+  - AgentProfile and WorkItem schemas
+  - owner-reference map
+  steps:
+  - Reconcile this pack semantic contracts against current owner models.
+  - Define universal primitive identity, lifecycle, state/reference boundaries and first-class profile compilation.
+  - Replace legacy vocabulary only through explicit migration maps; do not rename external source APIs blindly.
+  - Publish behavioral positive/negative fixtures before using machine schemas as API authority.
+  acceptance:
+  - Work Item and AgentProfile definitions are complete and provider neutral.
+  - Schema references have one owner and no copied TransportPacket/MemoryRecord.
+  negative_proofs:
+  - Reject competing work primitive keys in canonical payloads.
+  - State revision cannot be forged inside WorkItem payload.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: AG-02
+  repo: L9-AgentOS
+  title: Implement multi-artifact AgentProfile compiler
+  phase: 3
+  depends_on:
+  - AG-01
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - contracts/
+  - docs/
+  - pyproject.toml
+  - uv.lock
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - compiler
+  - profile content validation
+  - deterministic resolved artifact
+  - profile compatibility test suite
+  steps:
+  - Resolve only bounded local/approved immutable refs with content hashes.
+  - Validate all first-class sections and cross-profile restrictions.
+  - Normalize/digest semantics; keep deployment secrets and node grants external.
+  - Reject cycles, ambiguous overrides, executable code and capability escalation.
+  acceptance:
+  - All five specimen manifestations compile through identical code.
+  - No profile name branches or domain logic in compiler.
+  negative_proofs:
+  - Missing section/hash mismatch/traversal rejected.
+  - Profile change cannot silently upgrade active Work Item authority.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: AG-03
+  repo: L9-AgentOS
+  title: Implement universal Work Item and observation lifecycle
+  phase: 4
+  depends_on:
+  - AG-02
+  - STATE-03
+  - EVID-01
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - contracts/
+  - docs/
+  - pyproject.toml
+  - uv.lock
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - Work Item service
+  - objective/observation bindings
+  - replica recovery
+  steps:
+  - Instantiate manifestation identity separately from profile/replica/principal.
+  - Persist universal Work Item through State and source evidence references through Evidence.
+  - Model multiple actors/modalities with authenticated attribution, not implicit operator equivalence.
+  - Implement interrupt/resume/cancel and dependency references without external capability effects.
+  acceptance:
+  - Exactly same lifecycle handles each profile specimen.
+  - Cold restart recovers exact Work Item without a parallel local ledger.
+  negative_proofs:
+  - Duplicate observation cannot duplicate Work Item creation.
+  - Contact/actor identity is not an authority grant.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: AG-04
+  repo: L9-AgentOS
+  title: Implement generic autonomy and exact intent commitments
+  phase: 5
+  depends_on:
+  - AG-03
+  - CTX-02
+  - MEM-02
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - contracts/
+  - docs/
+  - pyproject.toml
+  - uv.lock
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - autonomy evaluator
+  - intent lifecycle
+  - effect reconciliation policy
+  steps:
+  - Extract generic evaluation mechanics from donor without coding-specific role constants.
+  - Evaluate immutable profile, current state, context, grants and budget; default deny/require context as
+    defined.
+  - Persist exact ActionIntent digest/key before any external dispatch.
+  - Bind approval/revocation/evaluation expiry and capability receipt to exact request.
+  acceptance:
+  - Autonomy allows only an attempt, never overrides Gate/destination.
+  - Unknown external effect transitions to reconciliation without blind retry.
+  negative_proofs:
+  - 'Grant expires between evaluation and execution: no effect.'
+  - Proposal/profile/payload changes invalidate prior approval.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: AG-05
+  repo: L9-AgentOS
+  title: Wire Gate-only capability and delegation execution
+  phase: 5
+  depends_on:
+  - AG-04
+  - GATE-02
+  - CTX-03
+  - ING-03
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - contracts/
+  - docs/
+  - pyproject.toml
+  - uv.lock
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - bounded execution loop
+  - delegation
+  - generic communication bindings
+  - end-to-end loop proof
+  steps:
+  - Use SDK node follow-up path preserving ancestry for trusted node execution.
+  - Constrain each delegation to intersect parent grants, budget and scope.
+  - Reference communication/inference/domain capabilities by approved action contract, not provider URLs.
+  - Persist attempts and receipts; feed selected observed outcomes to Ingest/Memory without self-reinforcement.
+  acceptance:
+  - No node calls another node directly or imports its service internals.
+  - Delegation/cancellation completion distinguished from request acceptance.
+  negative_proofs:
+  - Delegate refuses scope expansion and expired parent grant.
+  - Lost response reconciles original key before new execution.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: AG-06
+  repo: L9-AgentOS
+  title: Prove profile-only manifestations and unseen use case
+  phase: 6
+  depends_on:
+  - AG-05
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - contracts/
+  - docs/
+  - pyproject.toml
+  - uv.lock
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - manifestation conformance matrix
+  - profile deployment bundles
+  - multi-tenant workload tests
+  steps:
+  - Run commercial, assistance, technical and human-service synthetic cases against same immutable AgentOS
+    image.
+  - Add unseen profile without code changes and run modality/third-party interaction cases.
+  - Check privacy, interruption, uncertain-effect and provider outage behavior.
+  - Do not enable real external messages/payments/hiring during this proof.
+  acceptance:
+  - Five manifestations run with identical binary and owner APIs.
+  - Capabilities equal in mechanism while policy limits differ declaratively.
+  negative_proofs:
+  - Per-agent runtime patch fails acceptance.
+  - Forbidden raw content cannot enter memory merely via another profile.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: AG-07
+  repo: L9-AgentOS
+  title: Prove operator readiness, cold recovery and release boundaries
+  phase: 7
+  depends_on:
+  - AG-06
+  - OPS-02
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - contracts/
+  - docs/
+  - pyproject.toml
+  - uv.lock
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - staging readiness packet
+  - backup/restore proof
+  - failure drills
+  - deployment pin lock
+  steps:
+  - Pin all runtime images/packages/provider models by tested version/digest.
+  - Exercise replica failure, database failover, missing node, provider delay, privacy erasure and profile
+    rollback.
+  - Observe metrics and alert paths against workload assumptions.
+  - Request separate deployment/data-cutover authorization only after evidence is complete.
+  acceptance:
+  - No production-ready claim without all runtime gates.
+  - Hydration handoff independently reconstructs exact state and outstanding obligations.
+  negative_proofs:
+  - Empty required environment/provider proof blocks release.
+  - Artifact-validator pass cannot mark staging/runtime gates complete.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: EXT-01
+  repo: L9-AgentOS
+  title: Reconcile two-plane contracts and donor supersession
+  phase: 1
+  depends_on:
+  - BASE-01
+  - AG-01
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - docs/architecture/
+  - contracts/
+  - validation/
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - ext-01-implementation-diff
+  - ext-01-contract-tests
+  - ext-01-evidence-receipt.json
+  steps:
+  - Read v1.1 decision register, both donor inventories and revised node boundaries.
+  - Refresh intended repo existence, current action owners and exact Gate/SDK capability contracts.
+  - Classify every donor contract as retained, generalized, moved or superseded without copying old authority.
+  - Record native provider/family verification gates separately from offline spec checks.
+  acceptance:
+  - One canonical ReasoningAdapter name; two separately scoped node owners.
+  - No user lock re-decided and no source archive treated as deployment authority.
+  negative_proofs:
+  - A stale donor memory dependency cannot survive as a direct Communication/Reasoning import.
+  - An unavailable runtime capability remains unverified.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: AG-08
+  repo: L9-AgentOS
+  title: Compile capability behavior bindings and admit observations
+  phase: 5
+  depends_on:
+  - AG-05
+  - EXT-01
+  - COMM-01
+  - FR-01
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - contracts/
+  - tests/
+  - profiles/
+  - docs/
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - ag-08-implementation-diff
+  - ag-08-contract-tests
+  - ag-08-evidence-receipt.json
+  steps:
+  - Add optional declarative behavior bindings within the existing AgentProfile composition.
+  - Verify referenced behavior contracts/digests and independent deployment permissions.
+  - Implement generic Observation admission without new Work Item types.
+  - Keep Communication/Reasoning requests as universal ActionIntent payloads.
+  acceptance:
+  - Same profile/compiler structure for all manifestations.
+  - No native solver/media SDK appears in AgentOS domain code.
+  negative_proofs:
+  - Behavior reference cannot grant node trust or effect authorization.
+  - External source text cannot become profile/law.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: AG-09
+  repo: L9-AgentOS
+  title: Prove cross-plane perception, reasoning and effect loops
+  phase: 6
+  depends_on:
+  - AG-08
+  - COMM-05
+  - FR-05
+  - CTX-04
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - profiles/
+  - docs/
+  - validation/
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - ag-09-implementation-diff
+  - ag-09-contract-tests
+  - ag-09-evidence-receipt.json
+  steps:
+  - Run communication observation -> Work Item -> Context -> reasoning evidence -> autonomy -> communication
+    effect with all L9 hops via Gate.
+  - Prove exact commitment and original operation recovery.
+  - Run the identical runtime against five profile specimens and one unseen profile in conformance.
+  - Verify source revocation, budgets, loop limits and non-node restrictions.
+  acceptance:
+  - Communication never becomes brain and reasoning never becomes permission.
+  - Single runtime handles all profile fixtures.
+  negative_proofs:
+  - Reasoning SAT with revoked effect grant yields no send.
+  - Duplicate provider event plus source changes cannot generate infinite feedback.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+pack_revision: 1.1.0

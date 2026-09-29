@@ -1,0 +1,22 @@
+{
+  "work_item_id": "work.1",
+  "manifestation_id": "manifestation.1",
+  "objective_ref": "objective.1",
+  "profile_ref": "profile.synthetic@1",
+  "profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "scope_ref": "tenant.synthetic/subject.1",
+  "kind": "objective_fulfillment",
+  "lifecycle": "active",
+  "state_dimensions": {
+    "phase": "evaluating"
+  },
+  "payload": {
+    "summary": "Synthetic Work Item"
+  },
+  "dependency_refs": [],
+  "evidence_refs": [
+    "evidence.1"
+  ],
+  "context_refs": [],
+  "revision": 999
+}

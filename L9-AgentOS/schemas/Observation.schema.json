@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-agentos:Observation:0.1",
+  "title": "Observation",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "observation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "source_ref": {
+      "$ref": "urn:l9:devpack:l9-evidence:SourceRef:0.1"
+    },
+    "modality": {
+      "enum": [
+        "text",
+        "image",
+        "audio",
+        "video",
+        "document",
+        "structured"
+      ]
+    },
+    "evidence_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "actor_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "work_item_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    }
+  },
+  "required": [
+    "observation_id",
+    "scope_ref",
+    "source_ref",
+    "modality",
+    "evidence_ref",
+    "actor_ref",
+    "purpose"
+  ]
+}
