@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-agentos:ProfileWorkItems:0.1",
+  "title": "ProfileWorkItems",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. Owner-local first-implementation profile section. More expressive policy vocabularies require versioned compiler admission; unknown keys fail closed.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "canonical_type": {
+      "const": "WorkItem"
+    },
+    "kinds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+      },
+      "minItems": 1,
+      "maxItems": 100
+    },
+    "schema_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    }
+  },
+  "required": [
+    "canonical_type",
+    "kinds",
+    "schema_ref"
+  ]
+}

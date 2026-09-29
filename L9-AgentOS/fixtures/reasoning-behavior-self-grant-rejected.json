@@ -1,0 +1,23 @@
+{
+  "behavior_ref": "behavior:formal:1",
+  "semantics": {
+    "family": "stable_model",
+    "dialect_ref": "law-dialect:finite-asp-subset:1",
+    "required_features": [
+      "finite_domains",
+      "target_membership"
+    ],
+    "model_universe": "all_feasible",
+    "evidence_requirements": [
+      "witness",
+      "source_mapping"
+    ]
+  },
+  "allowed_law_refs": [
+    "law:synthetic:1"
+  ],
+  "context_policy_ref": "policy:exact:1",
+  "evidence_policy_ref": "policy:evidence:1",
+  "on_missing_evidence": "block",
+  "result_grants_authority": true
+}

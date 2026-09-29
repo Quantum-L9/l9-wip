@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-agentos:ProfileDelegation:0.1",
+  "title": "ProfileDelegation",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. Owner-local first-implementation profile section. More expressive policy vocabularies require versioned compiler admission; unknown keys fail closed.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "enabled": {
+      "type": "boolean"
+    },
+    "allow_redelegation": {
+      "type": "boolean"
+    },
+    "scope_rule": {
+      "const": "attenuate_only"
+    }
+  },
+  "required": [
+    "enabled",
+    "allow_redelegation",
+    "scope_rule"
+  ]
+}

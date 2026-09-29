@@ -1,0 +1,73 @@
+{
+  "profile_id": "profile.assistance",
+  "profile_version": "0.1.0",
+  "source_schema": "l9.agent-profile-source/0.1",
+  "fragments": [
+    {
+      "section": "identity",
+      "path": "fragments/identity.json",
+      "sha256": "84167b037331ff8bf9712fe5847d55a7f50e692b724af2430e3de1a2535a0fd5"
+    },
+    {
+      "section": "objectives",
+      "path": "fragments/objectives.json",
+      "sha256": "62bc48ac1553a80470b971bee4de0e7725c938b9c896b63d9f840550892830ec"
+    },
+    {
+      "section": "work_items",
+      "path": "fragments/work_items.json",
+      "sha256": "955a734d01da004039cedb17d9787b3c736b71b598b17a5136237540927b89a0"
+    },
+    {
+      "section": "observations",
+      "path": "fragments/observations.json",
+      "sha256": "f0aa7d307295ca19db4d1d1886e7825af93836ec28bbcbe6e7b3506fbc7ed7ef"
+    },
+    {
+      "section": "state",
+      "path": "fragments/state.json",
+      "sha256": "91f0ced998c9ea04f5621d86a8a078443cb929f29a208f81c96508853818b64d"
+    },
+    {
+      "section": "context",
+      "path": "fragments/context.json",
+      "sha256": "8d60d4c2e262a7524aa82a53968ccb153bb7ed2b710da889d0837544e8156a6f"
+    },
+    {
+      "section": "memory",
+      "path": "fragments/memory.json",
+      "sha256": "4c44fcff962b8d44ce72b51a3b2565cd1048cb6691a73a64a373171034df2722"
+    },
+    {
+      "section": "autonomy",
+      "path": "fragments/autonomy.json",
+      "sha256": "5069e7536be8d1ed383067d34fbd4494ec606b41b9ce1c171f1e13b59cacaecd"
+    },
+    {
+      "section": "capabilities",
+      "path": "fragments/capabilities.json",
+      "sha256": "c2395a4557837dda31a218217f7ba48d22f661b40a8933fcf712dea1a716b6e3"
+    },
+    {
+      "section": "interaction",
+      "path": "fragments/interaction.json",
+      "sha256": "b5884f9490bb55c8882b5dba6fa8784961cb9d435c91e7335153186d215645d7"
+    },
+    {
+      "section": "delegation",
+      "path": "fragments/delegation.json",
+      "sha256": "5557f342c555044116d8a5d3687fd8926e68ab987aa19ed3b6f22d13a5a18d49"
+    },
+    {
+      "section": "projections",
+      "path": "fragments/projections.json",
+      "sha256": "9ddb382113b9e024fba68d4195df672e347094866c97ae5dda014c7dda29fd71"
+    },
+    {
+      "section": "governance",
+      "path": "fragments/governance.json",
+      "sha256": "6ddf793a059e96b1ce7f4054220b9d08ebd4c9e3f5d6a17d7e96947e2cf460b5"
+    }
+  ],
+  "compiler_contract_ref": "l9.agent-profile-compiler/0.1"
+}

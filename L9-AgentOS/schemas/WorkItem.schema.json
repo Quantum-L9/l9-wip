@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-agentos:WorkItem:0.1",
+  "title": "WorkItem",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. StateRecord supplies persistence revision. WorkItem payload cannot forge a storage revision.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "work_item_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "manifestation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "objective_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "profile_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "profile_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "kind": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "lifecycle": {
+      "enum": [
+        "created",
+        "active",
+        "waiting",
+        "blocked",
+        "delegated",
+        "completed",
+        "cancelled",
+        "failed"
+      ]
+    },
+    "state_dimensions": {
+      "type": "object",
+      "maxProperties": 100
+    },
+    "payload": {
+      "type": "object",
+      "maxProperties": 100
+    },
+    "parent_work_item_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "dependency_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 0,
+      "maxItems": 100
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 0,
+      "maxItems": 100
+    },
+    "context_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 0,
+      "maxItems": 50
+    }
+  },
+  "required": [
+    "work_item_id",
+    "manifestation_id",
+    "objective_ref",
+    "profile_ref",
+    "profile_digest",
+    "scope_ref",
+    "kind",
+    "lifecycle",
+    "state_dimensions",
+    "payload",
+    "dependency_refs",
+    "evidence_refs",
+    "context_refs"
+  ]
+}

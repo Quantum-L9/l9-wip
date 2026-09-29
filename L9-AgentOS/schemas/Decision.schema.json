@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-agentos:Decision:0.1",
+  "title": "Decision",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "decision_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "work_item_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "state_ref": {
+      "$ref": "urn:l9:devpack:l9-state:StateRef:0.1"
+    },
+    "profile_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "context_bundle_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "outcome": {
+      "enum": [
+        "no_op",
+        "request_context",
+        "ask_human",
+        "propose_action",
+        "delegate",
+        "defer"
+      ]
+    },
+    "rationale": {
+      "type": "string",
+      "maxLength": 4000
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 0,
+      "maxItems": 100
+    },
+    "unknowns": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 0,
+      "maxItems": 50
+    },
+    "conflicts": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 0,
+      "maxItems": 50
+    }
+  },
+  "required": [
+    "decision_id",
+    "work_item_ref",
+    "state_ref",
+    "profile_digest",
+    "context_bundle_ref",
+    "outcome",
+    "rationale",
+    "evidence_refs",
+    "unknowns",
+    "conflicts"
+  ]
+}

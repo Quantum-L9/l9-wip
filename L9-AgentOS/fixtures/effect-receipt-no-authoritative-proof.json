@@ -1,0 +1,18 @@
+{
+  "receipt_id": "rcpt.1",
+  "operation_id": "op.1",
+  "request_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "manifestation_id": "manifestation.1",
+  "scope_ref": "scope.1",
+  "status": "effect_confirmed",
+  "reason_codes": [],
+  "observed_at": "2026-09-25T20:00:00Z",
+  "work_item_ref": "work.1",
+  "state_ref": {
+    "object_id": "object.1",
+    "scope_ref": "scope.1",
+    "revision": 1,
+    "state_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "schema_ref": "work/1"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-agentos:ProfileCapabilities:0.1",
+  "title": "ProfileCapabilities",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. Owner-local first-implementation profile section. More expressive policy vocabularies require versioned compiler admission; unknown keys fail closed. Draft additive v1.1 pack extension: optional owner-admitted behavior bindings; legacy fragments remain valid.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "requested_actions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+      },
+      "minItems": 0,
+      "maxItems": 100
+    },
+    "grant_source": {
+      "const": "deployment_authority"
+    },
+    "contains_credentials": {
+      "const": false
+    },
+    "behavior_bindings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "capability_family": {
+            "enum": [
+              "communication",
+              "formal_reasoning"
+            ]
+          },
+          "behavior_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          },
+          "behavior_digest": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "contract_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          }
+        },
+        "required": [
+          "capability_family",
+          "behavior_ref",
+          "behavior_digest",
+          "contract_ref"
+        ]
+      },
+      "minItems": 0,
+      "maxItems": 20
+    }
+  },
+  "required": [
+    "requested_actions",
+    "grant_source",
+    "contains_credentials"
+  ]
+}

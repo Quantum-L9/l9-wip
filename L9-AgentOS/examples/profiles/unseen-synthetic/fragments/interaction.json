@@ -1,0 +1,10 @@
+{
+  "parties": [
+    "operator",
+    "authorized_external_person"
+  ],
+  "channels": [
+    "structured"
+  ],
+  "unsolicited_effects": "disabled"
+}

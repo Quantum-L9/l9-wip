@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-agentos:ProfileInteraction:0.1",
+  "title": "ProfileInteraction",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. Owner-local first-implementation profile section. More expressive policy vocabularies require versioned compiler admission; unknown keys fail closed.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "parties": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "operator",
+          "authorized_external_person",
+          "authorized_system"
+        ]
+      },
+      "minItems": 1,
+      "maxItems": 3
+    },
+    "channels": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "text",
+          "image",
+          "audio",
+          "video",
+          "document",
+          "structured"
+        ]
+      },
+      "minItems": 1,
+      "maxItems": 6
+    },
+    "unsolicited_effects": {
+      "enum": [
+        "disabled",
+        "require_current_grants"
+      ]
+    }
+  },
+  "required": [
+    "parties",
+    "channels",
+    "unsolicited_effects"
+  ]
+}

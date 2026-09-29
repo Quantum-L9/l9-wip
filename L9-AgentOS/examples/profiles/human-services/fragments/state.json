@@ -1,0 +1,14 @@
+{
+  "owner": "l9-state",
+  "lifecycle": [
+    "created",
+    "active",
+    "waiting",
+    "blocked",
+    "delegated",
+    "completed",
+    "cancelled",
+    "failed"
+  ],
+  "conditional_revision": true
+}

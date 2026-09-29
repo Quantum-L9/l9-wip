@@ -1,0 +1,14 @@
+{
+  "parties": [
+    "operator",
+    "authorized_external_person"
+  ],
+  "channels": [
+    "text",
+    "structured",
+    "image",
+    "audio",
+    "document"
+  ],
+  "unsolicited_effects": "disabled"
+}

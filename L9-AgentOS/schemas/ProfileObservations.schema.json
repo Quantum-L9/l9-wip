@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-agentos:ProfileObservations:0.1",
+  "title": "ProfileObservations",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. Owner-local first-implementation profile section. More expressive policy vocabularies require versioned compiler admission; unknown keys fail closed.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "modalities": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "text",
+          "image",
+          "audio",
+          "video",
+          "document",
+          "structured"
+        ]
+      },
+      "minItems": 1,
+      "maxItems": 6
+    },
+    "source_attribution": {
+      "const": "required"
+    },
+    "operator_identity_inferred_from_message": {
+      "const": false
+    }
+  },
+  "required": [
+    "modalities",
+    "source_attribution",
+    "operator_identity_inferred_from_message"
+  ]
+}

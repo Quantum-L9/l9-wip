@@ -1,0 +1,13 @@
+{
+  "variants": [
+    {
+      "id": "reasoning",
+      "required_keys": [
+        "current_state"
+      ],
+      "max_tokens": 4000,
+      "missing_required": "block"
+    }
+  ],
+  "owner": "l9-context"
+}

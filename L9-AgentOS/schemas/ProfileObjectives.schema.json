@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-agentos:ProfileObjectives:0.1",
+  "title": "ProfileObjectives",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. Owner-local first-implementation profile section. More expressive policy vocabularies require versioned compiler admission; unknown keys fail closed.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "purpose": {
+      "type": "string",
+      "maxLength": 16000
+    },
+    "amendment": {
+      "const": "explicit_revision"
+    },
+    "success_rule": {
+      "const": "evidence_required"
+    }
+  },
+  "required": [
+    "purpose",
+    "amendment",
+    "success_rule"
+  ]
+}

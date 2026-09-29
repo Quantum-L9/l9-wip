@@ -1,0 +1,10 @@
+{
+  "requested_actions": [
+    "context.compile",
+    "memory.search",
+    "state.get",
+    "evidence.get"
+  ],
+  "grant_source": "deployment_authority",
+  "contains_credentials": false
+}

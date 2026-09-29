@@ -1,0 +1,38 @@
+schema: l9.devpack.repo-boundary/v1
+repo: Quantum-L9/L9-AgentOS
+class: runnable_node
+status: LOCKED_BOUNDARY_PROPOSED_LAYOUT
+owns:
+- AgentProfile source grammar, resolution, digest and lifecycle
+- Manifestation identity and profile binding
+- Objective and Work Item semantics
+- Observation handling, context needs, decisions and ActionIntents
+- Generic declarative autonomy evaluation and delegation semantics
+- Durable execution-intent coordination through State and Gate
+must_not_own:
+- Direct provider/database/Graphiti calls
+- Gate routing, transport models or node admission
+- Canonical memory admission or storage
+- Domain-specific commercial, calendar, coding or procurement branches
+- Generic multi-source retrieval implementation
+- A new downstream validator agent
+dependency_direction:
+- 'Gate_SDK: node chassis and outbound protocol'
+- 'l9-state: durable Work Item and execution state'
+- 'l9-context: required context fulfillment'
+- 'l9-memory: governed durable knowledge'
+- 'l9-evidence: evidence and receipt retention'
+- 'l9-ingest: optional transformation of raw observations'
+- 'l9-cognitive-runtime: owner-native compilation through an admitted binding when required'
+ports:
+- StateCapabilityPort
+- ContextCapabilityPort
+- MemoryCapabilityPort
+- EvidenceCapabilityPort
+- IngestCapabilityPort
+- ReasoningCapabilityPort
+- ProfileResolverPort
+cross_node_transport: Gate_SDK -> Constellation.Gate only
+provider_independence: true
+credentials_scope: Only owned adapter credentials; never peer credentials.
+node_trust_source: Deployment identity and Gate admission; never AgentProfile or request payload.

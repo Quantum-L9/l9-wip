@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-agentos:AgentInspectResult:0.1",
+  "title": "AgentInspectResult",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "work_item": {
+      "$ref": "urn:l9:devpack:l9-agentos:WorkItem:0.1"
+    },
+    "state_ref": {
+      "$ref": "urn:l9:devpack:l9-state:StateRef:0.1"
+    },
+    "receipt_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 0,
+      "maxItems": 200
+    },
+    "history_cursor": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "coverage": {
+      "enum": [
+        "complete",
+        "bounded",
+        "partial"
+      ]
+    }
+  },
+  "required": [
+    "work_item",
+    "state_ref",
+    "receipt_refs",
+    "coverage"
+  ]
+}

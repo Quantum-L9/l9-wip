@@ -1,0 +1,49 @@
+schema: l9.devpack.repo-invariants/v1
+owner: L9-AgentOS
+normative_in_this_pack: true
+invariants:
+- id: L9-001
+  assertion: One runtime manifests agents only through a resolved AgentProfile; no agent-name branches in shared
+    core.
+  negative_proof: Add a sixth synthetic profile without changing runtime source.
+- id: L9-002
+  assertion: Work Item is the canonical unit of agent work across schemas, APIs, examples and documentation.
+  negative_proof: Canonical schemas contain no legacy work primitive; migration records may quote source names.
+- id: L9-003
+  assertion: AgentProfile is a compiled, versioned, provenance-bound declarative aggregate, not one config
+    file.
+  negative_proof: Compile multi-file inputs deterministically; reject missing refs, cycles and policy conflicts.
+- id: L9-015
+  assertion: Autonomy permits a bounded attempt only; Gate and destination recheck authorization at execution.
+  negative_proof: Expired approval between evaluation and invocation yields zero external effect.
+- id: L9-016
+  assertion: Unknown external outcome requires reconciliation, not blind retry or a new idempotency key.
+  negative_proof: Crash after provider execution and before receipt does not duplicate the effect.
+- id: L9-017
+  assertion: Domain logic is declarative profile content or owned domain capability behavior, not generic node
+    code.
+  negative_proof: Profile loading rejects executable code, dynamic imports and provider credentials.
+- id: L9-020
+  assertion: Scope is server-derived and binding-preserving across delegations; sharing is explicit and revocable.
+  negative_proof: Sibling manifestations cannot read each other by matching a profile name or user label.
+- id: L9-021
+  assertion: Profile identity, manifestation identity, replica identity and security principal are distinct.
+  negative_proof: Restart preserves manifestation state without changing producer identity; replica has no
+    extra authority.
+- id: L9-024
+  assertion: Persist compact decision outputs and source references, not private chain-of-thought as mandatory
+    evidence.
+  negative_proof: Evidence schema has no required private reasoning trace.
+- id: L9-027
+  assertion: One repository does not mean one privileged process or one globally writable agent.
+  negative_proof: Concurrent manifestations enforce separate principals, budgets, capabilities and state scopes.
+- id: L9-030
+  assertion: Implementation may not weaken locked architecture to make a proof green.
+  negative_proof: Evidence gap creates a blocking receipt and narrowly scoped upstream work, never a local
+    fallback brain.
+imported_invariant_ids:
+- L9-004
+- L9-005
+- L9-006
+- L9-007
+- L9-023

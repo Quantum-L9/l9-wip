@@ -1,0 +1,7 @@
+{
+  "canonical_type": "WorkItem",
+  "kinds": [
+    "objective_fulfillment"
+  ],
+  "schema_ref": "urn:l9:devpack:l9-agentos:WorkItem:0.1"
+}

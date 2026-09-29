@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-agentos:CommunicationBehavior:0.1",
+  "title": "CommunicationBehavior",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Owner payload, not a transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "behavior_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "allowed_execution_classes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 1,
+      "maxItems": 20
+    },
+    "required_features": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 0,
+      "maxItems": 40
+    },
+    "recipient_policy_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "perception_policy_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "recording_default": {
+      "const": "disabled"
+    },
+    "evidence_policy_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "provider_selection_owner": {
+      "const": "l9-communication"
+    },
+    "profile_grants_authority": {
+      "const": false
+    }
+  },
+  "required": [
+    "behavior_ref",
+    "allowed_execution_classes",
+    "required_features",
+    "recipient_policy_ref",
+    "perception_policy_ref",
+    "recording_default",
+    "evidence_policy_ref",
+    "provider_selection_owner",
+    "profile_grants_authority"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-agentos:ProfileState:0.1",
+  "title": "ProfileState",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. Owner-local first-implementation profile section. More expressive policy vocabularies require versioned compiler admission; unknown keys fail closed.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "owner": {
+      "const": "l9-state"
+    },
+    "lifecycle": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "created",
+          "active",
+          "waiting",
+          "blocked",
+          "delegated",
+          "completed",
+          "cancelled",
+          "failed"
+        ]
+      },
+      "minItems": 1,
+      "maxItems": 8
+    },
+    "conditional_revision": {
+      "const": true
+    }
+  },
+  "required": [
+    "owner",
+    "lifecycle",
+    "conditional_revision"
+  ]
+}

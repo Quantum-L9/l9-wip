@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-agentos:AutonomyEvaluation:0.1",
+  "title": "AutonomyEvaluation",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. A permit to attempt is not destination authorization.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "evaluation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "intent_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "intent_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "profile_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "policy_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "state_ref": {
+      "$ref": "urn:l9:devpack:l9-state:StateRef:0.1"
+    },
+    "result": {
+      "enum": [
+        "allow_attempt",
+        "require_human",
+        "require_context",
+        "defer",
+        "deny",
+        "delegate"
+      ]
+    },
+    "reason_codes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+      },
+      "minItems": 1,
+      "maxItems": 50
+    },
+    "authority_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 0,
+      "maxItems": 50
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 0,
+      "maxItems": 100
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "evaluation_id",
+    "intent_ref",
+    "intent_digest",
+    "profile_digest",
+    "policy_ref",
+    "state_ref",
+    "result",
+    "reason_codes",
+    "authority_refs",
+    "evidence_refs",
+    "expires_at"
+  ]
+}

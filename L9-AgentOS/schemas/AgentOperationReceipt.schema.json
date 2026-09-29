@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-agentos:AgentOperationReceipt:0.1",
+  "title": "AgentOperationReceipt",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "receipt_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "request_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "manifestation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "work_item_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "state_ref": {
+      "$ref": "urn:l9:devpack:l9-state:StateRef:0.1"
+    },
+    "status": {
+      "enum": [
+        "accepted",
+        "no_op",
+        "waiting",
+        "blocked",
+        "intent_ready",
+        "attempt_pending",
+        "effect_confirmed",
+        "reconciliation_required",
+        "cancel_requested",
+        "cancelled",
+        "failed"
+      ]
+    },
+    "decision_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "intent_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "destination_receipt_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "reason_codes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+      },
+      "minItems": 0,
+      "maxItems": 50
+    },
+    "observed_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "receipt_id",
+    "operation_id",
+    "request_digest",
+    "manifestation_id",
+    "scope_ref",
+    "status",
+    "reason_codes",
+    "observed_at"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "accepted",
+              "intent_ready",
+              "attempt_pending",
+              "effect_confirmed",
+              "cancelled"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "work_item_ref",
+          "state_ref"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "effect_confirmed"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "destination_receipt_ref"
+        ]
+      }
+    }
+  ]
+}
