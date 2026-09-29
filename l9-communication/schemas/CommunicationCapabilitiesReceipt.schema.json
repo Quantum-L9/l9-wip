@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-communication:CommunicationCapabilitiesReceipt:0.1",
+  "title": "CommunicationCapabilitiesReceipt",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Owner payload, not a transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "$ref": "urn:l9:devpack:l9-communication:ProviderCapability:0.1"
+      },
+      "minItems": 0,
+      "maxItems": 50
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "future_features_advertised_ready": {
+      "const": false
+    }
+  },
+  "required": [
+    "scope_ref",
+    "capabilities",
+    "issued_at",
+    "future_features_advertised_ready"
+  ]
+}

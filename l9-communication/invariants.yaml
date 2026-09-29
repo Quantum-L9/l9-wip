@@ -1,0 +1,55 @@
+schema: l9.devpack.repo-invariants/v1
+owner: l9-communication
+normative_in_this_pack: true
+invariants:
+- id: COMM-001
+  assertion: Only Gate routes inter-node work; provider ingress is authenticated external input, never a trusted
+    node packet.
+  negative_proof: Forged provider callback and direct peer URL produce no accepted observation.
+- id: COMM-002
+  assertion: Communication owns channel/session mechanics, not objectives, Work Items, memory, relationship
+    truth or business decisions.
+  negative_proof: Provider prompt, memory and tool defaults cannot execute a business action.
+- id: COMM-003
+  assertion: Provider acceptance, delivery, playback, participant receipt and business completion are distinct
+    outcomes.
+  negative_proof: Accepted send cannot be rendered as delivered or objective completed.
+- id: COMM-004
+  assertion: An uncertain external effect is reconciled with its original operation identity before any retry.
+  negative_proof: Timeout after provider acceptance never creates a second message or call.
+- id: COMM-005
+  assertion: Session/turn identifiers, stream sequence and generation fence bound every response chunk.
+  negative_proof: A late token after interruption is dropped even if its text is otherwise valid.
+- id: COMM-006
+  assertion: Native channel correlation is retained without inventing cross-channel relationship identity.
+  negative_proof: Two channels with the same display name do not merge people or threads.
+- id: COMM-007
+  assertion: Perception outputs scoped observations with source, confidence and limitations; they never grant
+    authority.
+  negative_proof: A spoken instruction or image text cannot change grants or law.
+- id: COMM-008
+  assertion: Capabilities are negotiated exactly; any selected alternate composition preserves required semantics
+    and is receipted.
+  negative_proof: Missing transfer, recording consent or privacy feature fails without silent emulation.
+- id: COMM-009
+  assertion: Recording, retention, biometric/voice features and model disclosure require current scoped approval.
+  negative_proof: Disallowed raw audio/video never enters Evidence, Ingest, embeddings or provider retention.
+- id: COMM-010
+  assertion: Durable operation/session metadata use State; retained artifacts and receipts use Evidence, through
+    Gate.
+  negative_proof: No Communication Redis, memory SDK or provider event ledger becomes a second authority.
+- id: COMM-011
+  assertion: Only scoped deployment-owned recipient/channel resolution may bind an outbound target.
+  negative_proof: Caller-controlled URL or ambiguous contact identity is rejected before network effect.
+- id: COMM-012
+  assertion: External media transport is adapter I/O; it never creates a semantic AgentOS-to-Communication
+    bypass.
+  negative_proof: A realtime QoS setting cannot select a peer WebSocket or skip Gate authentication.
+imported_invariant_ids:
+- L9-004
+- L9-005
+- L9-006
+- L9-007
+- L9-020
+- L9-023
+- L9-030

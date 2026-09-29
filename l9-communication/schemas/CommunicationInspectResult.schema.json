@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-communication:CommunicationInspectResult:0.1",
+  "title": "CommunicationInspectResult",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Owner payload, not a transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "status": {
+      "enum": [
+        "pending",
+        "active",
+        "settled",
+        "outcome_unknown",
+        "not_found",
+        "refused"
+      ]
+    },
+    "receipt_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "session_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    }
+  },
+  "required": [
+    "operation_id",
+    "scope_ref",
+    "status"
+  ]
+}

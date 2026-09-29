@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-communication:CommunicationReceipt:0.1",
+  "title": "CommunicationReceipt",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Owner payload, not a transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "receipt_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "request_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "status": {
+      "enum": [
+        "accepted",
+        "effect_confirmed",
+        "rejected",
+        "outcome_unknown",
+        "failed",
+        "cancel_requested",
+        "cancel_confirmed"
+      ]
+    },
+    "effect_kind": {
+      "enum": [
+        "send",
+        "session_open",
+        "session_output",
+        "session_close",
+        "perception"
+      ]
+    },
+    "effect_level": {
+      "enum": [
+        "none",
+        "accepted",
+        "connected",
+        "delivered",
+        "played",
+        "read",
+        "closed",
+        "observed"
+      ]
+    },
+    "provider_receipt_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "operation_state_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "evidence_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "provider_correlation_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "composition_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 0,
+      "maxItems": 100
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "receipt_id",
+    "operation_id",
+    "scope_ref",
+    "request_digest",
+    "status",
+    "effect_kind",
+    "effect_level",
+    "operation_state_ref",
+    "composition_ref",
+    "limitations",
+    "issued_at"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "status": {
+            "const": "effect_confirmed"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "provider_receipt_ref",
+          "provider_correlation_ref"
+        ],
+        "properties": {
+          "effect_level": {
+            "not": {
+              "enum": [
+                "none",
+                "accepted"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "status": {
+            "const": "accepted"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "effect_level": {
+            "const": "accepted"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "status": {
+            "const": "outcome_unknown"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "effect_level": {
+            "const": "none"
+          }
+        }
+      }
+    }
+  ]
+}

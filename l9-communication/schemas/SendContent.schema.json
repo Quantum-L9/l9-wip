@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-communication:SendContent:0.1",
+  "title": "SendContent",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Owner payload, not a transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "modality": {
+      "enum": [
+        "text",
+        "audio",
+        "image",
+        "video",
+        "document",
+        "structured"
+      ]
+    },
+    "content_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "content_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "render_policy_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    }
+  },
+  "required": [
+    "modality",
+    "content_ref",
+    "content_digest",
+    "render_policy_ref"
+  ]
+}

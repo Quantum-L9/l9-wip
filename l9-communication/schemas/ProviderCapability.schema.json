@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-communication:ProviderCapability:0.1",
+  "title": "ProviderCapability",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Owner payload, not a transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "implementation_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "admission_receipt_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "channel_kinds": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "realtime",
+          "telecom",
+          "message",
+          "email",
+          "perception"
+        ]
+      },
+      "minItems": 1,
+      "maxItems": 5
+    },
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 0,
+      "maxItems": 100
+    },
+    "receipt_levels": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "accepted",
+          "effect_confirmed",
+          "delivered",
+          "played",
+          "read"
+        ]
+      },
+      "minItems": 1,
+      "maxItems": 5
+    },
+    "readiness": {
+      "enum": [
+        "unverified",
+        "ready",
+        "degraded",
+        "unavailable"
+      ]
+    },
+    "privacy_policy_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    }
+  },
+  "required": [
+    "implementation_ref",
+    "admission_receipt_ref",
+    "channel_kinds",
+    "features",
+    "receipt_levels",
+    "readiness",
+    "privacy_policy_ref"
+  ]
+}

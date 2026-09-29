@@ -1,0 +1,15 @@
+{
+  "receipt_id": "comm:receipt:1",
+  "operation_id": "op:comm:1",
+  "scope_ref": "scope:synthetic:one",
+  "request_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "status": "effect_confirmed",
+  "effect_kind": "send",
+  "effect_level": "delivered",
+  "operation_state_ref": "state:op:1",
+  "composition_ref": "composition:synthetic",
+  "limitations": [
+    "Delivery not established"
+  ],
+  "issued_at": "2026-09-25T22:00:00Z"
+}

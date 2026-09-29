@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-communication:CommunicationCapabilitiesRequest:0.1",
+  "title": "CommunicationCapabilitiesRequest",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Owner payload, not a transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "channel_kind": {
+      "enum": [
+        "realtime",
+        "telecom",
+        "message",
+        "email",
+        "perception"
+      ]
+    },
+    "required_features": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 0,
+      "maxItems": 40
+    }
+  },
+  "required": [
+    "scope_ref",
+    "channel_kind",
+    "required_features"
+  ]
+}

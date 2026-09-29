@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-communication:CommunicationEvent:0.1",
+  "title": "CommunicationEvent",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Owner payload, not a transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "source_ref": {
+      "$ref": "urn:l9:devpack:l9-evidence:SourceRef:0.1"
+    },
+    "kind": {
+      "enum": [
+        "inbound_message",
+        "partial_turn",
+        "final_turn",
+        "session_state",
+        "delivery_state",
+        "interruption",
+        "perception",
+        "provider_warning"
+      ]
+    },
+    "observation_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "session_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "turn_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "turn_generation": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+    },
+    "sequence": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+    },
+    "content_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "content_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "authenticated_source_receipt_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "provider_correlation_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "occurred_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "event_id",
+    "scope_ref",
+    "source_ref",
+    "kind",
+    "authenticated_source_receipt_ref",
+    "provider_correlation_ref",
+    "occurred_at"
+  ]
+}
