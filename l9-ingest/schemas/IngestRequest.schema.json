@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-ingest:IngestRequest:0.1",
+  "title": "IngestRequest",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "ingestion_profile_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "profile_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "source_ref": {
+      "$ref": "urn:l9:devpack:l9-evidence:SourceRef:0.1"
+    },
+    "artifact_ref": {
+      "$ref": "urn:l9:devpack:l9-evidence:ArtifactRef:0.1"
+    },
+    "purposes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+      },
+      "minItems": 1,
+      "maxItems": 20
+    },
+    "requested_destinations": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "evidence",
+          "memory"
+        ]
+      },
+      "minItems": 1,
+      "maxItems": 2
+    },
+    "max_bytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100000000
+    },
+    "mode": {
+      "enum": [
+        "submit",
+        "sync",
+        "inspect",
+        "replay"
+      ]
+    },
+    "prior_operation_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    }
+  },
+  "required": [
+    "operation_id",
+    "scope_ref",
+    "ingestion_profile_ref",
+    "profile_digest",
+    "source_ref",
+    "artifact_ref",
+    "purposes",
+    "requested_destinations",
+    "max_bytes",
+    "mode"
+  ]
+}

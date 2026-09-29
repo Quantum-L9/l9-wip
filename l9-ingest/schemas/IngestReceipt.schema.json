@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-ingest:IngestReceipt:0.1",
+  "title": "IngestReceipt",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "receipt_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "source_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "profile_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "status": {
+      "enum": [
+        "accepted",
+        "processing",
+        "complete",
+        "partial",
+        "rejected",
+        "quarantined",
+        "outcome_unknown"
+      ]
+    },
+    "outcomes": {
+      "type": "array",
+      "items": {
+        "$ref": "urn:l9:devpack:l9-ingest:DestinationOutcome:0.1"
+      },
+      "minItems": 0,
+      "maxItems": 100
+    },
+    "stage_receipt_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 0,
+      "maxItems": 100
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "receipt_id",
+    "operation_id",
+    "source_digest",
+    "profile_digest",
+    "status",
+    "outcomes",
+    "stage_receipt_refs",
+    "issued_at"
+  ]
+}

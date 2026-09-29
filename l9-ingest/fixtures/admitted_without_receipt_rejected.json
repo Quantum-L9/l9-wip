@@ -1,0 +1,8 @@
+{
+  "destination": "memory",
+  "candidate_ref": "candidate.1",
+  "operation_id": "memory.1",
+  "request_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "status": "admitted",
+  "reason_codes": []
+}

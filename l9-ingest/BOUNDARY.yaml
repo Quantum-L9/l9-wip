@@ -1,0 +1,37 @@
+schema: l9.devpack.repo-boundary/v1
+repo: Quantum-L9/l9-ingest
+class: runnable_node
+status: LOCKED_BOUNDARY_PROPOSED_LAYOUT
+owns:
+- Source-operation identity and bounded processing lifecycle
+- Authorized source capture, normalization and provenance
+- Profile-selected parsing, representation generation and candidate extraction
+- Deterministic transformation/view/cache identity
+- Destination-specific candidate compilation and per-destination delivery settlement
+- Replay and reconciliation of source processing, never domain effects
+must_not_own:
+- Canonical memory admission/lifecycle
+- Mutable agent Work Item semantics
+- Evidence/vector persistence behind another node
+- Cross-source context compilation
+- A global crawler, duplicate topology scanner or domain scheduler
+- Direct provider writes into Graphiti or Evidence database
+dependency_direction:
+- 'Gate_SDK: node runtime and transport'
+- 'l9-evidence: source and projection destination'
+- 'l9-memory: canonical memory-candidate destination'
+- LlamaIndex transformation adapter, selected first stack
+- Tree-sitter parser adapter only for justified code/source profiles
+- Existing topology publication contracts as input where available
+ports:
+- SourceReaderPort
+- NormalizerPort
+- ParserPort
+- ExtractorPort
+- RepresentationPort
+- JobStorePort
+- DestinationPort
+cross_node_transport: Gate_SDK -> Constellation.Gate only
+provider_independence: true
+credentials_scope: Only owned adapter credentials; never peer credentials.
+node_trust_source: Deployment identity and Gate admission; never AgentProfile or request payload.
