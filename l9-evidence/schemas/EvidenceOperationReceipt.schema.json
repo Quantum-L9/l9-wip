@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-evidence:EvidenceOperationReceipt:0.1",
+  "title": "EvidenceOperationReceipt",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "receipt_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "request_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "status": {
+      "enum": [
+        "accepted",
+        "duplicate",
+        "rejected",
+        "quarantined",
+        "invalidated",
+        "erasure_pending",
+        "erased",
+        "outcome_unknown"
+      ]
+    },
+    "evidence_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "target_receipt_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 0,
+      "maxItems": 200
+    },
+    "pending_targets": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 0,
+      "maxItems": 200
+    },
+    "reason_codes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+      },
+      "minItems": 0,
+      "maxItems": 50
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "receipt_id",
+    "operation_id",
+    "request_digest",
+    "scope_ref",
+    "status",
+    "target_receipt_refs",
+    "pending_targets",
+    "reason_codes",
+    "issued_at"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "accepted",
+              "duplicate",
+              "invalidated",
+              "erased"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "evidence_ref"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "erased"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "pending_targets": {
+            "maxItems": 0
+          }
+        }
+      }
+    }
+  ]
+}

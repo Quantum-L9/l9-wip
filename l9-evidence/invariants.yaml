@@ -1,0 +1,19 @@
+schema: l9.devpack.repo-invariants/v1
+owner: l9-evidence
+normative_in_this_pack: true
+invariants:
+- id: L9-012
+  assertion: Evidence/projections do not replace source systems or become universal operational truth.
+  negative_proof: Retrieved source projection cannot satisfy a live approval or business-state requirement.
+- id: L9-025
+  assertion: Privacy erasure covers owned raw evidence, derived text, vectors, caches and retrieval visibility
+    with receipts.
+  negative_proof: Deleted evidence is not recreated by replay or reachable through a stale cached context.
+imported_invariant_ids:
+- L9-004
+- L9-005
+- L9-006
+- L9-007
+- L9-020
+- L9-023
+- L9-030

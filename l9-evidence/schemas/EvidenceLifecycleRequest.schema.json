@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-evidence:EvidenceLifecycleRequest:0.1",
+  "title": "EvidenceLifecycleRequest",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "evidence_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "reason": {
+      "type": "string",
+      "maxLength": 16000
+    },
+    "authority_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "expected_source_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "policy_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    }
+  },
+  "required": [
+    "operation_id",
+    "scope_ref",
+    "evidence_ref",
+    "reason",
+    "authority_ref",
+    "expected_source_digest",
+    "policy_ref"
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-evidence:EvidenceSearchPage:0.1",
+  "title": "EvidenceSearchPage",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "hits": {
+      "type": "array",
+      "items": {
+        "$ref": "urn:l9:devpack:l9-evidence:EvidenceRecord:0.1"
+      },
+      "minItems": 0,
+      "maxItems": 200
+    },
+    "strategy_receipts": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 1,
+      "maxItems": 20
+    },
+    "status": {
+      "enum": [
+        "complete",
+        "partial",
+        "failed"
+      ]
+    },
+    "next_cursor": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "query_identity": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "omissions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 0,
+      "maxItems": 50
+    }
+  },
+  "required": [
+    "scope_ref",
+    "hits",
+    "strategy_receipts",
+    "status",
+    "query_identity",
+    "omissions"
+  ]
+}

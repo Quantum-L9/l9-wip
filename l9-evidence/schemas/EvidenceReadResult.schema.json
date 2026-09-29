@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-evidence:EvidenceReadResult:0.1",
+  "title": "EvidenceReadResult",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "evidence": {
+      "$ref": "urn:l9:devpack:l9-evidence:EvidenceRecord:0.1"
+    },
+    "authorized_artifact_ref": {
+      "$ref": "urn:l9:devpack:l9-evidence:ArtifactRef:0.1"
+    },
+    "receipt_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "coverage": {
+      "enum": [
+        "complete",
+        "bounded",
+        "unavailable"
+      ]
+    }
+  },
+  "required": [
+    "scope_ref",
+    "evidence",
+    "receipt_ref",
+    "coverage"
+  ]
+}

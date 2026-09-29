@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-evidence:EvidenceSearchRequest:0.1",
+  "title": "EvidenceSearchRequest",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "query": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4000
+    },
+    "source_kinds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 0,
+      "maxItems": 20
+    },
+    "view_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 0,
+      "maxItems": 20
+    },
+    "max_items": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 200
+    },
+    "max_bytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000000
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "valid_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "scope_ref",
+    "query",
+    "max_items",
+    "max_bytes",
+    "purpose"
+  ]
+}
