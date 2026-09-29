@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-context:ContextItem:0.1",
+  "title": "ContextItem",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "item_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "source_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "source_revision": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "evidence_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "authority_class": {
+      "enum": [
+        "source_authority",
+        "approved_reference",
+        "external_evidence",
+        "memory",
+        "interaction"
+      ]
+    },
+    "evidence_state": {
+      "enum": [
+        "supported",
+        "inferred",
+        "unknown",
+        "stale",
+        "conflicted",
+        "unavailable"
+      ]
+    },
+    "semantic_key": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "content": {
+      "type": "string",
+      "maxLength": 16000
+    },
+    "token_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "item_id",
+    "source_ref",
+    "source_revision",
+    "evidence_ref",
+    "scope_ref",
+    "authority_class",
+    "evidence_state",
+    "semantic_key",
+    "content",
+    "token_count"
+  ]
+}

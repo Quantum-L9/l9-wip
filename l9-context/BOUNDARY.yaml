@@ -1,0 +1,34 @@
+schema: l9.devpack.repo-boundary/v1
+repo: Quantum-L9/l9-context
+class: runnable_node
+status: LOCKED_BOUNDARY_PROPOSED_LAYOUT
+owns:
+- Scoped ContextNeed handling and provider-neutral fulfillment planning
+- Deterministic required/optional reads and bound source precedence
+- Multi-source retrieval through Gate and evidence normalization
+- Coverage, freshness, conflict and omission accounting
+- Budgeted ContextBundle/ContextDelta issuance and cache invalidation
+- Scoped reverse-ingestion requests when already authorized
+must_not_own:
+- Memory retrieval planner or canonical lifecycle duplicated locally
+- Normative cognitive compiler or kernel registry duplicated locally
+- Action authorization, routing or domain source truth
+- Database/Graphiti calls bypassing source owners
+- Automatic policy promotion from retrieved material
+- A custom broker for each named agent
+dependency_direction:
+- 'Gate_SDK: node transport'
+- State/Evidence/Memory and source capability owners through Gate
+- l9-cognitive-runtime typed demand and snapshot contracts via supported binding
+- Optional LlamaIndex reranker/selector adapter only for non-mandatory retrieval choices
+ports:
+- DemandPlannerPort
+- SourceCapabilityPort
+- BudgetAllocatorPort
+- RerankerPort
+- BundleCachePort
+- EvidenceReceiptPort
+cross_node_transport: Gate_SDK -> Constellation.Gate only
+provider_independence: true
+credentials_scope: Only owned adapter credentials; never peer credentials.
+node_trust_source: Deployment identity and Gate admission; never AgentProfile or request payload.

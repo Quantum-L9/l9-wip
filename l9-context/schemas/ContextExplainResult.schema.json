@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-context:ContextExplainResult:0.1",
+  "title": "ContextExplainResult",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "bundle_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "bundle_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "coverage": {
+      "enum": [
+        "satisfied",
+        "unsatisfied",
+        "unknown"
+      ]
+    },
+    "source_receipt_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 0,
+      "maxItems": 200
+    },
+    "exclusions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 0,
+      "maxItems": 200
+    },
+    "reason_codes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+      },
+      "minItems": 0,
+      "maxItems": 100
+    },
+    "bounded_explanation": {
+      "type": "string",
+      "maxLength": 16000
+    }
+  },
+  "required": [
+    "scope_ref",
+    "bundle_ref",
+    "bundle_digest",
+    "coverage",
+    "source_receipt_refs",
+    "exclusions",
+    "reason_codes",
+    "bounded_explanation"
+  ]
+}

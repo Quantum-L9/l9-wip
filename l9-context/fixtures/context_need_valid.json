@@ -1,0 +1,21 @@
+{
+  "need_id": "need.1",
+  "scope_ref": "tenant.synthetic/subject.1",
+  "work_item_ref": "work.1",
+  "state_ref": {
+    "object_id": "work.1",
+    "scope_ref": "tenant.synthetic/subject.1",
+    "revision": 3,
+    "state_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "schema_ref": "urn:l9:devpack:l9-agentos:WorkItem:0.1"
+  },
+  "profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "context_profile_ref": "context.fixture@1",
+  "purpose": "fixture_test",
+  "required_keys": [
+    "current_state"
+  ],
+  "max_tokens": 2000,
+  "max_bytes": 12000,
+  "deadline_ms": 5000
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-context:ContextRefreshRequest:0.1",
+  "title": "ContextRefreshRequest",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "need": {
+      "$ref": "urn:l9:devpack:l9-context:ContextNeed:0.1"
+    },
+    "base_bundle_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "base_bundle_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "observed_change_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 1,
+      "maxItems": 50
+    },
+    "refresh_operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    }
+  },
+  "required": [
+    "need",
+    "base_bundle_ref",
+    "base_bundle_digest",
+    "observed_change_refs",
+    "refresh_operation_id"
+  ]
+}

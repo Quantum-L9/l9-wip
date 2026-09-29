@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-context:ContextDelta:0.1",
+  "title": "ContextDelta",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "delta_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "base_bundle_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "base_bundle_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "profile_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "plan_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "add_items": {
+      "type": "array",
+      "items": {
+        "$ref": "urn:l9:devpack:l9-context:ContextItem:0.1"
+      },
+      "minItems": 0,
+      "maxItems": 500
+    },
+    "remove_item_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+      },
+      "minItems": 0,
+      "maxItems": 500
+    },
+    "reason_codes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+      },
+      "minItems": 1,
+      "maxItems": 50
+    },
+    "result_bundle_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "delta_id",
+    "base_bundle_ref",
+    "base_bundle_digest",
+    "scope_ref",
+    "profile_digest",
+    "plan_ref",
+    "add_items",
+    "remove_item_ids",
+    "reason_codes",
+    "result_bundle_digest",
+    "expires_at"
+  ]
+}

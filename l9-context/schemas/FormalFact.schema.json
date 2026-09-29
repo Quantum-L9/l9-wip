@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-context:FormalFact:0.1",
+  "title": "FormalFact",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Owner payload, not a transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "fact_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "predicate": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "terms": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string",
+            "maxLength": 512
+          },
+          {
+            "type": "integer"
+          },
+          {
+            "type": "boolean"
+          }
+        ]
+      },
+      "minItems": 0,
+      "maxItems": 16
+    },
+    "polarity": {
+      "enum": [
+        "positive",
+        "explicit_negative"
+      ]
+    },
+    "epistemic_status": {
+      "enum": [
+        "observed",
+        "inferred",
+        "hypothetical",
+        "unknown"
+      ]
+    },
+    "source_ref": {
+      "$ref": "urn:l9:devpack:l9-evidence:SourceRef:0.1"
+    },
+    "evidence_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "validity_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    }
+  },
+  "required": [
+    "fact_id",
+    "predicate",
+    "terms",
+    "polarity",
+    "epistemic_status",
+    "source_ref",
+    "evidence_ref",
+    "validity_ref"
+  ]
+}

@@ -1,0 +1,27 @@
+schema: l9.devpack.repo-invariants/v1
+owner: l9-context
+normative_in_this_pack: true
+invariants:
+- id: L9-013
+  assertion: Mandatory reads, coverage, freshness and authority bounds are deterministic; missing data is explicit.
+  negative_proof: Disable a required source and fail the requirement without converting it to optional or zero
+    hits.
+- id: L9-018
+  assertion: A context bundle is an evidence view with source coordinates, not a globally atomic snapshot or
+    permission.
+  negative_proof: Concurrent source change produces explicit mixed coordinates, stale/refresh status or bounded
+    failure.
+- id: L9-022
+  assertion: Circular reuse requires new evidence/revision, durable dedupe and bounded continuation budgets.
+  negative_proof: An unchanged refresh cannot create another ingest/refresh cascade.
+- id: L9-028
+  assertion: Existing cognitive context-demand/compilation semantics are reused, not silently copied or redefined.
+  negative_proof: Expected context-plan identity is verified through owner-native contracts.
+imported_invariant_ids:
+- L9-004
+- L9-005
+- L9-006
+- L9-007
+- L9-020
+- L9-023
+- L9-030
