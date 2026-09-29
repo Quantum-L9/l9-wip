@@ -1,0 +1,15 @@
+schema: l9.devpack.repo-invariants/v1
+owner: l9-memory
+normative_in_this_pack: true
+invariants:
+- id: L9-011
+  assertion: Only the existing MemoryService owns canonical memory admission, lifecycle and persistence.
+  negative_proof: No AgentOS, Context, Ingest or Evidence path writes memory stores/providers.
+imported_invariant_ids:
+- L9-004
+- L9-005
+- L9-006
+- L9-007
+- L9-020
+- L9-023
+- L9-030

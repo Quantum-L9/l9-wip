@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-memory:MemoryBindingRequest:0.1",
+  "title": "MemoryBindingRequest",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. owner_request MUST additionally validate against the exact installed existing memory-owner model. This shell is insufficient for admission; no new MemoryRecord is defined.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "owner_contract_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "operation": {
+      "enum": [
+        "write",
+        "ingest",
+        "search",
+        "hydrate",
+        "close",
+        "phase_lock",
+        "delete",
+        "rebuild_projection"
+      ]
+    },
+    "owner_request": {
+      "type": "object",
+      "maxProperties": 100
+    }
+  },
+  "required": [
+    "operation_id",
+    "scope_ref",
+    "owner_contract_ref",
+    "operation",
+    "owner_request"
+  ]
+}

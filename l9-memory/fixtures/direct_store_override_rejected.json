@@ -1,0 +1,18 @@
+{
+  "operation_id": "memory.1",
+  "scope_ref": "tenant.synthetic/subject.1",
+  "owner_contract_ref": "l9-graphite-memory:MemoryWriteRequest@baseline",
+  "operation": "write",
+  "owner_request": {
+    "namespace": "synthetic",
+    "memory_class": "observation",
+    "content": "Synthetic learned fact.",
+    "provenance": {
+      "source": "fixture",
+      "source_id": "evidence.1",
+      "source_agent_id": "manifestation.1"
+    },
+    "idempotency_key": "memory.1"
+  },
+  "store": "mongodb"
+}
