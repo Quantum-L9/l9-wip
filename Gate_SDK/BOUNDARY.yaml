@@ -1,0 +1,37 @@
+schema: l9.devpack.repo-boundary/v1
+repo: Quantum-L9/Gate_SDK
+class: existing_sdk
+goal: Represent consumer and admitted-node invocation distinctly while preserving one canonical transport and
+  opaque capability payloads.
+candidate_paths:
+- src/constellation_node_sdk/gate/client.py
+- src/constellation_node_sdk/gate/config.py
+- src/constellation_node_sdk/transport/provenance.py
+- src/constellation_node_sdk/security/validation.py
+- src/constellation_node_sdk/runtime/
+- contracts/ROUTING_POLICY_SPEC.md
+- tests/gate/test_application_execute.py
+- tests/gate/test_error_taxonomy.py
+- tests/packaging/test_installed_package.py
+allowed_changes:
+- Keep GateClient.execute as the single application entry point; no mandatory node registration for clients.
+- Represent authenticated client versus node role without caller-controlled elevation; coordinate server binding
+  with Gate.
+- Preserve one deadline, one send attempt, canonical response validation, correlation and lineage.
+- Offer optional owner-published typed capability clients over execute, not domain models in SDK production
+  code.
+- Expose a safe node follow-up binding preserving parent lineage; do not use application root calls to erase
+  ancestry.
+forbidden:
+- Second packet envelope or second HTTP stack
+- AgentProfile parser, State/Memory/Context domain models in SDK core
+- Peer URL APIs
+- Automatic retry of domain effects
+- Trust based only on a declared origin_kind
+proofs:
+- Client credentials with node provenance rejected by Gate
+- Node dispatch path still passes signed end-to-end tests
+- Application client cannot register as capability owner
+- Opaque arbitrary domain payload transported unchanged
+- Installed wheel retains one transport and typed errors
+scope_rule: Only owner-native gap closure or donor evacuation; no unrelated cleanup.
