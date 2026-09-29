@@ -1,0 +1,205 @@
+repo: Quantum-L9/Constellation.Gate
+status: planned
+unit_count: 2
+units:
+- id: GATE-01
+  repo: Constellation.Gate
+  title: Bind trusted roles and generic action ownership
+  phase: 2
+  depends_on:
+  - SDK-01
+  - AG-01
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - constellation-gate/src/constellation_gate/boundary/
+  - constellation-gate/src/constellation_gate/routing/
+  - constellation-gate/src/constellation_gate/runtime/
+  - constellation-gate/tests/
+  - constellation-gate/docs/
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - role admission rules
+  - six owner action families
+  - registration conformance
+  steps:
+  - Bind role and source identity to authenticated principal.
+  - Register proposed action namespaces only after owner contract publication.
+  - Enforce semantic owner collisions for all new actions and replicas.
+  - Retain SDK dispatch transport and existing deadline clamping.
+  acceptance:
+  - Client may invoke only allowed actions but cannot register/receive node dispatch.
+  - All six node families resolve by action, never client-supplied destination.
+  negative_proofs:
+  - Owner collision rejects registration.
+  - Registered-looking client principal cannot become worker.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: GATE-02
+  repo: Constellation.Gate
+  title: Validate async receipts, event re-entry and degraded routing
+  phase: 3
+  depends_on:
+  - GATE-01
+  - SDK-02
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - contracts/
+  - docs/
+  - pyproject.toml
+  - uv.lock
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - event/request binding decision
+  - end-to-end signed rail tests
+  - role-aware readiness
+  steps:
+  - Inspect which packet types ingress actually admits; define bounded State event relay using supported owner
+    APIs.
+  - Separate durable accepted-work receipts from completed-operation receipts.
+  - Exercise no healthy owner, unknown action, expiry and cancellation without peer fallback.
+  - Prove node-to-Gate-to-node scopes and parent causation.
+  acceptance:
+  - Async acceptance cannot be interpreted as external execution completion.
+  - No capability work is dispatched to a consumer address.
+  negative_proofs:
+  - Owner outage returns typed unavailable without direct-peer bypass.
+  - Long-running continuation cannot reset spent budget or impersonate a new objective.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: GATE-03
+  repo: Constellation.Gate
+  title: Admit communication, formal and exact-context action owners
+  phase: 4
+  depends_on:
+  - GATE-02
+  - COMM-01
+  - FR-01
+  - CTX-04
+  - SDK-03
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - config/
+  - contracts/
+  - docs/
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - gate-03-implementation-diff
+  - gate-03-contract-tests
+  - gate-03-evidence-receipt.json
+  steps:
+  - Register approved owner contracts without publishing roadmap adapters.
+  - Verify authenticated consumer/node classes and observation delivery targets.
+  - Check deadlines, payload bounds and health for added action families.
+  - Prove callback input cannot impersonate a trusted node.
+  acceptance:
+  - One semantic owner per action; replicas share that owner only.
+  - Inter-node events/requests cannot target ordinary consumers.
+  negative_proofs:
+  - Client self-registration and declared role spoof are refused.
+  - Partial dependency outage does not create direct peer routing.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+pack_revision: 1.1.0
