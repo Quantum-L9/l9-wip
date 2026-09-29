@@ -1,0 +1,29 @@
+schema: l9.devpack.repo-boundary/v1
+repo: Quantum-L9/l9-cognitive-runtime
+class: existing_dependency
+goal: Provide owner-native demand/compilation seams to Context without growing acquisition, provider or agent
+  identity responsibilities.
+candidate_paths:
+- docs/CONTEXT_PLANNING_BRIDGE.md
+- src/l9_cognitive_runtime/service.py
+- src/l9_cognitive_runtime/compiler/context_requirements.py
+- src/l9_cognitive_runtime/compiler/pipeline.py
+- src/l9_cognitive_runtime/models/context.py
+- contracts/context_snapshot.schema.json
+- tests/test_context_planning_bridge.py
+allowed_changes:
+- Freeze/test ContextPlan and ContextSnapshot semantics needed by generic fulfillment.
+- Preserve expected_context_plan_id recomputation at final compile.
+- Add small published contracts/package parity only where the wrapper genuinely needs it.
+- Document that actual source fetching is outside the cognitive compiler.
+forbidden:
+- Git/Graphiti/State/Mongo clients inside the compiler
+- A second kernel registry or copied semantic compiler in Context
+- Source acquisition inferred from repository presence
+- Memory promoted into authority facts
+proofs:
+- Additional irrelevant facts do not alter demand identity
+- Changed kernel/discovery/requirement causes replan_required
+- Context cannot waive mandatory demand coverage
+- Installed artifacts publish matching schemas and models
+scope_rule: Only owner-native gap closure or donor evacuation; no unrelated cleanup.

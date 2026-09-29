@@ -1,0 +1,71 @@
+repo: Quantum-L9/l9-cognitive-runtime
+status: planned
+unit_count: 1
+units:
+- id: COG-01
+  repo: l9-cognitive-runtime
+  title: Bind existing demand/compile contracts without acquisition
+  phase: 3
+  depends_on:
+  - BASE-01
+  - AG-01
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - contracts/
+  - docs/
+  - pyproject.toml
+  - uv.lock
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - published demand contracts
+  - expected-plan fixtures
+  - no-change or minimal delta
+  steps:
+  - Inspect ContextPlan, ContextSnapshot and final compile interfaces.
+  - Bind exact required/optional coverage and compiler identity.
+  - Keep all source acquisition out of this repo.
+  - Publish deterministic demand changes and stale-plan rejection tests.
+  acceptance:
+  - Context fulfills existing demand instead of copying planner.
+  - Compiler identity and source digests survive installed artifact packaging.
+  negative_proofs:
+  - Changed requirement forces replan.
+  - Adding irrelevant facts does not spuriously change semantic demand.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+pack_revision: 1.1.0
