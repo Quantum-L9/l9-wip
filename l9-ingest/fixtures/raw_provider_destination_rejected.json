@@ -1,0 +1,33 @@
+{
+  "operation_id": "ingest.1",
+  "scope_ref": "tenant.synthetic/subject.1",
+  "ingestion_profile_ref": "ingestion.fixture@1",
+  "profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "source_ref": {
+    "kind": "structured_event",
+    "source_id": "synthetic.source.1",
+    "revision": "1",
+    "content_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "locator": {
+      "event_id": "event.1"
+    },
+    "issuer_ref": "fixture.authority",
+    "observed_at": "2026-09-25T20:00:00Z"
+  },
+  "artifact_ref": {
+    "id": "artifact.1",
+    "owner": "l9-evidence",
+    "schema_ref": "fixture/source@1",
+    "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "media_type": "application/json",
+    "size_bytes": 120
+  },
+  "purposes": [
+    "fixture_test"
+  ],
+  "requested_destinations": [
+    "graphiti"
+  ],
+  "max_bytes": 1000,
+  "mode": "submit"
+}

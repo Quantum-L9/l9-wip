@@ -1,0 +1,24 @@
+schema: l9.devpack.repo-invariants/v1
+owner: l9-ingest
+normative_in_this_pack: true
+invariants:
+- id: L9-014
+  assertion: Transformation produces candidates and source-processing receipts, never downstream admission
+    claims.
+  negative_proof: Mixed destination success preserves separate results and retries only unresolved deliveries.
+- id: L9-019
+  assertion: Sensitive source processing is purpose-limited; preserved source bytes never imply permission
+    to embed or memorize.
+  negative_proof: Profile-forbidden raw body and transcript are rejected before external model or index use.
+- id: L9-029
+  assertion: Embedding identity binds representation, model revision, dimensions, similarity space and privacy
+    scope.
+  negative_proof: Mismatched query/index model or scope is rejected; unchanged content is not re-embedded.
+imported_invariant_ids:
+- L9-004
+- L9-005
+- L9-006
+- L9-007
+- L9-020
+- L9-023
+- L9-030
