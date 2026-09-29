@@ -1,0 +1,38 @@
+schema: l9.devpack.repo-boundary/v1
+repo: Quantum-L9/Cursor-Governance
+class: existing_donor
+goal: Evict generic runtime implementations and retain coding-host governance, universal-profile assets and
+  thin host bindings only.
+candidate_paths:
+- environment/agents/generated-data/
+- environment/agents/results/gateway.py
+- environment/agents/lifecycle/compose_stop.py
+- environment/agents/cursor-subagents/result_bridge.py
+- ops/graphiti/hydration/
+- ops/memory/
+- ops/autonomy/
+- autonomy/
+- environment/contracts/autonomy/
+- environment/contracts/execution/PEER_EXECUTION_THIN_ADAPTER_LAW.yaml
+allowed_changes:
+- Map generic generated-data ingestion and delivery to l9-ingest; preserve host acceptance as a source trust
+  boundary.
+- Move generic context fulfillment to l9-context and memory semantics to the existing memory owner/wrapper.
+- Extract generic autonomy evaluator/policy grammar to AgentOS-owned reusable code; express coding policy as
+  profile content.
+- Keep host event capture, host truth acceptance, editing rules and provider translation thin.
+- Update generated host bindings through their existing generators; remove imports/dead shims only after replacement
+  receipts.
+forbidden:
+- Bulk move of all autonomy/ without ownership analysis
+- Stealing Program Execution controller, scheduler or task-state authority
+- Restoring retired direct provider clients
+- Making Cursor the mandatory entry point for constellation memory
+- Leaving a compatibility shim that still owns generic policy or persistence
+proofs:
+- Host results are captured and accepted before ingest without domain semantics in the transport adapter
+- No direct Graphiti/database writes remain in coding-host paths
+- No generic duplicate context/autonomy engine remains after cutover
+- Interrupted handoff resumes with original source/effect identities
+- Independent host startup/close and coding safety tests remain green
+scope_rule: Only owner-native gap closure or donor evacuation; no unrelated cleanup.
