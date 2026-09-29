@@ -1,0 +1,33 @@
+schema: l9.devpack.repo-boundary/v1
+repo: Quantum-L9/l9-graphiti-memory
+class: existing_dependency
+goal: Remain the single memory domain owner and expose the smallest verified public-contract additions needed
+  by the new node wrapper.
+candidate_paths:
+- src/l9_graphite_memory/sdk.py
+- src/l9_graphite_memory/services/memory_service.py
+- src/l9_graphite_memory/services/generated_data.py
+- src/l9_graphite_memory/contracts/
+- src/l9_graphite_memory/retrieval/
+- src/l9_graphite_memory/projections/
+- src/l9_graphite_memory/integrations/constellation.py
+- tests/unit/test_control_plane_transport_parity.py
+allowed_changes:
+- Verify public facade/principal mapping for node-bound callers; add only missing public capability parity.
+- Preserve exact scope, consent, source and receipt semantics through wrapper calls.
+- Keep canonical store and optional projection ownership unchanged.
+- Expose necessary operation status/selector metadata rather than forcing a wrapper to inspect internal tables.
+- Add cross-repo fixtures asserting Gate-wrapper calls equal public SDK behavior.
+forbidden:
+- Replacing MemoryService
+- Canonical memory moved to Evidence or State
+- A new provider-managed embedding requirement on core writes
+- Agent-specific hardcoded namespaces
+- Promising compiler-only projection machinery is an active multi-target runtime
+proofs:
+- Canonical write works with optional projection down
+- Projection hits resolve to allowed canonical records
+- Consent/refusal/deletion survive wrapper transport unchanged
+- No second memory lifecycle or shadow storage is introduced
+- Exact request selector and operation identity receipts round trip
+scope_rule: Only owner-native gap closure or donor evacuation; no unrelated cleanup.

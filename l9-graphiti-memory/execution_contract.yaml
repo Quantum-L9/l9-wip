@@ -1,0 +1,135 @@
+repo: Quantum-L9/l9-graphiti-memory
+status: planned
+unit_count: 2
+units:
+- id: MEMCORE-01
+  repo: l9-graphiti-memory
+  title: Probe existing public facade and node principal mapping
+  phase: 3
+  depends_on:
+  - BASE-01
+  - AG-01
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - contracts/
+  - docs/
+  - pyproject.toml
+  - uv.lock
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - owner API compatibility receipt
+  - principal/consent matrix
+  - missing-seam ledger
+  steps:
+  - Inspect current MemorySDK/MemoryService/generated-data public contracts.
+  - Check signed/authenticated node delegated identity cannot default to all-powerful local principal.
+  - Verify response selectors, idempotency, consent and deletion obligations.
+  - Record no-change disposition when facade already suffices; do not manufacture changes.
+  acceptance:
+  - Every wrapper operation has an exact current public owner target.
+  - Any missing operation becomes narrow owner change, not wrapper internals access.
+  negative_proofs:
+  - Missing principal claims never become wildcard namespace.
+  - Projection down remains explicit and cannot redefine canonical write success.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: MEMCORE-02
+  repo: l9-graphiti-memory
+  title: Close only demonstrated public contract gaps
+  phase: 3
+  depends_on:
+  - MEMCORE-01
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - contracts/
+  - docs/
+  - pyproject.toml
+  - uv.lock
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - minimal public facade delta or no-change receipt
+  - owner conformance suite
+  steps:
+  - Implement only verified gaps from prior unit.
+  - Preserve canonical lifecycle/outbox identity and source taxonomy.
+  - Publish installed model/schema parity and typed failures.
+  - Version incompatible changes explicitly.
+  acceptance:
+  - No duplicate RecordStore/lifecycle service outside owner.
+  - Admitted write, duplicate, quarantine, refusal and projection status remain distinct.
+  negative_proofs:
+  - Cross-scope candidate rejected.
+  - Deletion incomplete remains incomplete under projection outage.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+pack_revision: 1.1.0
