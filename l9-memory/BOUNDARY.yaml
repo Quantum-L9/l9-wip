@@ -1,0 +1,29 @@
+schema: l9.devpack.repo-boundary/v1
+repo: Quantum-L9/l9-memory
+class: runnable_node
+status: LOCKED_BOUNDARY_PROPOSED_LAYOUT
+owns:
+- Gate-facing memory capability adapters
+- Authenticated transport principal mapping into existing memory contracts
+- Node lifecycle, configuration and readiness for the embedded memory domain
+- Public request/response compatibility and explicit per-operation receipts
+- Deployment composition of existing canonical store and projection backend
+must_not_own:
+- A second MemoryService, canonical store or lifecycle engine
+- Agent-specific memory taxonomy or namespace hardcoding
+- New generic source-ingestion framework
+- Direct remote node URLs
+- Requiring graph projection to admit canonical memory
+- A mandatory new global database migration
+dependency_direction:
+- 'Gate_SDK: trusted node runtime and transport'
+- 'l9-graphiti-memory (distribution l9-graphite-memory): canonical memory domain'
+- Existing RecordStore adapters and configured Graphiti/Zep/none projection via the domain package
+ports:
+- MemoryDomainFacade (existing public API only)
+- PrincipalBindingPort
+- GateCapabilityBindingPort
+cross_node_transport: Gate_SDK -> Constellation.Gate only
+provider_independence: true
+credentials_scope: Only owned adapter credentials; never peer credentials.
+node_trust_source: Deployment identity and Gate admission; never AgentProfile or request payload.
