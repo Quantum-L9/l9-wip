@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-context:ExactFactRequirement:0.1",
+  "title": "ExactFactRequirement",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Owner payload, not a transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "requirement_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "predicate": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "source_capability_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "selector_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "domain_bounds_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "coverage_mode": {
+      "enum": [
+        "all_eligible",
+        "semantic_keys",
+        "exact_revision"
+      ]
+    },
+    "source_consistency_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "required": {
+      "type": "boolean"
+    },
+    "missing_policy": {
+      "const": "block"
+    },
+    "max_items": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100000
+    },
+    "max_bytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 20000000
+    }
+  },
+  "required": [
+    "requirement_id",
+    "predicate",
+    "source_capability_ref",
+    "selector_ref",
+    "domain_bounds_ref",
+    "coverage_mode",
+    "source_consistency_ref",
+    "required",
+    "missing_policy",
+    "max_items",
+    "max_bytes"
+  ]
+}

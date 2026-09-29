@@ -1,0 +1,27 @@
+{
+  "operation_id": "op:ctx:1",
+  "scope_ref": "scope:synthetic:one",
+  "purpose": "synthetic formal coverage",
+  "demand_ref": "demand:1",
+  "demand_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "requirements": [
+    {
+      "requirement_id": "requirement:1",
+      "predicate": "eligible",
+      "source_capability_ref": "source.exact:1",
+      "selector_ref": "selector:1",
+      "domain_bounds_ref": "domain:1",
+      "coverage_mode": "all_eligible",
+      "source_consistency_ref": "revision:1",
+      "required": true,
+      "missing_policy": "block",
+      "max_items": 100,
+      "max_bytes": 100000
+    }
+  ],
+  "vocabulary_ref": "vocab:1",
+  "vocabulary_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "deadline_ms": 10000,
+  "max_bytes": 100000,
+  "recursive_reasoning_allowed": false
+}

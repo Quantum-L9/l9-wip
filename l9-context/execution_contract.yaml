@@ -1,0 +1,274 @@
+repo: Quantum-L9/l9-context
+status: planned
+unit_count: 3
+units:
+- id: CTX-01
+  repo: l9-context
+  title: Birth requirement fulfillment and evidence normalization
+  phase: 4
+  depends_on:
+  - COG-01
+  - STATE-01
+  - EVID-01
+  - MEM-01
+  - GATE-01
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - contracts/
+  - docs/
+  - pyproject.toml
+  - uv.lock
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - fulfillment service
+  - ContextNeed/bundle binding
+  - source capability adapters
+  steps:
+  - Compose owner demand contract with approved context-profile requirements.
+  - Obtain scope/authenticated source selector constraints before any retrieval.
+  - Call State/Evidence/Memory through Gate only and normalize typed evidence.
+  - Preserve required/optional failures independently.
+  acceptance:
+  - No copied cognitive compiler or direct provider/store clients.
+  - Required coverage cannot be traded away for token score.
+  negative_proofs:
+  - Unavailable required source yields blocked/partial under explicit policy.
+  - High relevance never overrules source authority.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: CTX-02
+  repo: l9-context
+  title: Implement bounded fusion, stable bundles and deltas
+  phase: 4
+  depends_on:
+  - CTX-01
+  - STATE-03
+  - EVID-03
+  - MEM-02
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - contracts/
+  - docs/
+  - pyproject.toml
+  - uv.lock
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - budget allocator
+  - bundle digest
+  - delta protocol
+  - context invalidation tests
+  steps:
+  - Budget mandatory context before optional ranking/reranking.
+  - Include every source coordinate and observation time; never claim globally atomic source snapshot.
+  - Bind caches to scope, purpose, profile, source revisions and authorization generation.
+  - Implement exact-base delta and current permission revalidation.
+  acceptance:
+  - Oversized mandatory material blocks instead of dropping obligations.
+  - Delta is applicable only to exact authorized base bundle.
+  negative_proofs:
+  - Wrong base/scope/profile delta rejected.
+  - Revoked source grant invalidates cache and explain output.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: CTX-03
+  repo: l9-context
+  title: Bound reverse-ingest and execution-refresh loops
+  phase: 5
+  depends_on:
+  - CTX-02
+  - ING-03
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - contracts/
+  - docs/
+  - pyproject.toml
+  - uv.lock
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - refresh/invalidation hooks
+  - reverse-ingest request protocol
+  - loop budget proofs
+  steps:
+  - Emit only scoped allowed missing-source requests with approved ingestion profiles.
+  - Track work epoch, causal dedupe, cost/latency/round ceilings.
+  - Separate long-lived continuation from transport packet deadline.
+  - Prefer no-change delta on unchanged source state.
+  acceptance:
+  - No new source crawl or permission is invented by context gap.
+  - Fresh independent source evidence is required for improvement claims.
+  negative_proofs:
+  - Repeated context output cannot self-corroborate.
+  - Context-Ingest feedback terminates under unchanged state.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: CTX-04
+  repo: l9-context
+  title: Fulfill exact formal fact demand without top-k substitution
+  phase: 4
+  depends_on:
+  - CTX-02
+  - EXT-01
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - contracts/
+  - tests/
+  - docs/
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - ctx-04-implementation-diff
+  - ctx-04-contract-tests
+  - ctx-04-evidence-receipt.json
+  steps:
+  - Add owner-native FormalContextFulfillRequest/FactBundle contracts.
+  - Probe exact source enumeration/snapshot/coverage contracts.
+  - Implement predicate-level coverage and exclusion receipts with source coordinates.
+  - Block recursive reasoning-dependent acquisition for the same demand.
+  - Close only demonstrated upstream exact-read gaps through separately owned changes.
+  acceptance:
+  - Formal coverage is stronger than ranked retrieval and independently evidenced.
+  - No global atomic snapshot is fabricated across owners.
+  negative_proofs:
+  - Required source cap/denial yields incomplete, not empty.
+  - A recursive Context-to-Reasoning dependency is rejected.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+pack_revision: 1.1.0

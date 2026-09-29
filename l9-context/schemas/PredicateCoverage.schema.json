@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-context:PredicateCoverage:0.1",
+  "title": "PredicateCoverage",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Owner payload, not a transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "requirement_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "predicate": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "status": {
+      "enum": [
+        "complete",
+        "incomplete",
+        "withheld",
+        "stale",
+        "conflicted",
+        "unavailable"
+      ]
+    },
+    "returned_count": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100000
+    },
+    "source_receipt_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "source_coordinate_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "selector_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "domain_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 0,
+      "maxItems": 100
+    }
+  },
+  "required": [
+    "requirement_id",
+    "predicate",
+    "status",
+    "returned_count",
+    "source_receipt_ref",
+    "source_coordinate_ref",
+    "selector_digest",
+    "domain_digest",
+    "limitations"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "bundle_id": "bundle:1",
+  "bundle_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "scope_ref": "scope:synthetic:one",
+  "demand_ref": "demand:1",
+  "demand_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "vocabulary_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "status": "complete",
+  "facts": [],
+  "coverage": [
+    {
+      "requirement_id": "requirement:1",
+      "predicate": "eligible",
+      "status": "withheld",
+      "returned_count": 0,
+      "source_receipt_ref": "source:1",
+      "source_coordinate_ref": "snapshot:1",
+      "selector_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "domain_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "limitations": []
+    }
+  ],
+  "source_coordinates": [
+    "snapshot:1"
+  ],
+  "exclusions": [],
+  "global_atomic_snapshot_claimed": false,
+  "issued_at": "2026-09-25T22:00:00Z",
+  "expires_at": "2026-09-25T22:05:00Z"
+}
