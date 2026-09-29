@@ -1,0 +1,32 @@
+schema: l9.devpack.repo-boundary/v1
+repo: Quantum-L9/Constellation.Gate
+class: existing_node
+goal: Admit and route the six node action families while enforcing distinct authenticated consumer/node roles
+  and unique semantic ownership.
+candidate_paths:
+- constellation-gate/src/constellation_gate/boundary/ingress_validator.py
+- constellation-gate/src/constellation_gate/boundary/routing_policy.py
+- constellation-gate/src/constellation_gate/routing/action_ownership.py
+- constellation-gate/src/constellation_gate/routing/node_registry.py
+- constellation-gate/src/constellation_gate/routing/dispatch.py
+- constellation-gate/src/constellation_gate/orchestration/workflow_engine.py
+- constellation-gate/src/constellation_gate/runtime/
+allowed_changes:
+- Bind role/source/tenant claims to authenticated identity and reject claimed role mismatches.
+- Register generic action families with one semantic owner; replicas share that owner but not arbitrary credentials.
+- Reject clients as worker destinations and deny client action-owner registration.
+- Keep dispatch deadline clamping and SDK-owned worker transport.
+- Validate event/request binding actually supported by ingress; do not assume event type support from SDK enumeration.
+forbidden:
+- AgentProfile evaluation in Gate
+- Database-specific payload handling
+- Node-specific business workflows built into routing
+- Silent peer fallback during a node outage
+- Authorization based solely on graph presence or profile capability list
+proofs:
+- Every proposed action resolves to exactly one owner
+- Unknown action differs from temporarily unavailable owner
+- Unauthorized client cannot become node or receive worker dispatch
+- Node -> Gate -> node preserves one deadline and ancestry
+- Optional callbacks/provider input cannot impersonate node work
+scope_rule: Only owner-native gap closure or donor evacuation; no unrelated cleanup.
