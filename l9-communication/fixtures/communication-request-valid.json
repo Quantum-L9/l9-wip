@@ -1,0 +1,24 @@
+{
+  "operation_id": "op:comm:1",
+  "scope_ref": "scope:synthetic:one",
+  "purpose": "synthetic contract fixture only",
+  "target": {
+    "channel_kind": "message",
+    "account_binding_ref": "account:synthetic",
+    "recipient_binding_ref": "recipient:synthetic"
+  },
+  "content": {
+    "modality": "text",
+    "content_ref": "artifact:synthetic-text",
+    "content_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "render_policy_ref": "render:plain-text:1"
+  },
+  "authorization_ref": "grant:synthetic",
+  "required_features": [
+    "native_delivery_ref"
+  ],
+  "optional_features": [],
+  "execution_class": "async_message",
+  "deadline_ms": 10000,
+  "evidence_policy_ref": "retention:synthetic"
+}

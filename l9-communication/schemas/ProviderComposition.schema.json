@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-communication:ProviderComposition:0.1",
+  "title": "ProviderComposition",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Owner payload, not a transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "composition_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "composition_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "execution_class": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "adapter_bindings": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 1,
+      "maxItems": 10
+    },
+    "feature_admission_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "privacy_admission_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "agent_cognition_owner": {
+      "const": "L9-AgentOS"
+    },
+    "provider_business_tools_enabled": {
+      "const": false
+    },
+    "provider_memory_enabled": {
+      "const": false
+    },
+    "contains_credentials": {
+      "const": false
+    }
+  },
+  "required": [
+    "composition_ref",
+    "composition_digest",
+    "execution_class",
+    "adapter_bindings",
+    "feature_admission_ref",
+    "privacy_admission_ref",
+    "agent_cognition_owner",
+    "provider_business_tools_enabled",
+    "provider_memory_enabled",
+    "contains_credentials"
+  ]
+}

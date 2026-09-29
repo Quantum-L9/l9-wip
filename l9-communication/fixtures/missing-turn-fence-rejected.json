@@ -1,0 +1,16 @@
+{
+  "operation_id": "op:turn:1",
+  "scope_ref": "scope:synthetic:one",
+  "session_ref": "session:1",
+  "turn_ref": "turn:1",
+  "sequence": 0,
+  "final_chunk": true,
+  "content": {
+    "modality": "text",
+    "content_ref": "artifact:synthetic-text",
+    "content_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "render_policy_ref": "render:plain-text:1"
+  },
+  "authorization_ref": "grant:synthetic",
+  "deadline_ms": 5000
+}

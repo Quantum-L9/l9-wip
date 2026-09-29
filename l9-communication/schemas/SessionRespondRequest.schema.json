@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-communication:SessionRespondRequest:0.1",
+  "title": "SessionRespondRequest",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Owner payload, not a transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "session_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "turn_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "turn_generation": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+    },
+    "sequence": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+    },
+    "final_chunk": {
+      "type": "boolean"
+    },
+    "content": {
+      "$ref": "urn:l9:devpack:l9-communication:SendContent:0.1"
+    },
+    "authorization_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "deadline_ms": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 300000
+    }
+  },
+  "required": [
+    "operation_id",
+    "scope_ref",
+    "session_ref",
+    "turn_ref",
+    "turn_generation",
+    "sequence",
+    "final_chunk",
+    "content",
+    "authorization_ref",
+    "deadline_ms"
+  ]
+}

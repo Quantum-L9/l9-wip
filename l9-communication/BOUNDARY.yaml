@@ -1,0 +1,35 @@
+schema: l9.devpack.repo-boundary/v1
+repo: Quantum-L9/l9-communication
+class: runnable_node
+status: LOCKED_BOUNDARY_PROPOSED_LAYOUT
+owns:
+- Communication capability admission and deployment-owned ProviderComposition selection
+- Authenticated external events and native channel correlation
+- Session, turn, interruption and response-rendering mechanics
+- Bounded perception execution and uncertainty-bearing Observation materialization
+- Operation receipt construction and unknown-effect reconciliation
+- Provider-local media/control SDK adapters
+must_not_own:
+- Agent cognition, prompts, objective interpretation or Work Item semantics
+- Memory retrieval or storage, transcript learning, relationship identity
+- Canonical provider-independent business records or policy authoring
+- Inter-node routing, peer addressing or SDK-owned transport
+- Provider-managed business tools or autonomous answer generation
+- A new durable session database
+dependency_direction:
+- Gate_SDK chassis/transport
+- State for durable operation/session metadata through Gate
+- Evidence for retained observations/effect receipts through Gate
+- AgentOS observation action through Gate for admitted node manifestations
+- External providers only through deployment-owned adapters
+ports:
+- CommunicationAdapter
+- PerceptionAdapter
+- RecipientResolutionPort
+- StateCapabilityPort
+- EvidenceCapabilityPort
+- ObservationPublisherPort
+cross_node_transport: Gate_SDK -> Constellation.Gate only
+provider_independence: true
+credentials_scope: Only owned external adapter credentials. No sibling node or storage credentials.
+node_trust_source: Deployment identity and Gate admission; never profile, provider event or request declaration.

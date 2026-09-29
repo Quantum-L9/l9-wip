@@ -1,0 +1,335 @@
+schema: l9.devpack.execution-contract/v1
+repo: Quantum-L9/l9-communication
+status: planned_not_executed
+units:
+- id: COMM-01
+  repo: l9-communication
+  title: Birth communication payloads and provider-composition boundary
+  phase: 3
+  depends_on:
+  - EXT-01
+  - SDK-02
+  - GATE-01
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - contracts/
+  - tests/
+  - docs/
+  - engine/
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - comm-01-implementation-diff
+  - comm-01-contract-tests
+  - comm-01-evidence-receipt.json
+  steps:
+  - Use the current canonical node birth path.
+  - Implement strict payload validation and generic capability descriptors.
+  - Keep AgentOS cognition and provider composition distinct.
+  - Implement authenticated external input boundary and native channel correlation contracts.
+  acceptance:
+  - All proposed communication payloads have strict positive/negative tests.
+  - No provider-specific field or peer URL enters canonical requests.
+  negative_proofs:
+  - Provider tool/memory defaults are refused by composition admission.
+  - Webhook body cannot choose tenant or node role.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: COMM-02
+  repo: l9-communication
+  title: Persist effect operations and reconcile uncertain outcomes
+  phase: 4
+  depends_on:
+  - COMM-01
+  - STATE-03
+  - EVID-03
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - contracts/
+  - tests/
+  - docs/
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - comm-02-implementation-diff
+  - comm-02-contract-tests
+  - comm-02-evidence-receipt.json
+  steps:
+  - Bind State generic operation schemas with revision and fencing.
+  - Commit prepared intent before network action.
+  - Normalize acceptance/delivery/cancellation strength and preserve native IDs.
+  - Implement inspect/reconcile against original operation identity.
+  - Retain redacted effect receipts via Evidence with explicit failure behavior.
+  acceptance:
+  - Crash after provider effect cannot silently resend.
+  - Receipt strength and State/Evidence ownership remain separate.
+  negative_proofs:
+  - Same key/different recipient conflicts.
+  - Unknown outcome cannot be retried with a new key.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: COMM-03
+  repo: l9-communication
+  title: Admit messaging and email provider adapters
+  phase: 4
+  depends_on:
+  - COMM-02
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/adapters/
+  - tests/
+  - docs/
+  - pyproject.toml
+  - uv.lock
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - comm-03-implementation-diff
+  - comm-03-contract-tests
+  - comm-03-evidence-receipt.json
+  steps:
+  - Pin reviewed provider SDK/API/account capability evidence.
+  - Implement thin native messaging/email adapters and scoped recipient resolution.
+  - Verify webhook signatures, replay protection, thread correlation and body minimization.
+  - Run synthetic and explicitly authorized sandbox recipient cases.
+  acceptance:
+  - One common request contract operates across admitted channels.
+  - A provider lacking required receipt/privacy features is not advertised ready.
+  negative_proofs:
+  - Two channel display names cannot merge person identity.
+  - A callback replay does not duplicate an Observation or external reply.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: COMM-04
+  repo: l9-communication
+  title: Admit realtime composition and interruption-safe output
+  phase: 5
+  depends_on:
+  - COMM-02
+  - SDK-03
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/adapters/
+  - src/session/
+  - tests/
+  - docs/
+  - pyproject.toml
+  - uv.lock
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - comm-04-implementation-diff
+  - comm-04-contract-tests
+  - comm-04-evidence-receipt.json
+  steps:
+  - Prove Agora/ElevenLabs and Twilio execution composition behavior from exact selected versions.
+  - Implement provider-edge turn translation only.
+  - Bind session/turn/generation/sequence and drop stale response chunks.
+  - Use Gate-owned transport support or explicitly limited final-turn mode.
+  - Measure end-to-end latency, stop/reconnect behavior and cleanup.
+  acceptance:
+  - No semantic response bypass or provider brain.
+  - Interruption fences prevent post-cancel stale playback requests.
+  negative_proofs:
+  - Late chunk from prior generation is dropped.
+  - Missing Gate streaming support cannot create a direct peer connection.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: COMM-05
+  repo: l9-communication
+  title: Qualify bounded perception, privacy and operator recovery
+  phase: 6
+  depends_on:
+  - COMM-03
+  - COMM-04
+  - GATE-03
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - contracts/
+  - tests/
+  - docs/
+  - validation/
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - comm-05-implementation-diff
+  - comm-05-contract-tests
+  - comm-05-evidence-receipt.json
+  steps:
+  - Implement bounded perception request/result capability with admitted provider or honest unavailable status.
+  - Test input reference authorization and source coordinates.
+  - Demonstrate privacy controls, redaction, retention and revoked consent.
+  - Run live channel tests only under explicit current authorization.
+  - Publish per-feature readiness rather than pass-all status.
+  acceptance:
+  - Basic messaging/voice readiness is distinct from optional video/avatar capabilities.
+  - Every requested perception feature is either demonstrated or explicitly unavailable.
+  negative_proofs:
+  - A still-image request cannot turn on continuous recording.
+  - Perception content cannot change law/grants or write memory.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+pack_revision: 1.1.0
