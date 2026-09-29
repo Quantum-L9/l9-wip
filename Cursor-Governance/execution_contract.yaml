@@ -1,0 +1,205 @@
+repo: Quantum-L9/Cursor-Governance
+status: planned
+unit_count: 3
+units:
+- id: CG-01
+  repo: Cursor-Governance
+  title: Lock fine-grained eviction matrix without relocating Program authority
+  phase: 1
+  depends_on:
+  - BASE-01
+  - AG-01
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - contracts/
+  - docs/
+  - pyproject.toml
+  - uv.lock
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - inclusion-exclusion matrix
+  - source hash map
+  - retained host adapter list
+  steps:
+  - Inventory generated-data, hydration, memory and autonomy executable call graphs.
+  - Classify each file/function as generic donor, host adapter, normative policy, Program controller or historical.
+  - Name beneficiary owner and preserve reference trace.
+  - Reject directory-wide moves that steal leases/readiness from Program Execution.
+  acceptance:
+  - Every affected surface has exactly one destination/retain/retire disposition.
+  - No generic runtime copied into two beneficiary repos.
+  negative_proofs:
+  - Program-owned scheduler relocation outside scope is refused.
+  - Historical docs cannot be treated as live executable evidence.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: CG-02
+  repo: Cursor-Governance
+  title: Project host policies and bind shared nodes
+  phase: 6
+  depends_on:
+  - CG-01
+  - AG-06
+  - ING-03
+  - CTX-03
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - contracts/
+  - docs/
+  - pyproject.toml
+  - uv.lock
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - host profile sources
+  - generated host bindings
+  - equivalence receipts
+  steps:
+  - Move generic policy semantics to AgentOS profile/compiler/evaluator owner once.
+  - Keep native host identity/result acceptance and safety gates local and thin.
+  - Replace generic source processing and context hydration with owner capabilities.
+  - Regenerate host docs/config through existing generators, not manual output edits.
+  acceptance:
+  - Coding host can operate without importing donor generic runtime.
+  - Captured host result remains evidence, not auto-promoted memory.
+  negative_proofs:
+  - Failed subagent return cannot appear completed.
+  - No direct memory provider fallback on node outage.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: CG-03
+  repo: Cursor-Governance
+  title: Switch one writer and remove superseded generic paths
+  phase: 7
+  depends_on:
+  - CG-02
+  - AG-07
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - contracts/
+  - docs/
+  - pyproject.toml
+  - uv.lock
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - cutover journal
+  - deleted generic paths
+  - no-shadow guard
+  steps:
+  - Freeze old durable writer and inventory pending obligations.
+  - Migrate bounded records with stable source and operation identities.
+  - Confirm target parity/reconciliation before donor retirement.
+  - Remove old imports/dead workers/config credentials after replacement receipt exists.
+  acceptance:
+  - Exactly one authoritative writer per owned state surface after cutover.
+  - No acknowledged work or unresolved receipt is abandoned.
+  negative_proofs:
+  - Rollback cannot re-enable donor writer against same workload.
+  - Removed runtime is not reintroduced by generated host synchronization.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+pack_revision: 1.1.0
