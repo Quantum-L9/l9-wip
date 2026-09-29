@@ -1,0 +1,32 @@
+schema: l9.devpack.repo-boundary/v1
+repo: Quantum-L9/L9-Ops-MCP
+class: existing_source
+goal: Be one governed source and example consumer, not a universal context/memory subsystem.
+candidate_paths:
+- src/l9_ops_mcp/hydrator.py
+- src/l9_ops_mcp/graphiti_client.py
+- src/l9_ops_mcp/memory_ops.py
+- src/l9_ops_mcp/admission.py
+- src/l9_ops_mcp/kernel_resolver.py
+- src/l9_ops_mcp/kernel_registry.py
+- src/l9_ops_mcp/transport.py
+- docs/KERNEL_AUTHORITY.md
+allowed_changes:
+- Expose/retain authored artifact identities and exact source authority without moving them into a semantic
+  database.
+- Replace generic memory access with owner capabilities through Gate.
+- Replace generic context assembly with Context capability consumption.
+- Retain deterministic source-specific kernel authority only where it is the current canonical owner; reconcile
+  overlap with cognitive-runtime explicitly.
+- Retire any locally defined packet shape used as an alternate L9 wire format.
+forbidden:
+- Direct Graphiti memory admission
+- Ops-only universal Context API
+- Copied authority schemas promoted from retrieval
+- A per-source registry becoming a second Gate router
+proofs:
+- Source references reconstruct exact authored bytes
+- Generic Context can use a different source with no Ops dependency
+- No direct provider write path remains
+- Deterministic authority remains distinguishable from semantic retrieval
+scope_rule: Only owner-native gap closure or donor evacuation; no unrelated cleanup.

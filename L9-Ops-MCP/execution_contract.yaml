@@ -1,0 +1,138 @@
+repo: Quantum-L9/L9-Ops-MCP
+status: planned
+unit_count: 2
+units:
+- id: OPS-01
+  repo: L9-Ops-MCP
+  title: Reconcile source authority and generic machinery donor boundaries
+  phase: 4
+  depends_on:
+  - BASE-01
+  - COG-01
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - contracts/
+  - docs/
+  - pyproject.toml
+  - uv.lock
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - source inventory
+  - overlap verdict
+  - exact-authority adapter map
+  steps:
+  - Read source resolver/registry and distinguish owner-native authority from generic context/memory.
+  - Keep Ops as optional source, not global context authority.
+  - Map provider-specific local memory/client/transport code for retirement.
+  - Freeze source revision references before any export.
+  acceptance:
+  - Context can operate without Ops as mandatory dependency.
+  - No inferred graph content becomes normative source.
+  negative_proofs:
+  - Missing source hash blocks authority projection.
+  - Ops transport-shaped dict cannot bypass SDK canonical envelope.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+- id: OPS-02
+  repo: L9-Ops-MCP
+  title: Cut over to shared owner APIs and retire duplicates
+  phase: 6
+  depends_on:
+  - OPS-01
+  - CTX-02
+  - MEM-02
+  status: not_started
+  authority: implementation_contract; requires current repository baseline and user-authorized execution session
+  allowed_paths:
+  - src/
+  - tests/
+  - contracts/
+  - docs/
+  - pyproject.toml
+  - uv.lock
+  forbidden_changes:
+  - other repositories in this unit
+  - production deployment
+  - live data migration without explicit authorization
+  - secret changes
+  - weakening owner invariants
+  - unrelated cleanup
+  deliverables:
+  - thin source/client adapters
+  - removed generic duplicates
+  - rollback receipts
+  steps:
+  - Replace generic hydration/admission with owner capability calls.
+  - Retain only proved source-specific deterministic authority behavior.
+  - Remove direct Graphiti calls and alternate wire construction once replacement tests pass.
+  - Run existing source resolver and packaging tests unchanged in intent.
+  acceptance:
+  - No Ops-specific universal Context or memory authority remains.
+  - Exact source retrieval works over approved binding.
+  negative_proofs:
+  - Graphiti credential absent from Ops consumer runtime.
+  - Source-specific rule cannot widen profile/node permissions.
+  checkpoint:
+    receipt_type: repo_unit_evidence
+    required_fields:
+    - unit_id
+    - repo
+    - base_sha
+    - head_sha
+    - contract_digest
+    - changed_paths
+    - commands
+    - exit_codes
+    - assertion_results
+    - negative_test_results
+    - artifact_digests
+    - remaining_unknowns
+    pass_rule: all acceptance assertions demonstrated; all required negative proofs pass; no blocking unknown;
+      receipt bound to tested head
+  failure_policy: Stop only affected dependency branch; preserve evidence; do not mark complete. Diagnose whether
+    contract, source, environment or implementation caused the failure.
+  rollback: Before activation revert this isolated PR after checking dependent unpublished work. After effects
+    or data cutover, preserve receipts and perform owner-approved forward recovery; never re-enable a second
+    writer.
+  pr_policy:
+    one_repo: true
+    draft_until_verified: true
+    stack: Only on unmerged same-repo prerequisite when unavoidable; record base/head relationship. Prefer
+      prerequisite merge before next unit.
+    merge_authority: not_granted_by_this_pack
+pack_revision: 1.1.0
