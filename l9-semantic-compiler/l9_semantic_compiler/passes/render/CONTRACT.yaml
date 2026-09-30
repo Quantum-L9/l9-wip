@@ -1,0 +1,86 @@
+schema: l9.semantic-compiler-pass-contract/v1
+contract_id: l9.semantic-compiler/render@1
+extends:
+  - l9.semantic-compiler/pass@1
+operation: rendering
+purpose: >
+  Materialize sufficiently concrete validated IR into final target syntax,
+  files, bytes, documents, or other target artifact representations without
+  making new semantic decisions.
+semantic_question: >
+  How is this already-decided concrete representation serialized into the
+  declared final target form?
+inputs:
+  required:
+    - concrete_ir
+    - concrete_ir_digest
+    - target_binding
+    - target_binding_digest
+    - rendering_profile_ref
+    - rendering_profile_digest
+    - target_artifact_type
+    - source_provenance
+preconditions:
+  - concrete_ir_is_validated
+  - target_binding_is_validated
+  - semantic_decisions_are_complete
+  - target_artifact_type_is_registered
+semantic_freedom:
+  target: approximately_zero
+allowed_operations:
+  - serialize
+  - format
+  - emit_files
+  - emit_bytes
+  - emit_text
+  - deterministic_template_application
+  - deterministic_syntax_generation
+forbidden:
+  - invent_domain_behavior
+  - change_contract
+  - select_provider
+  - select_architecture
+  - add_retry_semantics
+  - add_authority
+  - remove_required_constraint
+  - reinterpret_concrete_ir
+  - synthesize_missing_semantics
+template_use:
+  allowed: true
+  rule: >
+    Templates MAY realize already-concrete target structure but MUST NOT become
+    sources of semantic or architectural truth.
+outputs:
+  semantic_class: final_artifact
+  required:
+    - artifact_type
+    - artifact_content
+    - source_ir_ref
+    - target_binding_ref
+    - rendering_profile_ref
+    - provenance
+    - artifact_digest
+validation:
+  required: true
+  minimum_checks:
+    - output_is_valid_target_syntax
+    - output_matches_concrete_ir
+    - no_required_semantics_lost
+    - no_undeclared_semantics_added
+    - deterministic_for_fixed_inputs
+failure_states:
+  target_not_registered:
+    result: INVALID
+  invalid_target_syntax:
+    result: FAIL
+  semantic_difference:
+    result: FAIL
+  missing_render_mapping:
+    result: UNKNOWN
+receipt:
+  operation: rendering
+invariants:
+  - RENDER-001: rendering_is_last_mile_materialization
+  - RENDER-002: rendering_does_not_invent_semantics
+  - RENDER-003: renderer_has_no_architectural_authority
+  - RENDER-004: deterministic_rendering_is_required_for_fixed_inputs

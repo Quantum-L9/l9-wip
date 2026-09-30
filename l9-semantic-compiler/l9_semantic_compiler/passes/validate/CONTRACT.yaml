@@ -1,0 +1,156 @@
+schema: l9.semantic-compiler-pass-contract/v1
+contract_id: l9.semantic-compiler/validate@1
+extends:
+  - l9.semantic-compiler/pass@1
+operation: validation
+purpose: >
+  Mechanically determine whether a candidate artifact satisfies the exact
+  constraints applicable to its compilation stage using only the solver
+  declared by the canonical compilation profile.
+semantic_question: >
+  Does this exact candidate satisfy this exact mechanically defined stage
+  contract?
+inputs:
+  required:
+    - candidate_artifact
+    - candidate_digest
+    - stage
+    - solver_projection
+    - validation_profile_ref
+    - validation_profile_digest
+    - applicable_constraints
+solver_selection:
+  source: canonical_compilation_profile
+  expression: >
+    Solver(Stage_n) =
+    π_solver(
+      CanonicalCompilationProfile,
+      Stage_n
+    )
+  candidate_may_not_override_solver: true
+solver_contract:
+  required_properties:
+    - registered
+    - versioned
+    - bounded
+    - mechanically_checkable
+    - receipt_capable
+  future_reasoning_plane_solver:
+    direct_dependency: false
+    access_via: Gate
+    verification_rule: >
+      A Reasoning Plane result MAY be consumed only through a declared
+      validation binding and MUST satisfy the same mechanical verification
+      contract as any other solver.
+result_domain:
+  - PASS
+  - FAIL
+  - UNSAT
+  - INVALID
+  - UNKNOWN
+result_semantics:
+  PASS:
+    meaning: >
+      Candidate mechanically satisfies every applicable required constraint.
+  FAIL:
+    meaning: >
+      Candidate is mechanically well-formed enough to evaluate but violates
+      at least one required constraint.
+  UNSAT:
+    meaning: >
+      Applicable constraint set admits no satisfying candidate under the
+      evaluated model.
+  INVALID:
+    meaning: >
+      Validation request, candidate, profile, solver selection, or evidence is
+      structurally or semantically invalid.
+  UNKNOWN:
+    meaning: >
+      Validator cannot mechanically establish PASS, FAIL, or UNSAT from the
+      available evidence.
+forbidden_results:
+  - PROBABLY_OK
+  - LIKELY_VALID
+  - MODEL_APPROVED
+  - ACCEPTABLE_ENOUGH
+allowed_solver_classes:
+  - structural
+  - schema
+  - predicate
+  - set_compatibility
+  - graph
+  - satisfiability
+  - fixture_derivation
+  - conformance
+validation:
+  itself_requires_validation: false
+  reason: >
+    Validation is the mechanical evidence-producing boundary for other
+    compiler passes. Its own admissibility is established by registered solver
+    contracts, profiles, deterministic input binding, and receipt verification.
+mutation:
+  candidate_mutation_allowed: false
+  repair_allowed: false
+  synthesis_allowed: false
+  binding_allowed: false
+  lowering_allowed: false
+  rendering_allowed: false
+failure_evidence:
+  FAIL:
+    should_include:
+      - violated_constraint_refs
+  UNSAT:
+    should_include:
+      - unsat_core_when_supported
+  INVALID:
+    should_include:
+      - invalidity_reason
+  UNKNOWN:
+    should_include:
+      - unresolved_evidence_refs
+      - unresolved_conditions
+outputs:
+  semantic_class: validation_receipt
+  required:
+    - candidate_ref
+    - candidate_digest
+    - stage
+    - solver_ref
+    - solver_version
+    - solver_profile_digest
+    - applicable_constraint_refs
+    - result
+    - evidence
+    - receipt_digest
+receipt:
+  operation: validation
+  authority_class: evidence
+  rule: >
+    A validation receipt proves the observed mechanical validation result and
+    does not grant governance or execution authority.
+advancement:
+  allowed_only_when:
+    - result_is_PASS
+    - required_authority_is_valid
+    - stage_preconditions_are_satisfied
+failure_localization:
+  current_stage_default:
+    action: repair_current_stage
+  upstream_conflict:
+    when: >
+      Failure evidence or an UNSAT core proves an admitted upstream assumption
+      invalid under newly available evidence.
+    action:
+      - resolve_provenance
+      - identify_earliest_affected_semantic_artifact
+      - create_new_upstream_revision
+      - invalidate_transitive_dependents
+      - recompile_affected_subgraph
+invariants:
+  - VALIDATE-001: validation_is_mechanical
+  - VALIDATE-002: validator_does_not_mutate_candidate
+  - VALIDATE-003: validator_does_not_repair_candidate
+  - VALIDATE-004: solver_is_profile_selected
+  - VALIDATE-005: unknown_is_not_pass
+  - VALIDATE-006: evidence_does_not_grant_authority
+  - VALIDATE-007: pass_is_required_before_stage_advancement

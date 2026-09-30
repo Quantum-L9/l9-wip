@@ -1,0 +1,93 @@
+schema: l9.semantic-compiler-pass-contract/v1
+contract_id: l9.semantic-compiler/bind@1
+extends:
+  - l9.semantic-compiler/pass@1
+operation: binding_selection
+purpose: >
+  Select a registered concrete realization for an abstract semantic role when
+  the candidate realization satisfies every required capability and binding
+  constraint.
+semantic_question: >
+  Which registered concrete realization can faithfully realize this abstract
+  semantic role?
+binding_classes:
+  - provider
+  - target
+inputs:
+  required:
+    - abstract_role
+    - binding_requirements
+    - binding_catalog
+    - binding_profile_ref
+    - binding_profile_digest
+  provider_binding:
+    additionally_requires:
+      - provider_capability_facts
+  target_binding:
+    additionally_requires:
+      - target_capability_facts
+preconditions:
+  - abstract_role_is_defined
+  - requirements_are_machine_readable
+  - candidate_bindings_are_registered
+  - capability_facts_are_registered
+compatibility:
+  provider:
+    expression: >
+      RequiredCapabilities
+      ⊆
+      ProviderCapabilities
+  target:
+    expression: >
+      RequiredTargetCapabilities
+      ⊆
+      TargetCapabilities
+unknown_capability:
+  interpretation: unsupported_until_resolved
+  result: INCOMPATIBLE
+selection:
+  allowed:
+    - select_single_compatible_binding
+    - return_multiple_compatible_candidates_when_profile_allows
+  optimization:
+    permitted_only_after_compatibility: true
+forbidden:
+  - assume_unregistered_capability
+  - provider_becomes_semantic_owner
+  - target_framework_redefines_source_semantics
+  - lower_during_binding_selection
+  - silently_relax_requirement
+  - bind_to_unregistered_technology
+outputs:
+  semantic_class: selected_binding
+  required:
+    - binding_ref
+    - binding_digest
+    - abstract_role_ref
+    - satisfied_requirement_refs
+    - capability_evidence
+    - provenance
+failure_states:
+  no_registered_binding:
+    result: FAIL
+  insufficient_capabilities:
+    result: FAIL
+  unknown_capability:
+    result: UNKNOWN
+  conflicting_capability_facts:
+    result: INVALID
+validation:
+  required: true
+  minimum_checks:
+    - binding_registered
+    - capability_coverage_complete
+    - no_forbidden_capability
+    - semantic_owner_unchanged
+    - provenance_complete
+receipt:
+  operation: binding_selection
+invariants:
+  - BIND-001: binding_precedes_lowering
+  - BIND-002: provider_does_not_become_semantic_owner
+  - BIND-003: missing_capability_is_not_assumed
+  - BIND-004: binding_selection_does_not_transform_source_ir

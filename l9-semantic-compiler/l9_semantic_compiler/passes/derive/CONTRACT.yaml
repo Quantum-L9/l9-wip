@@ -1,0 +1,82 @@
+schema: l9.semantic-compiler-pass-contract/v1
+contract_id: l9.semantic-compiler/derive@1
+extends:
+  - l9.semantic-compiler/pass@1
+operation: derivation
+purpose: >
+  Make semantic consequences explicit when they are entailed by validated
+  source semantics under a declared derivation profile.
+semantic_question: >
+  What explicit consequence follows from these already-authoritative or
+  validated semantics?
+inputs:
+  required:
+    - source_semantics
+    - derivation_profile_ref
+    - derivation_profile_digest
+    - source_provenance
+  profile_may_require:
+    - derivation_operator
+    - derivation_parameters
+preconditions:
+  - source_semantics_are_validated
+  - derivation_profile_is_registered
+  - requested_derivation_is_allowed_for_source_semantic_class
+  - source_authority_is_known
+allowed_operations:
+  - formalize_entailed_consequence
+  - expand_truth_table
+  - derive_positive_case
+  - derive_negative_case
+  - derive_boundary_case
+  - derive_replay_case
+  - derive_collision_case
+  - derive_permutation
+  - derive_countercase
+  - derive_failure_case
+  - derive_metamorphic_case
+  - derive_structural_obligation
+semantic_rule:
+  expression: >
+    SourceSemantics ⊢ DerivedSemantics
+hard_requirements:
+  - every_output_semantic_claim_is_entailed_by_source
+  - every_output_traces_to_specific_source_semantics
+  - derivation_operator_is_declared
+  - derivation_profile_is_pinned
+forbidden:
+  - invent_new_law
+  - introduce_new_authority
+  - infer_desired_behavior_not_supported_by_source
+  - synthesize_arbitrary_candidate
+  - resolve_source_ambiguity_by_guessing
+  - admit_output
+ambiguity:
+  insufficient_source_semantics:
+    result: UNKNOWN
+  conflicting_authoritative_semantics:
+    result: INVALID
+outputs:
+  semantic_class: derived_artifact
+  required:
+    - derived_payload
+    - source_semantic_refs
+    - derivation_profile_ref
+    - derivation_operator
+    - provenance
+    - artifact_digest
+validation:
+  required: true
+  validates:
+    - entailment_supported
+    - operator_allowed
+    - provenance_complete
+    - no_authority_expansion
+    - output_semantic_class_valid
+receipt:
+  operation: derivation
+invariants:
+  - DERIVE-001: output_must_be_entailed
+  - DERIVE-002: derivation_does_not_create_authority
+  - DERIVE-003: unresolved_semantics_remain_unresolved
+  - DERIVE-004: derivation_is_reproducible_for_fixed_inputs_and_profile

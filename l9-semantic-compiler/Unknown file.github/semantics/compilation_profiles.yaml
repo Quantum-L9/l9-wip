@@ -1,0 +1,249 @@
+schema: l9.compilation-profiles/v1
+artifact_id: l9.compilation-profiles/global@1
+canonical: true
+authority:
+  owner: Quantum-L9/.github
+  scope: l9_global_compilation_profiles
+  authority_class: canonical
+canonical_source:
+  format: yaml
+  artifact: compilation_profiles.yaml
+global_rules:
+  stages_are_ordered: true
+  downstream_stage_requires_validated_upstream_state: true
+  stage_context_is_projected_from_validated_state: true
+  stage_solver_is_projected_from_compilation_profile: true
+  validation_is_mechanical: true
+  historical_stage_artifacts_are_immutable: true
+  corrections_create_new_revisions: true
+  failed_stage_blocks_downstream_advancement: true
+  upstream_semantic_change_invalidates_affected_dependents: true
+  compiler_must_not_select_solver_ad_hoc: true
+  compiler_must_not_expand_authority: true
+profiles:
+  - id: l9.compilation/node-build@1
+    purpose: >
+      Compile an L9 node or dependency incrementally through validated
+      semantic stages from global baseline to final target artifacts.
+    stages:
+      - ordinal: 1
+        id: global_baseline
+        consumes:
+          - global_authority
+          - global_invariants
+          - global_contracts
+          - canonical_l9_vocabulary
+        operations:
+          - projection
+          - normalization
+        produces:
+          - validated_global_baseline
+        validation:
+          required: true
+          solver_ref: l9.solver/global-baseline-validator@1
+      - ordinal: 2
+        id: project_contracts
+        consumes:
+          - validated_global_baseline
+          - project_spec
+          - project_requirements
+          - project_boundaries
+          - desired_capabilities
+        operations:
+          - projection
+          - synthesis
+          - compilation
+        produces:
+          - project_contract_ir
+        validation:
+          required: true
+          solver_ref: l9.solver/contract-validator@1
+      - ordinal: 3
+        id: laws
+        consumes:
+          - applicable_invariants
+          - global_contracts
+          - admitted_project_contracts
+        operations:
+          - projection
+          - derivation
+          - formalization
+          - normalization
+        produces:
+          - semantic_law_ir
+        validation:
+          required: true
+          solver_ref: l9.solver/law-validator@1
+      - ordinal: 4
+        id: fixtures
+        consumes:
+          - semantic_law_ir
+          - law_provenance
+        operations:
+          - projection
+          - derivation
+          - fixture_case_expansion
+        produces:
+          - fixture_ir
+          - fixture_candidate_packets
+        validation:
+          required: true
+          solver_ref: l9.solver/fixture-derivation-validator@1
+      - ordinal: 5
+        id: conformance
+        consumes:
+          - fixture_ir
+          - applicable_conformance_bindings
+          - fixture_profiles
+        operations:
+          - binding_selection
+          - lowering
+          - compilation
+        produces:
+          - conformance_ir
+          - executable_conformance_cases
+        validation:
+          required: true
+          solver_ref: l9.solver/conformance-validator@1
+      - ordinal: 6
+        id: architecture
+        consumes:
+          - validated_semantic_baseline_projection
+          - admitted_contract_projection
+          - semantic_law_projection
+          - applicable_conformance_projection
+          - desired_capabilities
+          - project_constraints
+          - applicable_architecture_patterns
+          - node_archetype
+          - technology_capabilities
+        operations:
+          - projection
+          - synthesis
+          - constraint_solving
+          - pattern_composition
+        produces:
+          - architecture_ir
+          - selected_pattern_refs
+        validation:
+          required: true
+          solver_ref: l9.solver/architecture-constraint-validator@1
+      - ordinal: 7
+        id: ports
+        consumes:
+          - architecture_ir
+          - applicable_contract_projection
+          - applicable_conformance_projection
+        operations:
+          - projection
+          - synthesis
+          - compilation
+        produces:
+          - port_ir
+        validation:
+          required: true
+          solver_ref: l9.solver/interface-compatibility-validator@1
+      - ordinal: 8
+        id: provider_bindings
+        consumes:
+          - port_ir
+          - technology_capabilities
+          - provider_constraints
+        operations:
+          - projection
+          - binding_selection
+          - compatibility_analysis
+          - compilation
+        produces:
+          - provider_binding_ir
+        validation:
+          required: true
+          solver_ref: l9.solver/provider-capability-validator@1
+      - ordinal: 9
+        id: implementation
+        consumes:
+          - port_ir
+          - provider_binding_ir
+          - applicable_conformance_projection
+          - implementation_constraints
+        operations:
+          - projection
+          - synthesis
+          - lowering
+        produces:
+          - implementation_ir
+        validation:
+          required: true
+          solver_ref: l9.solver/implementation-contract-validator@1
+      - ordinal: 10
+        id: target_artifacts
+        consumes:
+          - implementation_ir
+          - target_binding
+          - rendering_profile
+          - final_conformance_projection
+        operations:
+          - binding_selection
+          - lowering
+          - rendering
+        produces:
+          - final_artifacts
+          - final_conformance_receipt
+        validation:
+          required: true
+          final_conformance_required: true
+          solver_ref: l9.solver/final-conformance-validator@1
+stage_rules:
+  context:
+    expression: "StageContext_n = π_stage(ValidatedState_n)"
+  solver:
+    expression: "Solver(Stage_n) = π_solver(CanonicalCompilationProfile, Stage_n)"
+  compile:
+    expression: >
+      Candidate_(n+1) =
+      Compile_(n+1)(
+        Project_(n+1)(S_n),
+        Input_(n+1)
+      )
+  validate:
+    expression: >
+      Receipt_(n+1) =
+      Validate_(Solver(n+1))(
+        Candidate_(n+1),
+        Project_(n+1)(S_n)
+      )
+  advance:
+    expression: >
+      Advance(n -> n+1)
+      iff
+      AuthorityValid
+      ∧ UpstreamValid(n)
+      ∧ OutputValid(n+1)
+      ∧ PreconditionsSatisfied
+  commit:
+    expression: >
+      S_(n+1) =
+      Commit(
+        S_n,
+        Candidate_(n+1),
+        Receipt_(n+1)
+      )
+      iff Receipt_(n+1) = PASS
+  failure:
+    default_action: repair_current_stage
+    upstream_exception: >
+      When mechanical evidence proves an admitted upstream semantic
+      assumption invalid or unsatisfiable, create a new upstream revision
+      and invalidate only its affected transitive dependents.
+  historical_state:
+    mutate_previous_revision: false
+  recompilation:
+    expression: >
+      Affected(change) =
+      TransitiveDependents(changed_semantics)
+validation_results:
+  - pass
+  - fail
+  - unsat
+  - invalid
+  - unknown

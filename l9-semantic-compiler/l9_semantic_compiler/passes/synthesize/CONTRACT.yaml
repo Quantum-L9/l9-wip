@@ -1,0 +1,87 @@
+schema: l9.semantic-compiler-pass-contract/v1
+contract_id: l9.semantic-compiler/synthesize@1
+extends:
+  - l9.semantic-compiler/pass@1
+operation: synthesis
+purpose: >
+  Construct one or more candidate artifacts satisfying declared semantic
+  requirements and constraints when no unique output is already entailed.
+semantic_question: >
+  What candidate can satisfy the applicable constraints without violating
+  authoritative upstream semantics?
+inputs:
+  required:
+    - validated_requirements
+    - applicable_constraints
+    - synthesis_profile_ref
+    - synthesis_profile_digest
+    - source_provenance
+  optional:
+    - preferred_properties
+    - optimization_objectives
+    - existing_candidate
+    - target_semantic_class
+preconditions:
+  - hard_constraints_are_explicit
+  - source_semantics_are_validated
+  - synthesis_profile_is_registered
+  - target_semantic_class_is_declared
+constraint_classes:
+  hard:
+    semantics: non_compensable
+  objective:
+    semantics: optimize_only_among_feasible_candidates
+feasibility:
+  expression: >
+    Candidate ∈ Feasible
+    iff
+    ∀ hard_constraint c:
+    c(Candidate) = true
+optimization:
+  rule: >
+    Optimization MUST occur only after formal admissibility has been
+    established.
+allowed_operations:
+  - construct_candidate
+  - enumerate_candidate
+  - refine_existing_candidate
+  - optimize_feasible_candidate
+  - delegate_candidate_generation_through_declared_binding
+forbidden:
+  - weaken_hard_constraint
+  - convert_hard_constraint_to_score
+  - create_authority
+  - self_admit_candidate
+  - silently_drop_unsatisfied_requirement
+  - manufacture_missing_semantic_input
+outputs:
+  semantic_class: candidate_artifact
+  required:
+    - candidate_payload
+    - satisfied_constraint_refs
+    - unresolved_constraint_refs
+    - source_refs
+    - synthesis_profile_ref
+    - provenance
+    - candidate_digest
+validation:
+  required: true
+  minimum_checks:
+    - structural_validity
+    - hard_constraint_satisfaction
+    - authority_preservation
+    - provenance_complete
+results:
+  candidate_found:
+    next: validation
+  no_feasible_candidate:
+    result: UNSAT
+  insufficient_semantics:
+    result: UNKNOWN
+receipt:
+  operation: synthesis
+invariants:
+  - SYNTH-001: synthesis_creates_candidates_not_authority
+  - SYNTH-002: hard_constraints_are_non_compensable
+  - SYNTH-003: optimization_follows_admissibility
+  - SYNTH-004: missing_semantics_are_not_invented

@@ -1,0 +1,49 @@
+schema: l9.compiler-component/v1
+id: l9.semantic-compiler/validate@1
+kind: compiler_pass
+contract:
+  ref: ./CONTRACT.yaml
+  authority_class: project_contract
+purpose: >
+  Provide the universal mechanical validation boundary used between Semantic
+  Compiler stages.
+owns:
+  - validation_orchestration
+  - solver_selection_enforcement
+  - solver_dispatch
+  - validation_result_normalization
+  - validation_evidence
+  - validation_receipts
+  - failure_provenance
+does_not_own:
+  - candidate_generation
+  - candidate_repair
+  - synthesis
+  - binding_selection
+  - lowering
+  - rendering
+  - semantic_admission
+  - authority
+  - canonical_solver_policy
+canonical_dependencies:
+  - vocabulary.yaml
+  - compilation_profiles.yaml
+  - solver_catalog.yaml
+  - ir_catalog.yaml
+  - receipt_catalog.yaml
+  - error_taxonomy.yaml
+generated_artifacts:
+  manifest: ./GENERATED.yaml
+result_domain:
+  - PASS
+  - FAIL
+  - UNSAT
+  - INVALID
+  - UNKNOWN
+invariants:
+  - validator_does_not_mutate_candidate
+  - validator_does_not_repair_candidate
+  - solver_is_selected_from_canonical_profile
+  - unknown_is_not_pass
+  - evidence_does_not_grant_authority
+  - pass_is_required_before_stage_advancement

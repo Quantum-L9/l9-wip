@@ -1,0 +1,74 @@
+schema: l9.semantic-compiler-pass-contract/v1
+contract_id: l9.semantic-compiler/pass@1
+purpose: >
+  Define the common protocol implemented by every Semantic Compiler pass.
+pass_protocol:
+  inputs:
+    required:
+      - source_artifacts
+      - pass_profile_ref
+      - pass_profile_digest
+      - source_provenance
+    optional:
+      - stage_context
+      - constraints
+      - selected_binding
+      - solver_projection
+  preflight:
+    required_checks:
+      - source_refs_resolve
+      - source_digests_match
+      - profile_ref_resolves
+      - profile_digest_matches
+      - source_artifacts_are_not_stale
+      - operation_is_permitted_for_source_semantic_class
+  execution:
+    requirements:
+      - pass_executes_only_declared_operation
+      - transformation_is_profile_driven
+      - source_artifacts_are_not_mutated
+  outputs:
+    required:
+      - output_artifact
+      - output_digest
+      - provenance
+      - pass_receipt
+  postconditions:
+    required:
+      - output_semantic_class_is_declared
+      - output_digest_is_reproducible
+      - authority_did_not_expand
+      - provenance_is_complete
+authority:
+  pass_may:
+    - perform_declared_transformation
+    - emit_derived_or_candidate_artifact
+    - emit_evidence
+  pass_may_not:
+    - admit_its_own_output
+    - change_canonical_source
+    - silently_switch_profiles
+    - silently_switch_operation
+    - erase_source_provenance
+common_failure_states:
+  - INVALID_SOURCE
+  - STALE_SOURCE
+  - UNKNOWN_PROFILE
+  - PROFILE_DIGEST_MISMATCH
+  - UNSUPPORTED_OPERATION
+  - SEMANTIC_CONFLICT
+  - AUTHORITY_VIOLATION
+  - INVALID_OUTPUT
+  - UNKNOWN
+receipt:
+  schema: l9.compiler-receipt/v1
+  required:
+    - pass_id
+    - operation
+    - input_refs
+    - input_digests
+    - profile_ref
+    - profile_digest
+    - output_ref
+    - output_digest
+    - result
