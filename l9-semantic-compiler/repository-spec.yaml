@@ -1,0 +1,447 @@
+schema: l9.repository-semantics/v1
+
+repository:
+  id: Quantum-L9/l9-semantic-compiler
+  name: l9-semantic-compiler
+  canonical_repository: Quantum-L9/l9-semantic-compiler
+  status: candidate
+
+identity:
+  repo: Quantum-L9/l9-semantic-compiler
+  class: product-source-repository
+  semantic_owner: Quantum-L9/l9-semantic-compiler
+
+product_binding:
+  product_ref: l9.product/l9-semantic-compiler
+
+  topology:
+    schema_ref: l9.product-topology/v1
+    source_path: product-topology.yaml
+    revision_ref: null
+    digest: null
+
+  exact_binding_required: true
+  stale_topology_binding_policy: fail_closed
+
+  inherit:
+    - product_identity
+    - product_kind
+    - product_archetype
+    - product_purpose
+    - semantic_boundary
+    - capabilities
+    - product_contracts
+    - product_relationships
+    - identity_topology
+    - effects
+    - admission_semantics
+    - lifecycle
+    - conformance_requirements
+
+  rules:
+    - repository_spec_must_not_restate_product_semantics_as_independent_authority
+    - product_topology_remains_authoritative_for_product_meaning
+    - repository_spec_may_project_product_semantics_but_must_not_reinterpret_them
+    - product_topology_revision_change_invalidates_affected_repository_projections
+
+mission:
+  summary: >
+    Serve as the canonical source repository for the L9 Semantic Compiler's
+    domain semantics, compiler contracts, compiler-owned calculi and bindings,
+    reference implementation, validation fixtures, and repository projections,
+    while preserving the separation between authoritative product meaning,
+    repository-specific source organization, derived projections, target-owner
+    semantics, and external conformance or admission authority.
+
+  repository_responsibility: >
+    Maintain the authoritative repository-local source surfaces required to
+    implement and validate the l9-semantic-compiler product without duplicating
+    global L9 law or independently redefining the bound ProductTopology.
+
+ownership:
+  owns:
+    - compiler_domain_semantic_source
+    - compiler_contract_source
+    - semantic_algebra_implementation_source
+    - domain_calculus_implementation_source
+    - semantic_ir_implementation_source
+    - reference_interpreter_implementation_source
+    - target_capability_profile_source_where_compiler_owned
+    - target_binding_source_where_compiler_owned
+    - compilation_profile_source_where_compiler_owned
+    - artifact_plan_implementation_source
+    - compilation_receipt_implementation_source
+    - conformance_handoff_implementation_source
+    - compiler_reference_implementation
+    - compiler_owned_validation_fixtures
+    - repository_projection_profiles_owned_by_this_repository
+    - compiler_owned_repository_projection_regions
+
+  does_not_own:
+    - global_l9_semantics
+    - ProductTopology_semantics
+    - ProductKind_semantics
+    - global_identity_semantics
+    - organization_governance
+    - product_admission_authority
+    - target_owner_domain_semantics
+    - provider_truth
+    - target_behavioral_conformance
+    - repository_merge_authority
+    - deployment_authority
+    - generated_projection_semantics_as_independent_authority
+    - README_as_canonical_semantic_source
+    - AGENTS_as_canonical_semantic_source
+    - CLAUDE_as_canonical_semantic_source
+    - generated_architecture_projection_as_canonical_semantic_source
+    - generated_ownership_projection_as_canonical_semantic_source
+
+authority_order:
+  - global_admitted_l9_semantics
+  - exact_bound_product_topology
+  - compiler_domain_canonical_semantics
+  - repository_spec_for_repository_scoped_semantics
+  - compiler_source_and_executable_contracts
+  - derived_repository_projections
+
+authority_rules:
+  scoped_authority_required: true
+  product_semantics_resolve_from: product_binding.topology
+  repository_semantics_resolve_from: this_repository_spec
+  compiler_domain_semantics_resolve_from: compiler_owned_canonical_sources
+  derived_projection_authority: none
+
+  conflicts:
+    product_topology_vs_repository_spec: product_topology_wins_for_product_semantics
+    repository_spec_vs_generated_projection: repository_spec_wins
+    canonical_source_vs_generated_projection: canonical_source_wins
+    unresolved_cross_scope_conflict: fail_closed
+
+source_surfaces:
+  authoritative:
+    product:
+      - path: product-topology.yaml
+        semantic_role: product_contract
+        authority_source: product_semantic_owner
+
+    compiler_domain:
+      - semantic_role: semantic_spec_contract
+      - semantic_role: semantic_algebra
+      - semantic_role: compiler_invariants
+      - semantic_role: compiler_contracts
+      - semantic_role: semantic_ir_contract
+      - semantic_role: domain_calculus_contracts
+      - semantic_role: reference_interpreter_contracts
+      - semantic_role: target_capability_profiles
+      - semantic_role: target_bindings
+      - semantic_role: compilation_profiles
+      - semantic_role: target_ir_contract
+      - semantic_role: artifact_plan_contract
+      - semantic_role: semantic_equivalence_contract
+      - semantic_role: conformance_handoff_contract
+      - semantic_role: compilation_receipt_contract
+      - semantic_role: compiler_error_taxonomy
+
+    repository:
+      - path: repository-spec.yaml
+        semantic_role: repository_contract
+        authority_source: repository_owner
+
+  derived:
+    - README.md
+    - AGENTS.md
+    - CLAUDE.md
+    - .l9/architecture.yaml
+    - .l9/ownership.yaml
+
+  rules:
+    - derived_surface_must_reference_exact_source_semantic_digest
+    - derived_surface_must_reference_exact_projection_profile
+    - derived_surface_must_not_become_semantic_authority
+    - generated_surface_must_not_contain_unbound_independent_semantic_content
+
+repository_structure:
+  semantic_roots:
+    - semantics/
+    - contracts/
+
+  implementation_roots:
+    - src/
+
+  validation_roots:
+    - tests/
+
+  fixture_roots:
+    - fixtures/
+
+  documentation_roots:
+    - docs/
+
+  generated_roots:
+    - .l9/
+
+  rules:
+    - canonical_semantics_must_not_live_only_in_generated_roots
+    - implementation_must_not_become_semantic_authority
+    - fixtures_must_trace_to_governing_semantics
+    - generated_files_must_be_mechanically_identifiable
+
+capabilities:
+  source: product_topology
+  independently_declared_here: false
+
+  expected_product_capability_refs:
+    - l9.capability/semantic-compilation
+    - l9.semantic-compiler.capability/semantic-validation
+    - l9.semantic-compiler.capability/semantic-explanation
+
+  rules:
+    - repository_spec_does_not_create_product_capabilities
+    - capability_projection_must_preserve_product_topology_coordinates
+
+invariants:
+  - id: SC-REPO-001
+    statement: >
+      Product semantics are inherited from the exact bound ProductTopology and
+      MUST NOT be independently restated as repository authority.
+
+  - id: SC-REPO-002
+    statement: >
+      RepositorySpec owns only repository-scoped semantics not already owned by
+      ProductTopology, global L9 semantics, or compiler-domain canonical sources.
+
+  - id: SC-REPO-003
+    statement: >
+      README.md, AGENTS.md, CLAUDE.md, architecture projections, ownership
+      projections, and other generated repository views are derived artifacts
+      and MUST NOT become independent semantic authorities.
+
+  - id: SC-REPO-004
+    statement: >
+      Every compiler-owned repository projection MUST bind the exact source
+      semantic digests, compiler version, projection profile version, and
+      generated artifact digest.
+
+  - id: SC-REPO-005
+    statement: >
+      Material semantic input change MUST invalidate exactly the affected
+      downstream repository projection closure.
+
+  - id: SC-REPO-006
+    statement: >
+      An unchanged effective semantic input closure MUST NOT cause unchanged
+      generated artifacts to be rewritten.
+
+  - id: SC-REPO-007
+    statement: >
+      Human-authored repository regions outside explicitly compiler-owned
+      projection regions MUST be preserved byte-for-byte by repository
+      projection compilation.
+
+  - id: SC-REPO-008
+    statement: >
+      Repository projection compilation MUST NOT require an LLM.
+
+  - id: SC-REPO-009
+    statement: >
+      Compiler core MUST remain independent of target-provider SDKs and database
+      drivers.
+
+  - id: SC-REPO-010
+    statement: >
+      Generated agent instruction surfaces MUST contain no independent semantic
+      law beyond their admitted source semantics.
+
+  - id: SC-REPO-011
+    statement: >
+      RepositorySpec is a revision-bound semantic input to SemanticSpec and is
+      not an alternate compiler frontend or semantic language.
+
+  - id: SC-REPO-012
+    statement: >
+      Repository projection success MUST NOT imply product admission, runtime
+      admission, deployment authorization, or target-owner conformance.
+
+forbidden:
+  - duplicate_product_semantics_in_repository_spec
+  - README_as_source_of_truth
+  - AGENTS_as_source_of_truth
+  - CLAUDE_as_source_of_truth
+  - generated_architecture_as_source_of_truth
+  - generated_ownership_as_source_of_truth
+  - handwritten_semantic_drift_in_generated_regions
+  - independently_maintained_duplicate_capability_ledgers
+  - independently_maintained_duplicate_ownership_ledgers
+  - target_provider_semantics_in_compiler_core
+  - database_driver_dependency_in_compiler_core
+  - implicit_target_binding_selection
+  - hidden_llm_dependency
+  - generated_projection_self_admission
+  - repository_projection_as_product_architecture_authority
+  - repository_spec_as_alternate_SemanticSpec_language
+  - compiler_owned_write_outside_authorized_projection_region
+
+commands:
+  validate: uv run pytest
+
+  rules:
+    - validation_command_must_be_repository_local
+    - validation_failure_blocks_repository_projection_admission
+
+projection_compilation:
+  calculus_ref: l9.repository-projection/v1
+
+  semantic_inputs:
+    required:
+      - repository_spec
+      - product_topology
+
+    exact_revision_binding_required: true
+    exact_digest_binding_required: true
+
+  outputs:
+    - id: human.readme
+      target: README.md
+      mode: authored_shell_with_compiled_regions
+
+      compiler_owned_regions:
+        - identity
+        - mission
+        - architecture_summary
+        - capabilities
+        - status
+
+      preserve_unowned_content: true
+
+    - id: agent.general
+      target: AGENTS.md
+      mode: fully_compiled
+
+      semantic_projection:
+        - authority_order
+        - semantic_ownership
+        - forbidden_concerns
+        - required_validation
+        - capabilities
+        - repository_constraints
+
+    - id: agent.claude
+      target: CLAUDE.md
+      mode: fully_compiled
+
+      semantic_projection:
+        - authority_order
+        - semantic_ownership
+        - forbidden_concerns
+        - required_validation
+        - capabilities
+        - repository_constraints
+
+      rule: >
+        Claude-specific layout MAY differ from AGENTS but semantic content MUST
+        remain equivalent to the same admitted source semantics.
+
+    - id: architecture.machine
+      target: .l9/architecture.yaml
+      mode: fully_compiled
+
+      semantic_projection:
+        - product_identity
+        - product_kind
+        - product_archetype
+        - architecture_constraints
+        - capability_boundary
+        - product_relationships
+        - repository_source_surfaces
+
+    - id: ownership.machine
+      target: .l9/ownership.yaml
+      mode: fully_compiled
+
+      semantic_projection:
+        - product_semantic_owner
+        - repository_owner
+        - compiler_domain_ownership
+        - owns
+        - does_not_own
+        - authority_sources
+
+  target_bindings:
+    - markdown/v1
+    - yaml/v1
+    - agent-instructions/v1
+
+  metadata_required_on_every_output:
+    - source_semantic_digest
+    - semantic_input_digests
+    - compiler_version
+    - projection_profile_ref
+    - projection_profile_version
+    - generated_digest
+
+  staleness:
+    rule: >
+      A projection is stale when any material source semantic digest or
+      applicable projection-profile digest differs from the coordinates bound
+      into the generated artifact.
+
+    policy: recompile_affected_dependency_closure
+
+  incremental_compilation:
+    enabled: true
+    prior_receipt_may_accelerate: true
+    prior_receipt_is_authority: false
+
+    requirements:
+      - no_change_returns_NO_CHANGE
+      - ownership_change_recompiles_only_ownership_dependents
+      - unchanged_artifact_not_rewritten
+      - cache_not_authority
+
+validation:
+  repository_projection:
+    required: true
+
+    acceptance:
+      - golden_fixture_exact
+      - all_outputs_bind_same_source_digest
+      - exact_product_topology_binding
+      - exact_repository_spec_binding
+      - authored_regions_preserved
+      - source_change_marks_affected_outputs_stale
+      - unchanged_outputs_not_rewritten
+      - repository_spec_is_semantic_input_not_alternate_language
+      - generated_agent_surfaces_contain_no_independent_semantic_content
+      - no_llm_dependency
+      - no_provider_driver_in_compiler_core
+
+provenance:
+  semantic_owner: Quantum-L9/l9-semantic-compiler
+  repository: Quantum-L9/l9-semantic-compiler
+
+  source_refs:
+    - Quantum-L9/.github
+    - l9.product/l9-semantic-compiler
+    - L9_Semantic_Compiler_Dev_Pack_v1.0.1
+
+  product_topology_revision: null
+  product_topology_digest: null
+  repository_spec_revision: l9.revision/repository-spec-candidate
+  repository_spec_digest: null
+
+unknowns:
+  material:
+    - exact admitted ProductTopology revision and digest
+    - exact canonical filesystem paths for compiler-domain semantic ledgers
+    - exact canonical filesystem paths for Target Capability Profiles
+    - exact canonical filesystem paths for Target Bindings
+    - exact schema contract for compiler-owned projection metadata
+    - exact repository projection profile coordinates after v3.5 convergence
+
+  non_material:
+    - additional future repository projection targets
+    - additional agent-specific layout bindings
+
+  policy:
+    material_unknowns_block_admission: true
+    unknowns_must_not_be_inferred: true
