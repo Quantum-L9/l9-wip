@@ -1,0 +1,78 @@
+schema: l9.compilation-profile/v1
+artifact_id: l9.compilation/contract-to-json-schema@1
+canonical: true
+purpose: >
+  Compile the structural surface of an admitted CONTRACT.yaml
+  into mechanically validated JSON Schema artifacts.
+source:
+  semantic_class:
+    - contract
+target:
+  semantic_class:
+    - json_schema
+  format:
+    - json
+pipeline:
+  - ordinal: 1
+    id: normalize_contract
+    operation: normalization
+    consumes:
+      - CONTRACT.yaml
+    produces:
+      - contract_ir
+  - ordinal: 2
+    id: derive_structural_requirements
+    operation: derivation
+    consumes:
+      - contract_ir
+    produces:
+      - structural_requirements_ir
+    rules:
+      - only_explicit_or_entailed_structure_may_be_derived
+      - unspecified_types_remain_any
+      - semantic_types_must_not_be_invented
+  - ordinal: 3
+    id: bind_json_schema
+    operation: binding_selection
+    consumes:
+      - structural_requirements_ir
+    binding:
+      ref: l9.binding/json-schema-2020-12@1
+    produces:
+      - selected_json_schema_binding
+  - ordinal: 4
+    id: lower_json_schema
+    operation: lowering
+    consumes:
+      - structural_requirements_ir
+      - selected_json_schema_binding
+    produces:
+      - json_schema_ir
+  - ordinal: 5
+    id: validate_json_schema_ir
+    operation: validation
+    consumes:
+      - json_schema_ir
+    required_result:
+      - PASS
+  - ordinal: 6
+    id: render_json_schema
+    operation: rendering
+    consumes:
+      - validated_json_schema_ir
+    produces:
+      - "*.schema.json"
+  - ordinal: 7
+    id: validate_rendered_artifact
+    operation: validation
+    consumes:
+      - rendered_json_schema
+    required_result:
+      - PASS
+invariants:
+  - contract_remains_semantic_source
+  - schemas_are_derived_artifacts
+  - schemas_do_not_create_contract_semantics
+  - unknown_structural_semantics_are_not_invented
+  - target_binding_is_explicit
+  - rendering_has_no_semantic_authority

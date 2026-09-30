@@ -1,0 +1,862 @@
+schema: l9.product-topology/v1
+
+product:
+  id: l9.semantic-compiler
+  kind: node
+  archetype_ref: l9.node-archetype/worker@1
+  name: l9-semantic-compiler
+  versioning_family: semantic_version
+  status: candidate
+
+identity:
+  semantic_owner: Quantum-L9/l9-semantic-compiler
+  semantic_scope: deterministic_semantic_compilation
+  canonical_repository: Quantum-L9/l9-semantic-compiler
+
+  dimensions:
+    product:
+      identity_ref: l9.product/l9-semantic-compiler
+    release:
+      identity_ref: l9.release/l9-semantic-compiler
+    runtime:
+      identity_ref: l9.runtime/l9-semantic-compiler
+    constellation:
+      identity_ref: l9.constellation/l9-semantic-compiler
+    actor:
+      identity_ref: l9.actor/runtime
+    surface:
+      identity_ref: l9.surface/gate
+
+  resolution:
+    contract_ref: l9.contract/identity-resolution@1
+    assertion_schema_ref: l9.schema/identity-assertion@1
+    unknown_policy: fail_closed
+    evidence_source_refs: []
+
+  identity_contract_refs:
+    - l9.contract/identity-topology@1
+    - l9.contract/identity-resolution@1
+
+  predecessor_refs:
+    - l9-codegen
+    - CodeGen
+
+purpose:
+  statement: >
+    Provide one deterministic L9 semantic compilation capability that transforms
+    an approved SemanticSpec, exact revision-bound semantic inputs, admitted
+    Domain Calculi, Target Capability Profiles, explicit Target Binding chains,
+    and an exact Compilation Profile into mechanically derived artifacts while
+    preserving source semantics, exact provenance, compilation lineage, and
+    authority boundaries.
+
+  primary_responsibility: >
+    Perform semantics-preserving transformation from authoritative semantic
+    inputs through canonical Semantic IR, explicit TargetIR lowering,
+    deterministic ArtifactPlan construction, rendering, semantic-equivalence
+    evaluation, and provenance-bound CompilationReceipt emission without
+    independently reasoning about architecture or inventing missing semantics.
+
+  capability_refs:
+    - l9.capability/semantic-compilation
+    - l9.semantic-compiler.capability/semantic-validation
+    - l9.semantic-compiler.capability/semantic-explanation
+
+  objectives:
+    - one general semantic compiler for heterogeneous L9 compilation problems
+    - one canonical SemanticSpec compiler language
+    - deterministic compilation from exact revision-bound inputs
+    - provider-neutral Semantic IR
+    - explicit compositional Target Binding chains
+    - reproducible heterogeneous artifact generation
+    - mechanically detectable staleness
+    - dependency-closure incremental recompilation
+    - independent reference interpretation
+    - semantic-equivalence checking where applicable
+    - exact provenance through every compiler pass
+    - first-divergence localization
+    - no-LLM canonical compilation
+    - owner-native conformance handoff without authority transfer
+
+  non_goals:
+    - select product architecture
+    - perform architectural reasoning
+    - invent missing semantics
+    - infer ambiguous semantics
+    - choose among architecturally valid alternatives without admitted selection law
+    - become semantic owner of compiled domains
+    - own State semantics
+    - own Evidence semantics
+    - own Memory semantics
+    - own repository domain semantics
+    - own workflow domain semantics
+    - own provider truth
+    - own target semantic meaning
+    - perform repository merge
+    - mutate Git as part of semantic compilation
+    - deploy generated artifacts
+    - authorize generated artifacts
+    - admit generated products
+    - promote generated semantics
+    - replace independent owner-native conformance
+    - require an LLM in the canonical compilation path
+
+boundary:
+  owns:
+    - SemanticSpec contract
+    - semantic compilation semantics
+    - canonical compiler pass semantics
+    - compiler input binding semantics
+    - semantic dependency resolution mechanics
+    - canonical normalization semantics
+    - Semantic IR contract
+    - Domain Calculus expansion mechanics
+    - Reference Interpreter execution mechanics
+    - Target Capability Profile consumption semantics
+    - Target Binding composition semantics
+    - binding-chain coverage validation
+    - TargetIR contract
+    - ArtifactPlan contract
+    - deterministic rendering mechanics
+    - structural validation mechanics
+    - semantic-equivalence comparison mechanics
+    - compilation staleness semantics
+    - incremental recompilation mechanics
+    - compilation provenance semantics
+    - CompilationReceipt contract
+    - ConformanceHandoff contract
+    - compiler-owned projection region mechanics
+
+  does_not_own:
+    - global L9 semantic authority
+    - ProductTopology semantics
+    - product architecture
+    - architectural reasoning
+    - domain truth
+    - domain policy
+    - domain-owned contracts
+    - domain-owned calculi meaning
+    - provider capability truth
+    - target semantic ownership
+    - target behavioral conformance
+    - product admission
+    - semantic promotion
+    - repository merge
+    - source-control mutation
+    - deployment
+    - runtime authorization
+    - durable State semantics
+    - durable Evidence semantics
+    - external governance
+
+  authority_boundary_refs:
+    - l9.contract/authority-boundary@1
+    - l9.contract/semantic-ownership@1
+    - l9.contract/derived-artifact@1
+
+  semantic_boundary_refs:
+    - l9.contract/product-topology@1
+    - l9.contract/product-kind@1
+
+requirements:
+  invariant_refs:
+    - SC-001
+    - SC-002
+    - SC-003
+    - SC-004
+    - SC-005
+    - SC-006
+    - SC-007
+    - SC-008
+    - SC-009
+    - SC-010
+    - SC-011
+    - SC-012
+    - SC-013
+    - SC-014
+    - SC-015
+    - SC-016
+    - SC-017
+    - SC-018
+    - SC-019
+    - SC-020
+    - SC-021
+    - SC-022
+    - SC-023
+    - SC-024
+    - SC-025
+    - SC-026
+    - SC-027
+    - SC-028
+
+  contract_refs:
+    - l9.contract/product-topology@1
+    - l9.contract/product-kind@1
+    - l9.contract/authority-boundary@1
+    - l9.contract/semantic-ownership@1
+    - l9.contract/derived-artifact@1
+    - l9.contract/evidence-and-receipt@1
+    - l9.contract/hard-constraint@1
+    - l9.contract/provenance-and-coordinate@1
+    - l9.contract/identity-topology@1
+    - l9.contract/identity-resolution@1
+
+  hard_constraints:
+    - canonical compilation MUST be deterministic for identical pinned inputs
+    - every compilation MUST bind an exact SemanticSpec revision and digest
+    - every semantic input MUST be revision-bound and digest-bound
+    - every Domain Calculus MUST resolve to an exact admitted revision
+    - every Target Capability Profile MUST resolve to an exact revision
+    - every Target Binding MUST resolve to an exact admitted revision
+    - every Compilation Profile MUST resolve to one exact revision
+    - raw SemanticSpec MUST NOT be rendered directly
+    - canonical lowering path MUST pass through Semantic IR
+    - target lowering MUST use an explicit ordered binding_chain
+    - compiler MUST NOT infer Target Binding selection or precedence
+    - adjacent binding-chain IR contracts MUST compose exactly
+    - unresolved semantic references MUST block compilation
+    - ambiguous semantic meaning MUST block compilation
+    - unknown values MUST NOT silently become defaults
+    - missing lowering MUST block compilation
+    - target capability insufficiency MUST block compilation
+    - Target Binding MUST NOT manufacture source semantics
+    - target/provider identity MUST NOT become semantic ownership
+    - Reference Interpreter MUST remain independent of target rendering
+    - compilation success MUST NOT imply target behavioral conformance
+    - target conformance MUST NOT imply architecture admission
+    - generated implementation MUST NOT define its own correctness
+    - compiler MUST NOT select architecture
+    - compiler MUST NOT authorize merge deploy admit or promote outputs
+    - canonical compile path MUST NOT require an LLM
+    - compiler core MUST remain provider-neutral
+    - compiler core MUST NOT import target provider packages
+    - compiler core MUST NOT require database drivers
+    - compiler semantic core MUST NOT depend on Gate transport mechanics
+    - all compiler-owned outputs MUST be content digested
+    - provenance MUST survive every compiler pass
+    - compiler-owned writes MUST remain inside authorized output roots
+    - authored target regions MUST NOT be modified without explicit compiler ownership
+    - incremental recompilation MUST use semantic dependency closure
+    - compilation receipts MUST bind exact effective inputs and outputs
+
+  operational_requirements:
+    - independently deployable
+    - independently scalable
+    - independently health-checkable
+    - deterministic canonicalization
+    - isolated rendering workspace
+    - exact compilation receipts
+    - exact source and profile digest validation
+    - NO_CHANGE detection for unchanged effective inputs and outputs
+    - stale artifact detection without semantic guesswork
+    - first-divergence diagnostics
+    - bounded compilation budgets
+    - reproducible compilation without live mutable documentation
+
+capabilities:
+  provides:
+    - capability_ref: l9.capability/semantic-compilation
+      contract_refs:
+        - l9.semantic-compiler.contract/compile@1
+
+    - capability_ref: l9.semantic-compiler.capability/semantic-validation
+      contract_refs:
+        - l9.semantic-compiler.contract/validate@1
+
+    - capability_ref: l9.semantic-compiler.capability/semantic-explanation
+      contract_refs:
+        - l9.semantic-compiler.contract/explain@1
+
+  requires: []
+
+  optional:
+    - capability_ref: l9.capability/state
+      contract_refs: []
+    - capability_ref: l9.capability/evidence
+      contract_refs: []
+
+  degraded_without: []
+
+  forbidden:
+    - l9.semantic-compiler.capability/architecture-selection
+    - l9.semantic-compiler.capability/semantic-authoring
+    - l9.semantic-compiler.capability/reasoning
+    - l9.semantic-compiler.capability/admission
+    - l9.semantic-compiler.capability/promotion
+    - l9.semantic-compiler.capability/deployment
+    - l9.semantic-compiler.capability/repository-merge
+
+consumption:
+  model: remote_invocation
+
+  public_entry_modes:
+    - constellation
+
+  invocation_contract_refs:
+    - l9.semantic-compiler.contract/compile@1
+    - l9.semantic-compiler.contract/validate@1
+    - l9.semantic-compiler.contract/explain@1
+
+  consumer_requirements:
+    - exact SemanticSpec identity
+    - exact SemanticSpec revision and digest
+    - exact semantic input coordinates
+    - exact Compilation Profile coordinates
+    - exact requested output contract
+    - authorized invocation
+
+  forbidden_consumption_modes:
+    - direct_target_provider_as_compiler
+    - generated_artifact_as_semantic_authority
+    - mutable_live_documentation_as_compile_authority
+    - free_form_llm_generation_as_canonical_compilation
+
+deployment:
+  model: independent_runtime
+  deployment_unit: node_runtime
+  runtime_boundary: independent
+  scaling_boundary: independent
+  failure_boundary: independent
+  upgrade_boundary: independent
+
+  artifact_forms: []
+
+  deployment_constraints:
+    - semantic core remains independently testable without Gate transport
+    - canonical compilation requires no LLM credentials
+    - canonical compilation must support offline deterministic execution when all required inputs are present
+
+architecture:
+  required_pattern_refs:
+    - l9.pattern/semantic-core-gate-adapter@1
+    - l9.pattern/runnable-node@1
+    - l9.pattern/authority-candidate-admission@1
+    - l9.pattern/reference-model-conformance@1
+    - l9.pattern/stage-scoped-semantic-compilation@1
+    - l9.pattern/proof-carrying-stage-state@1
+    - l9.pattern/incremental-semantic-recompilation@1
+    - l9.pattern/stage-specific-mechanical-validation@1
+
+  optional_pattern_refs:
+    - l9.pattern/canonical-source-derived-projections@1
+    - l9.pattern/facts-plus-lineage-compiled-views@1
+    - l9.pattern/session-projection-cache@1
+    - l9.pattern/fixture-backed-conformance@1
+
+  forbidden_pattern_refs: []
+
+  structural_constraints:
+    - compiler semantic core remains separate from Gate transport adapter
+    - compiler semantic core remains separate from target provider packages
+    - Domain Calculi extend semantics without domain-specific branching in compiler core
+    - Reference Interpreters remain independent of Target Bindings
+    - Target Capability Profiles describe support without selecting architecture
+    - Target Bindings define lowering law without acquiring semantic ownership
+    - target binding chains are explicit and ordered
+    - TargetIR exists before ArtifactPlan
+    - ArtifactPlan exists before rendering
+    - rendering introduces no new semantic decisions
+    - generated artifacts remain derived
+    - ConformanceHandoff does not transfer conformance authority
+    - target bindings are compiler-domain semantic artifacts not ProductTopology provider bindings
+    - repository projection is a bootstrap proof not the compiler product boundary
+    - executable semantic compilation is a target family not compiler identity
+    - State compilation is an application of the compiler not compiler identity
+    - Workflow compilation is an application of the compiler not compiler identity
+
+contracts:
+  public:
+    - l9.semantic-compiler.contract/compile@1
+    - l9.semantic-compiler.contract/validate@1
+    - l9.semantic-compiler.contract/explain@1
+    - l9.semantic-compiler.contract/semantic-spec@1
+    - l9.semantic-compiler.contract/compilation-profile@1
+    - l9.semantic-compiler.contract/compilation-receipt@1
+
+  consumed:
+    - l9.contract/product-topology@1
+    - l9.contract/authority-boundary@1
+    - l9.contract/semantic-ownership@1
+    - l9.contract/derived-artifact@1
+
+  produced:
+    - l9.semantic-compiler.contract/target-ir@1
+    - l9.semantic-compiler.contract/artifact-plan@1
+    - l9.semantic-compiler.contract/compiled-artifact-set@1
+    - l9.semantic-compiler.contract/semantic-equivalence-report@1
+    - l9.semantic-compiler.contract/conformance-handoff@1
+    - l9.semantic-compiler.contract/compilation-receipt@1
+
+  required:
+    - l9.contract/authority-boundary@1
+    - l9.contract/semantic-ownership@1
+    - l9.contract/derived-artifact@1
+    - l9.contract/provenance-and-coordinate@1
+    - l9.contract/evidence-and-receipt@1
+
+  schemas:
+    - l9.binding/json-schema-2020-12@1
+
+interfaces:
+  actions:
+    - id: semantic.compile
+      capability_ref: l9.capability/semantic-compilation
+      contract_ref: l9.semantic-compiler.contract/compile@1
+      effect_class: derived_artifact_production
+
+    - id: semantic.validate
+      capability_ref: l9.semantic-compiler.capability/semantic-validation
+      contract_ref: l9.semantic-compiler.contract/validate@1
+      effect_class: read
+
+    - id: semantic.explain
+      capability_ref: l9.semantic-compiler.capability/semantic-explanation
+      contract_ref: l9.semantic-compiler.contract/explain@1
+      effect_class: read
+
+  forbidden_actions:
+    - semantic.approve
+    - semantic.merge
+    - semantic.deploy
+    - semantic.reason
+    - semantic.promote
+    - semantic.select_architecture
+
+ports:
+  inbound:
+    - port_ref: l9.semantic-compiler.port/semantic-compilation
+      contract_refs:
+        - l9.semantic-compiler.contract/compile@1
+        - l9.semantic-compiler.contract/validate@1
+        - l9.semantic-compiler.contract/explain@1
+      capability_ref: l9.capability/semantic-compilation
+
+  outbound: []
+
+adapters:
+  inbound:
+    - adapter_role: GateSemanticCompilerAdapter
+      implements_port_ref: l9.semantic-compiler.port/semantic-compilation
+
+  outbound: []
+
+relationships:
+  products:
+    - target_product_ref: l9.gate-sdk
+      relation: integrate
+      capability_refs: []
+      required: true
+
+  forbidden_relationships:
+    - target_product_ref: l9.global-governance
+      relation: redefine
+      capability_refs: []
+      required: false
+
+    - target_product_ref: l9.conformance
+      relation: own
+      capability_refs: []
+      required: false
+
+bindings:
+  # Intentionally empty.
+  #
+  # Compiler Target Bindings such as MarkdownBinding, PythonBinding,
+  # MongoBinding, etc. are semantic compilation artifacts owned by the
+  # compiler/domain binding catalogs. They are NOT ProductTopology
+  # provider bindings for the compiler Node itself.
+  provider_bindings: []
+
+providers:
+  allowed: []
+
+  prohibited:
+    - provider_as_compiler_semantic_owner
+    - target_provider_as_compiler_semantic_owner
+    - llm_as_canonical_compilation_engine
+    - database_provider_in_compiler_core
+    - target_provider_package_in_compiler_core
+    - live_mutable_provider_documentation_as_compile_authority
+
+  provider_independence_required: true
+
+technology:
+  hard_constraints:
+    - canonical compilation MUST NOT require an LLM
+    - canonical compilation MUST be reproducible from pinned local inputs
+    - semantic core MUST remain provider-neutral
+    - target provider SDKs MUST remain outside compiler core
+    - canonical digest representation MUST be deterministic
+
+  preferences:
+    - Python >=3.12 as current implementation language
+    - canonical JSON for digest representation
+    - JSON Schema Draft 2020-12 for structural contract validation
+    - uv for current Python dependency management
+
+state:
+  owns_authoritative_state: false
+  cache_authority: none
+
+  state_semantic_refs:
+    - compilation identity
+    - prior successful receipt identity
+    - semantic dependency closure
+    - incremental compilation coordinates
+
+  persistence_ports: []
+
+runtime:
+  participation_model: constellation_node
+  process_model: independently_deployed_service
+  concurrency_model: bounded_compilation_execution
+  resource_model: bounded_compilation_resources
+
+  health_contract_refs:
+    - l9.semantic-compiler.contract/health@1
+
+  readiness_contract_refs:
+    - l9.semantic-compiler.contract/readiness@1
+
+communication:
+  constellation_boundary_required: true
+
+  transport_contract_refs:
+    - l9.transport/TransportPacket
+
+  routing_authority_ref: l9.constellation.gate
+
+  forbidden_paths:
+    - direct_peer_node_http
+    - peer_url_knowledge
+    - private_node_routing
+    - transport_semantics_in_compiler_core
+
+security:
+  authentication_contract_refs: []
+  authorization_contract_refs: []
+
+  credential_scope:
+    - least_privilege
+    - compilation_request_bound
+    - target_binding_specific_when_required
+    - never_used_to_expand_semantic_authority
+
+  isolation_requirement_refs:
+    - l9.semantic-compiler.requirement/output-root-confinement
+    - l9.semantic-compiler.requirement/render-workspace-isolation
+
+configuration:
+  namespaces:
+    - L9_SEMANTIC_COMPILER
+
+  forbidden:
+    - architecture_selection_override
+    - semantic_unknown_defaulting
+    - target_binding_precedence_override
+    - conformance_authority_override
+    - admission_authority_override
+    - llm_required_compile_mode
+    - unrestricted_output_path
+
+effects:
+  effect_classes:
+    - derived_artifact_production
+
+  consequential_operations:
+    - semantic.compile
+
+  idempotency_contract_refs:
+    - l9.semantic-compiler.contract/deterministic-compilation@1
+
+receipts:
+  emits:
+    - receipt_ref: l9.semantic-compiler.receipt/compilation@1
+      subject: exact_semantic_compilation
+      consequence: derived_artifact_production
+
+  consumes:
+    - receipt_ref: l9.semantic-compiler.receipt/compilation@1
+      purpose: deterministic_no_change_and_incremental_recompilation_basis
+
+  canonicalization_ref: l9.receipt-canonicalization/v1
+
+failure:
+  taxonomy_refs:
+    - l9.semantic-compiler.error/INVALID_REQUEST
+    - l9.semantic-compiler.error/INVALID_SPEC
+    - l9.semantic-compiler.error/INVALID_PROFILE
+    - l9.semantic-compiler.error/INVALID_CALCULUS
+    - l9.semantic-compiler.error/INVALID_TARGET_BINDING
+    - l9.semantic-compiler.error/UNRESOLVED_REFERENCE
+    - l9.semantic-compiler.error/REVISION_MISMATCH
+    - l9.semantic-compiler.error/UNKNOWN_SEMANTIC_OPERATOR
+    - l9.semantic-compiler.error/AMBIGUOUS_SEMANTICS
+    - l9.semantic-compiler.error/TYPE_MISMATCH
+    - l9.semantic-compiler.error/DIMENSION_MISMATCH
+    - l9.semantic-compiler.error/UNSATISFIED_PRECONDITION
+    - l9.semantic-compiler.error/DEPENDENCY_CYCLE
+    - l9.semantic-compiler.error/UNSUPPORTED_CALCULUS
+    - l9.semantic-compiler.error/TARGET_BINDING_MISSING
+    - l9.semantic-compiler.error/TARGET_CAPABILITY_INSUFFICIENT
+    - l9.semantic-compiler.error/LOWERING_UNAVAILABLE
+    - l9.semantic-compiler.error/OUTPUT_PATH_FORBIDDEN
+    - l9.semantic-compiler.error/FORBIDDEN_DEPENDENCY
+    - l9.semantic-compiler.error/ARTIFACT_LIMIT_EXCEEDED
+    - l9.semantic-compiler.error/RENDER_FAILED
+    - l9.semantic-compiler.error/STRUCTURAL_VALIDATION_FAILED
+    - l9.semantic-compiler.error/REFERENCE_EVALUATION_FAILED
+    - l9.semantic-compiler.error/TARGET_OBSERVATION_FAILED
+    - l9.semantic-compiler.error/SEMANTIC_DIVERGENCE
+    - l9.semantic-compiler.error/BUDGET_EXHAUSTED
+    - l9.semantic-compiler.error/DEADLINE_EXCEEDED
+    - l9.semantic-compiler.error/INTERNAL_FAILURE
+
+  fail_closed_conditions:
+    - unresolved semantic reference
+    - source revision or digest mismatch
+    - unknown semantic operator
+    - ambiguous semantic meaning
+    - semantic type mismatch
+    - dimension mismatch
+    - unsatisfied hard precondition
+    - dependency cycle without admitted fixed-point semantics
+    - missing Target Binding
+    - incompatible binding-chain IR contracts
+    - insufficient Target Capability Profile
+    - unavailable lowering
+    - unauthorized output path
+    - forbidden dependency
+    - structural validation failure
+    - semantic divergence where equivalence is required
+    - unresolved material semantic Unknown
+    - compilation budget exhaustion
+
+  degradable_conditions: []
+
+  unknown_outcome_rules:
+    - UNKNOWN MUST NOT become ZERO
+    - UNKNOWN MUST NOT become FALSE
+    - UNKNOWN MUST NOT become EMPTY
+    - UNKNOWN MUST NOT become DEFAULT
+    - missing target lowering MUST NOT become best effort
+    - ambiguous semantics MUST NOT be inferred
+    - validation failure MUST NOT become compilation success
+    - compilation success MUST NOT become owner-native conformance
+
+recovery:
+  restart_semantics:
+    - failed compilation may restart only from exact pinned semantic coordinates
+    - stale derived outputs MUST NOT be treated as current
+    - compiler-owned stage outputs may be reused only when their effective dependency digests remain current
+
+  replay_semantics:
+    - identical effective semantic inputs MUST produce identical semantic outputs and digests
+    - unchanged successful compilation MAY resolve as NO_CHANGE
+    - prior receipts MAY accelerate compilation but MUST NOT become semantic authority
+
+  compensation_semantics:
+    - emitted derived artifacts are never promoted implicitly
+    - corrected compilation creates successor artifacts and receipts
+    - compiler does not mutate external admitted artifacts as compensation
+
+observability:
+  capability_metrics:
+    - semantic_compilation_duration
+    - compilation_success_count
+    - compilation_blocked_count
+    - no_change_count
+    - semantic_divergence_count
+    - stale_artifact_count
+    - incremental_recompile_count
+    - unresolved_reference_count
+    - binding_coverage_failure_count
+    - output_path_rejection_count
+    - budget_exhaustion_count
+
+  provider_metrics: []
+
+  correlation_identity_refs:
+    - l9.identity/correlation
+    - l9.identity/subject
+    - l9.identity/semantic-spec
+    - l9.identity/compilation-profile
+    - l9.identity/compilation
+    - l9.identity/artifact-plan
+    - l9.identity/compilation-receipt
+
+governance:
+  profile_refs: []
+  profile_selection_contract_refs: []
+
+  rules:
+    - compiler consumes admitted semantic authority and does not manufacture it
+    - compiler validation evidence does not grant operational authority
+    - compiler-generated artifacts remain derived until separately admitted
+    - compiler MUST stop rather than widen authority to satisfy implementation convenience
+
+admission:
+  subject: exact_product_revision
+  authority_ref: l9.authority/product-admission
+
+  requirements:
+    - valid ProductTopology
+    - exact source revision
+    - valid Node ProductKind
+    - valid worker archetype
+    - required contracts resolve
+    - required compiler-domain invariants resolve
+    - SemanticSpec schema valid
+    - Compilation Profile schema valid
+    - Target Capability Profile schema valid
+    - Target Binding schema valid
+    - TargetIR schema valid
+    - ArtifactPlan schema valid
+    - CompilationReceipt schema valid
+    - ConformanceHandoff schema valid
+    - public actions exactly match capability manifest
+    - all applicable compiler acceptance cases pass
+    - canonical compilation path has no hidden LLM dependency
+    - no authority widening
+    - no unauthorized output path
+    - no stale generated fixture
+    - no unresolved material semantic Unknown
+
+  kind_specific_requirements:
+    - independent runtime proven
+    - canonical Gate communication proven
+    - independent health and readiness proven
+    - runtime identity proven
+    - Gate admission proven
+
+  evidence_requirement_refs: []
+  decision_ref: null
+
+lifecycle:
+  family_ref: l9.lifecycle/node
+
+  applicable_state_refs:
+    - candidate
+    - validated
+    - admitted
+    - current
+    - degraded
+    - superseded
+    - retired
+
+conformance:
+  profile_refs:
+    - l9.conformance/node
+    - l9.semantic-compiler.conformance/compiler-core@1
+
+  required_classes:
+    - core
+    - capability
+    - runtime
+    - compiler
+    - projection
+    - binding
+    - provenance
+    - adapter
+
+  negative_proof_refs:
+    - l9.semantic-compiler.proof/cannot-select-architecture
+    - l9.semantic-compiler.proof/cannot-invent-missing-semantics
+    - l9.semantic-compiler.proof/cannot-default-unknown
+    - l9.semantic-compiler.proof/cannot-infer-binding-chain
+    - l9.semantic-compiler.proof/cannot-render-raw-semantic-spec
+    - l9.semantic-compiler.proof/cannot-widen-source-authority
+    - l9.semantic-compiler.proof/cannot-treat-provider-as-semantic-owner
+    - l9.semantic-compiler.proof/cannot-require-llm
+    - l9.semantic-compiler.proof/cannot-mutate-git
+    - l9.semantic-compiler.proof/cannot-merge
+    - l9.semantic-compiler.proof/cannot-deploy
+    - l9.semantic-compiler.proof/cannot-promote
+    - l9.semantic-compiler.proof/cannot-claim-target-conformance
+    - l9.semantic-compiler.proof/cannot-write-outside-authorized-root
+    - l9.semantic-compiler.proof/cannot-modify-unowned-target-region
+    - l9.semantic-compiler.proof/provider-swap-does-not-change-semantic-ir
+    - l9.semantic-compiler.proof/same-inputs-produce-same-digests
+    - l9.semantic-compiler.proof/unchanged-recompile-produces-no-change
+
+  final_conformance_required: true
+
+compatibility:
+  semantic_compatibility_refs:
+    - l9.semantic-compiler.compat/semantic-spec@1
+    - l9.semantic-compiler.compat/domain-calculus@1
+    - l9.semantic-compiler.compat/compilation-profile@1
+    - l9.semantic-compiler.compat/target-capability-profile@1
+    - l9.semantic-compiler.compat/target-binding@1
+    - l9.semantic-compiler.compat/target-ir@1
+    - l9.semantic-compiler.compat/artifact-plan@1
+    - l9.semantic-compiler.compat/compilation-receipt@1
+    - l9.semantic-compiler.compat/conformance-handoff@1
+
+  provider_compatibility_refs: []
+
+distribution:
+  artifact_forms:
+    - python_package
+
+  release_contract_refs:
+    - l9.semantic-compiler.contract/release@1
+
+build:
+  compilation_profile_ref: l9.compilation/product-build@1
+
+  source_owned_surfaces:
+    - ProductTopology
+    - SemanticSpec contract
+    - Semantic Algebra
+    - compiler pass contracts
+    - compiler-domain invariants
+    - Domain Calculus integration contract
+    - Semantic IR contract
+    - Reference Interpreter contract
+    - Target Capability Profile contract
+    - Target Binding contract
+    - TargetIR contract
+    - ArtifactPlan contract
+    - Compilation Profile contract
+    - compiled artifact contract
+    - Semantic Equivalence contract
+    - ConformanceHandoff contract
+    - CompilationReceipt contract
+    - compiler failure taxonomy
+    - compiler conformance fixtures
+    - repository projection calculus
+    - compiler-owned target bindings
+
+provenance:
+  authority_ref: Quantum-L9/l9-semantic-compiler
+  source_revision: l9.revision/semantic-compiler-v1.0.1-product-topology-candidate
+
+  source_refs:
+    - Quantum-L9/.github
+    - Quantum-L9/l9-semantic-compiler
+    - L9_Semantic_Compiler_Dev_Pack_v1.0.1
+
+unknowns:
+  material:
+    - exact admitted canonical IDs for Semantic Compiler domain contracts
+    - exact admitted canonical IDs for compiler-domain capabilities
+    - exact admitted canonical IDs for compiler ports
+    - exact compiler conformance profile coordinate
+    - exact release and runtime deployment artifact form
+    - exact Gate_SDK integration contract pending SDK ProductKind convergence
+    - exact State-backed compilation boundary after bootstrap phase
+    - exact Evidence persistence boundary after bootstrap phase
+    - exact ownership location for shared Target Capability Profiles
+    - exact ownership location for cross-product Target Bindings
+
+  non_material:
+    - additional future target languages
+    - additional future Domain Calculi
+    - additional future repository projection formats
+
+  resolution_requirement_refs:
+    - l9.semantic-compiler.requirement/contract-coordinate-admission
+    - l9.semantic-compiler.requirement/gate-sdk-convergence
+    - l9.semantic-compiler.requirement/state-backed-compilation-boundary
+    - l9.semantic-compiler.requirement/target-binding-ownership

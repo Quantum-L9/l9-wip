@@ -1,0 +1,28 @@
+schema: l9.generated-artifacts/v1
+id: l9.semantic-compiler/validate-generated@1
+source:
+  ref: ./CONTRACT.yaml
+compiler:
+  profile: l9.compilation/contract-to-json-schema@1
+artifacts:
+  - semantic_surface: validation_request
+    target:
+      path: schemas/validation-request.schema.json
+      format: json_schema
+  - semantic_surface: validation_result
+    target:
+      path: schemas/validation-result.schema.json
+      format: json_schema
+  - semantic_surface: validation_evidence
+    target:
+      path: schemas/validation-evidence.schema.json
+      format: json_schema
+  - semantic_surface: validation_receipt
+    target:
+      path: schemas/validation-receipt.schema.json
+      format: json_schema
+rules:
+  generated_files_are_derived: true
+  generated_files_are_not_independently_authoritative: true
+  source_contract_change_marks_generated_artifacts_stale: true
+  manual_semantic_edits_to_generated_artifacts_are_forbidden: true

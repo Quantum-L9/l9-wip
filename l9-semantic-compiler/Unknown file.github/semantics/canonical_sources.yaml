@@ -1,0 +1,67 @@
+schema: l9.canonical-sources/v1
+artifact_id: l9.canonical-sources/global@1
+canonical: true
+authority:
+  owner: Quantum-L9/.github
+  scope: l9_global_canonical_source_registry
+  authority_class: canonical
+sources:
+  - id: l9.source/vocabulary@1
+    path: semantics/vocabulary.yaml
+    format: yaml
+    canonical: true
+    projection_allowed: true
+    derivation_allowed: false
+  - id: l9.source/invariants@1
+    path: semantics/invariants.yaml
+    format: yaml
+    canonical: true
+    projection_allowed: true
+    derivation_allowed: true
+  - id: l9.source/contracts@1
+    path: semantics/contracts.yaml
+    format: yaml
+    canonical: true
+    projection_allowed: true
+    derivation_allowed: true
+  - id: l9.source/capabilities@1
+    path: semantics/capabilities.yaml
+    format: yaml
+    canonical: true
+    projection_allowed: true
+    derivation_allowed: true
+  - id: l9.source/compilation-profiles@1
+    path: semantics/compilation_profiles.yaml
+    format: yaml
+    canonical: true
+    projection_allowed: true
+    derivation_allowed: false
+  - id: l9.source/projection-profiles@1
+    path: semantics/projection_profiles.yaml
+    format: yaml
+    canonical: true
+    projection_allowed: true
+    derivation_allowed: false
+  - id: l9.source/architecture-patterns@1
+    path: semantics/architecture_patterns.yaml
+    format: yaml
+    canonical: true
+    projection_allowed: true
+    derivation_allowed: true
+  - id: l9.source/node-archetypes@1
+    path: semantics/node_archetypes.yaml
+    format: yaml
+    canonical: true
+    projection_allowed: true
+    derivation_allowed: true
+  - id: l9.source/technology-capabilities@1
+    path: semantics/technology_capabilities.yaml
+    format: yaml
+    canonical: true
+    projection_allowed: true
+    derivation_allowed: true
+rules:
+  canonical_sources_must_be_registered: true
+  source_ids_are_immutable: true
+  breaking_semantic_change_requires_version_increment: true
+  derived_artifacts_cannot_be_registered_as_canonical_without_admission: true

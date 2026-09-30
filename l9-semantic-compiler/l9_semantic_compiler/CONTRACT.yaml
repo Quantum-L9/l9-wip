@@ -1,0 +1,234 @@
+schema: l9.semantic-compiler-contract/v1
+contract_id: l9.semantic-compiler/generic@1
+authority:
+  class: project_contract
+  semantic_owner: l9-semantic-compiler
+purpose: >
+  Define the universal Semantic Compiler contract for transforming
+  authoritative or validated semantic inputs through ordered, profile-driven,
+  provenance-preserving compiler passes into validated intermediate
+  representations and target artifacts.
+architectural_role:
+  kind: incremental_semantic_constraint_solver
+  principle: >
+    Complex artifacts are compiled incrementally through specialized semantic
+    stages. Each stage receives only the minimum sufficient validated upstream
+    projection plus stage-specific inputs, applies only declared compiler
+    operations, performs mechanical validation, and advances authoritative
+    build state only after successful validation.
+canonical_operations:
+  - projection
+  - derivation
+  - synthesis
+  - binding_selection
+  - lowering
+  - rendering
+  - composition
+  - validation
+required_passes:
+  - derive
+  - synthesize
+  - bind
+  - lower
+  - render
+  - validate
+external_dependencies:
+  required:
+    - canonical_semantic_sources
+    - canonical_compilation_profile
+    - canonical_projection_profiles
+  future_optional:
+    reasoning_plane:
+      direct_dependency_allowed: false
+      access_path: Gate
+      transport: TransportPacket
+      integration_surface: declared_binding
+inputs:
+  required:
+    - compilation_request
+    - compilation_profile_ref
+    - compilation_profile_digest
+    - validated_build_state
+  optional:
+    - stage_specific_inputs
+    - canonical_source_refs
+    - target_constraints
+compilation_request:
+  required_fields:
+    - operation
+    - source_refs
+    - requested_output_semantic_class
+  optional_fields:
+    - stage
+    - binding_requirements
+    - target
+    - constraints
+validated_build_state:
+  required_properties:
+    - revisioned
+    - provenance_preserved
+    - upstream_validation_receipts_available
+    - historical_revisions_immutable
+stage_context:
+  rule: >
+    The compiler MUST project only the minimum sufficient validated semantics
+    required by the active stage.
+  expression: >
+    StageContext_n =
+    π_stage(ValidatedState_n)
+  must_include:
+    - required_upstream_semantics
+    - applicable_constraints
+    - applicable_profile_coordinates
+    - applicable_solver_projection
+    - source_provenance
+  must_exclude:
+    - unrelated_semantic_surfaces
+    - future_stage_details_not_required_by_current_stage
+    - stale_upstream_artifacts
+stage_execution:
+  expression: >
+    Candidate_(n+1) =
+    Compile_(n+1)(
+      StageContext_n,
+      StageSpecificInput_(n+1)
+    )
+  validation_expression: >
+    Receipt_(n+1) =
+    Validate_(
+      Solver(Stage_(n+1))
+    )(
+      Candidate_(n+1),
+      StageContext_n
+    )
+  advancement_expression: >
+    Advance(n -> n+1)
+    iff
+    AuthorityValid
+    ∧ UpstreamValid(n)
+    ∧ OutputValid(n+1)
+    ∧ PreconditionsSatisfied
+  commit_expression: >
+    S_(n+1) =
+    Commit(
+      S_n,
+      Candidate_(n+1),
+      Receipt_(n+1)
+    )
+    iff Receipt_(n+1) = PASS
+solver_selection:
+  source: canonical_compilation_profile
+  expression: >
+    Solver(Stage_n) =
+    π_solver(
+      CanonicalCompilationProfile,
+      Stage_n
+    )
+  rules:
+    - solver_must_not_be_selected_ad_hoc
+    - solver_identity_must_be_versioned
+    - solver_profile_digest_must_be_receipted
+semantic_preservation:
+  required: true
+  rules:
+    - compilation_must_not_expand_authority
+    - derived_artifact_must_not_become_canonical_implicitly
+    - downstream_pass_must_preserve_applicable_upstream_semantics
+    - semantic_loss_must_fail_validation
+    - provenance_must_survive_every_pass
+determinism:
+  required_for:
+    - projection
+    - declared_derivation
+    - binding_resolution_given_fixed_catalog
+    - lowering_given_fixed_binding
+    - rendering_given_fixed_ir_and_profile
+    - validation_given_fixed_solver_and_inputs
+  synthesis:
+    deterministic_candidate_required: false
+    deterministic_validation_required: true
+artifact_identity:
+  content_digest_required: true
+  source_digests_required: true
+  profile_digest_required: true
+  compiler_version_required: true
+staleness:
+  source_digest_change:
+    result: stale
+  profile_digest_change:
+    result: stale
+  upstream_revision_change:
+    result: evaluate_dependency_impact
+failure_localization:
+  default_rule: >
+    A failed stage MUST be repaired locally when all admitted upstream
+    assumptions remain valid.
+  upstream_contradiction_rule: >
+    If mechanical validation proves that an admitted upstream assumption is
+    invalid or unsatisfiable under newly available evidence, the compiler MUST
+    identify the earliest affected semantic artifact through provenance.
+  repair_rule: >
+    Historical artifacts MUST NOT be rewritten. A corrected upstream artifact
+    MUST be emitted as a new revision.
+  invalidation_expression: >
+    Affected(change) =
+    TransitiveDependents(changed_semantics)
+validation_results:
+  allowed:
+    - PASS
+    - FAIL
+    - UNSAT
+    - INVALID
+    - UNKNOWN
+  forbidden:
+    - PROBABLY_OK
+    - LIKELY_PASS
+    - MODEL_APPROVED
+receipts:
+  required_for:
+    - derivation
+    - synthesis
+    - binding_selection
+    - lowering
+    - rendering
+    - composition
+    - validation
+  minimum_fields:
+    - operation
+    - input_refs
+    - input_digests
+    - profile_ref
+    - profile_digest
+    - output_ref
+    - output_digest
+    - result
+authority:
+  compiler_may:
+    - project
+    - derive_when_profile_allows
+    - synthesize_candidates
+    - resolve_registered_bindings
+    - lower
+    - render
+    - mechanically_validate
+    - emit_receipts
+    - mark_artifacts_stale
+    - propose_recompilation
+  compiler_may_not:
+    - admit_global_law
+    - admit_project_semantics_without_authority
+    - self_expand_authority
+    - redefine_canonical_vocabulary
+    - redefine_canonical_profiles
+    - reinterpret_failed_validation_as_success
+invariants:
+  - COMPILER-001: no_authority_expansion
+  - COMPILER-002: provenance_is_preserved
+  - COMPILER-003: historical_artifacts_are_immutable
+  - COMPILER-004: failed_stage_blocks_downstream_advancement
+  - COMPILER-005: solver_selection_is_profile_driven
+  - COMPILER-006: validation_is_mechanical
+  - COMPILER-007: stale_inputs_are_not_silently_consumed
+  - COMPILER-008: every_semantic_transformation_is_declared
+  - COMPILER-009: rendering_does_not_invent_semantics
+  - COMPILER-010: lowering_requires_binding

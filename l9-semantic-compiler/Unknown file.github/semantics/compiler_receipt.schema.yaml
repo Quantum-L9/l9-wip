@@ -1,0 +1,48 @@
+schema: l9.schema-definition/v1
+artifact_id: l9.schema/compiler-receipt@1
+canonical: true
+type: object
+required:
+  - schema
+  - operation
+  - inputs
+  - profile
+  - output
+  - result
+properties:
+  schema:
+    const: l9.compiler-receipt/v1
+  operation:
+    enum:
+      - projection
+      - derivation
+      - synthesis
+      - binding_selection
+      - lowering
+      - rendering
+      - composition
+      - validation
+  inputs:
+    type: array
+    items:
+      required:
+        - ref
+        - digest
+  profile:
+    type: object
+    required:
+      - ref
+      - digest
+  output:
+    type: object
+    required:
+      - ref
+      - digest
+  result:
+    enum:
+      - pass
+      - fail
+      - invalid
+      - unknown
+  diagnostics:
+    type: array

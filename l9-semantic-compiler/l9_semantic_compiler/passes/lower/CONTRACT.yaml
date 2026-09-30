@@ -1,0 +1,89 @@
+schema: l9.semantic-compiler-pass-contract/v1
+contract_id: l9.semantic-compiler/lower@1
+extends:
+  - l9.semantic-compiler/pass@1
+operation: lowering
+purpose: >
+  Transform an abstract intermediate representation into a more concrete
+  intermediate representation using an already-selected applicable binding.
+semantic_question: >
+  How is this validated abstract representation realized more concretely under
+  this binding?
+inputs:
+  required:
+    - source_ir
+    - source_ir_digest
+    - selected_binding
+    - selected_binding_digest
+    - target_ir_type
+    - lowering_profile_ref
+    - lowering_profile_digest
+    - source_provenance
+preconditions:
+  - source_ir_is_validated
+  - selected_binding_is_validated
+  - source_to_target_transition_is_registered
+  - lowering_profile_is_registered
+transition:
+  required_property: abstraction_must_not_increase
+  expression: >
+    Abstraction(TargetIR)
+    <
+    Abstraction(SourceIR)
+semantic_preservation:
+  required: true
+  expression: >
+    RequiredSemantics(TargetIR)
+    ⊨
+    RequiredSemantics(SourceIR)
+allowed_operations:
+  - structural_mapping
+  - type_mapping
+  - operation_mapping
+  - constraint_mapping
+  - registered_rename
+  - target_specific_normalization
+forbidden:
+  - lower_without_binding
+  - change_semantic_owner
+  - drop_required_constraint
+  - invent_new_domain_behavior
+  - perform_target_rendering
+  - silently_change_contract
+  - introduce_unbound_provider_behavior
+outputs:
+  semantic_class: intermediate_representation
+  required:
+    - target_ir
+    - target_ir_type
+    - source_ir_ref
+    - binding_ref
+    - applied_mapping_refs
+    - preserved_constraint_refs
+    - provenance
+    - target_ir_digest
+validation:
+  required: true
+  minimum_checks:
+    - target_ir_structurally_valid
+    - abstraction_reduced
+    - required_semantics_preserved
+    - required_constraints_preserved
+    - binding_rules_followed
+    - provenance_complete
+failure_states:
+  missing_binding:
+    result: INVALID
+  unsupported_transition:
+    result: INVALID
+  semantic_loss:
+    result: FAIL
+  unresolved_mapping:
+    result: UNKNOWN
+receipt:
+  operation: lowering
+invariants:
+  - LOWER-001: lowering_requires_binding
+  - LOWER-002: lowering_reduces_abstraction
+  - LOWER-003: lowering_preserves_required_semantics
+  - LOWER-004: lowering_does_not_render

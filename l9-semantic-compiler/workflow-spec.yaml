@@ -1,0 +1,846 @@
+# Candidate WorkflowSpec for l9-semantic-compiler.
+# Exact WorkflowSpec / Workflow Calculus coordinates remain pending canonical admission.
+schema: l9.workflow-spec/v1
+workflow:
+  id: l9.workflow/semantic-compilation
+  name: semantic-compilation
+  version: 1
+  status: candidate
+  semantic_owner: Quantum-L9/l9-semantic-compiler
+  product_ref: l9.product/l9-semantic-compiler
+  repository_ref: Quantum-L9/l9-semantic-compiler
+  calculus_ref: l9.workflow-calculus/v1
+purpose:
+  statement: >
+    Execute one deterministic, fail-closed semantic compilation from exact
+    revision-bound semantic inputs through canonical Semantic IR, explicit
+    Target Binding composition, TargetIR lowering, ArtifactPlan construction,
+    deterministic rendering, independent reference interpretation, semantic
+    equivalence evaluation, and provenance-bound receipt emission.
+  primary_responsibility: >
+    Define the canonical process semantics for semantic.compile without
+    acquiring authority to invent semantics, select architecture, admit
+    outputs, deploy artifacts, or redefine target-owner conformance.
+principles:
+  - reason_upstream_compile_downstream
+  - one_admitted_semantic_meaning_many_mechanically_equivalent_realizations
+  - exact_inputs_only
+  - deterministic_given_pinned_inputs
+  - no_hidden_defaults
+  - no_hidden_provider_selection
+  - no_llm_required
+  - fail_closed
+  - provenance_preserved_through_every_stage
+  - generated_artifacts_remain_derived
+  - target_conformance_remains_owner_native
+authority:
+  architect:
+    may:
+      - specify_semantics
+      - admit_architectural_decisions_under_applicable_authority
+      - provide_exact_semantic_inputs
+  compiler:
+    may:
+      - parse
+      - validate_contracts
+      - resolve_exact_dependencies
+      - type_check
+      - dimension_check
+      - normalize
+      - expand_admitted_calculus
+      - construct_semantic_ir
+      - construct_dependency_graph
+      - compose_explicit_target_bindings
+      - validate_binding_coverage
+      - lower
+      - construct_artifact_plan
+      - render
+      - structurally_validate
+      - reference_interpret
+      - observe_target_where_applicable
+      - compare_semantic_equivalence
+      - emit_receipts
+      - emit_provenance
+      - detect_staleness
+      - return_no_change
+    may_not:
+      - invent_missing_semantics
+      - infer_ambiguous_semantics
+      - select_product_architecture
+      - widen_source_authority
+      - self_admit_output
+      - authorize_merge
+      - deploy
+      - promote_semantics
+      - redefine_domain_truth
+      - redefine_target_semantics
+      - claim_owner_native_conformance
+      - silently_select_target_binding
+      - silently_select_provider
+      - use_llm_output_as_canonical_compilation_authority
+  independent_validation:
+    owns:
+      - observation_of_compiled_behavior
+      - owner_native_conformance_where_applicable
+  governance:
+    owns:
+      - admission
+      - promotion
+      - operational_authorization_where_applicable
+inputs:
+  required:
+    semantic_spec:
+      exact_revision_required: true
+      exact_digest_required: true
+    semantic_inputs:
+      type: list
+      min_items: 0
+      every_input_requires:
+        - exact_identity
+        - exact_revision
+        - exact_digest
+        - semantic_owner
+    semantic_algebra:
+      exact_revision_required: true
+      exact_digest_required: true
+    domain_calculi:
+      type: list
+      every_item_requires:
+        - exact_identity
+        - exact_revision
+        - exact_digest
+    compilation_profile:
+      exact_revision_required: true
+      exact_digest_required: true
+    outputs:
+      type: list
+      min_items: 1
+      every_output_requires:
+        - requested_output_identity
+        - target_ir_contract
+        - explicit_binding_chain
+  conditional:
+    target_capability_profiles:
+      required_when: output_binding_requires_target_capability_validation
+    target_bindings:
+      required_when: requested_output_requires_lowering
+    target_observation_profile:
+      required_when: semantic_equivalence_requires_target_observation
+  optional:
+    prior_compilation_receipt:
+      purpose:
+        - no_change_detection
+        - incremental_recompilation
+        - prior_dependency_coordinates
+      grants_authority: false
+preconditions:
+  - invocation_authorized
+  - semantic_spec_identity_resolved
+  - semantic_spec_revision_resolved
+  - semantic_spec_digest_verified
+  - every_semantic_input_identity_resolved
+  - every_semantic_input_revision_resolved
+  - every_semantic_input_digest_verified
+  - semantic_algebra_resolved
+  - domain_calculi_resolved
+  - compilation_profile_resolved
+  - requested_outputs_declared
+  - explicit_binding_chain_declared_for_every_lowered_output
+  - no_material_semantic_unknown
+  - output_roots_authorized
+context:
+  required:
+    - invocation_identity
+    - correlation_identity
+    - exact_subject_coordinates
+    - exact_semantic_spec_coordinates
+    - exact_semantic_input_coordinates
+    - semantic_algebra_coordinates
+    - domain_calculus_coordinates
+    - compilation_profile_coordinates
+    - requested_output_coordinates
+  derived:
+    - effective_input_digest
+    - compilation_identity
+    - dependency_closure
+    - affected_output_closure
+  forbidden:
+    - ambient_head_as_exact_revision
+    - mutable_live_documentation_as_compile_authority
+    - unresolved_provider_preference
+    - implicit_binding_precedence
+    - conversation_history_as_required_semantic_input
+capabilities:
+  required:
+    - l9.capability/semantic-compilation
+  workflow_internal:
+    - parse_semantic_spec
+    - validate_semantic_contracts
+    - resolve_exact_dependencies
+    - type_check
+    - dimension_check
+    - canonical_normalization
+    - domain_calculus_expansion
+    - semantic_ir_construction
+    - dependency_graph_construction
+    - target_binding_composition
+    - target_binding_coverage_validation
+    - target_lowering
+    - artifact_planning
+    - deterministic_rendering
+    - structural_validation
+    - reference_interpretation
+    - target_observation
+    - semantic_equivalence_comparison
+    - receipt_emission
+    - provenance_emission
+  forbidden:
+    - architecture_selection
+    - semantic_invention
+    - autonomous_semantic_admission
+    - deployment_authorization
+    - repository_merge
+    - semantic_promotion
+state_machine:
+  initial_state: requested
+  terminal_states:
+    success:
+      - succeeded
+      - no_change
+    non_success:
+      - failed
+      - blocked
+  states:
+    requested:
+      class: pending
+    parsing:
+      class: executing
+    contract_validation:
+      class: executing
+    dependency_resolution:
+      class: executing
+    type_dimension_check:
+      class: executing
+    normalization:
+      class: executing
+    calculus_expansion:
+      class: executing
+    semantic_ir_construction:
+      class: executing
+    dependency_graph_construction:
+      class: executing
+    binding_composition:
+      class: executing
+    target_lowering:
+      class: executing
+    artifact_planning:
+      class: executing
+    rendering:
+      class: executing
+    structural_validation:
+      class: executing
+    reference_interpretation:
+      class: executing
+    target_observation:
+      class: executing
+    semantic_equivalence:
+      class: executing
+    receipt_emission:
+      class: executing
+    succeeded:
+      class: terminal_success
+    no_change:
+      class: terminal_success
+    failed:
+      class: terminal_failure
+    blocked:
+      class: terminal_failure
+passes:
+  - ordinal: 0
+    id: P0
+    name: parse
+    from_state: requested
+    to_state: parsing
+    operation: parse_semantic_spec
+    consumes:
+      - semantic_spec
+      - invocation_context
+    produces:
+      - parsed_semantic_spec
+    success_transition: P1
+    failure_conditions:
+      - malformed_semantic_spec
+      - unsupported_schema
+      - invalid_request_shape
+  - ordinal: 1
+    id: P1
+    name: contract_validation
+    from_state: parsing
+    to_state: contract_validation
+    operation: validate_semantic_contracts
+    consumes:
+      - parsed_semantic_spec
+      - applicable_schemas
+      - compilation_profile
+    produces:
+      - structurally_validated_semantic_spec
+    success_transition: P2
+    failure_conditions:
+      - invalid_spec
+      - invalid_profile
+      - contract_violation
+  - ordinal: 2
+    id: P2
+    name: exact_dependency_resolution
+    from_state: contract_validation
+    to_state: dependency_resolution
+    operation: resolve_exact_dependencies
+    consumes:
+      - structurally_validated_semantic_spec
+      - semantic_inputs
+      - semantic_algebra
+      - domain_calculi
+      - target_capability_profiles
+      - target_bindings
+    produces:
+      - resolved_dependency_set
+      - exact_source_coordinates
+    success_transition: P3
+    block_conditions:
+      - unresolved_reference
+      - revision_mismatch
+      - digest_mismatch
+      - missing_semantic_input
+      - missing_calculus
+      - missing_required_binding
+  - ordinal: 3
+    id: P3
+    name: type_and_dimension_checking
+    from_state: dependency_resolution
+    to_state: type_dimension_check
+    operation:
+      - type_check
+      - dimension_check
+    consumes:
+      - resolved_dependency_set
+      - structurally_validated_semantic_spec
+    produces:
+      - typed_semantic_model
+    success_transition: P4
+    failure_conditions:
+      - unknown_semantic_operator
+      - type_mismatch
+      - dimension_mismatch
+      - unsatisfied_precondition
+  - ordinal: 4
+    id: P4
+    name: canonical_normalization
+    from_state: type_dimension_check
+    to_state: normalization
+    operation: canonical_normalization
+    consumes:
+      - typed_semantic_model
+    produces:
+      - normalized_semantic_model
+    guarantees:
+      - equivalent_inputs_have_canonical_representation
+      - no_new_semantic_meaning
+    success_transition: P5
+  - ordinal: 5
+    id: P5
+    name: domain_calculus_expansion
+    from_state: normalization
+    to_state: calculus_expansion
+    operation: expand_domain_calculus
+    consumes:
+      - normalized_semantic_model
+      - exact_domain_calculi
+      - semantic_algebra
+    produces:
+      - expanded_semantic_model
+    guarantees:
+      - expansion_uses_only_admitted_calculus_rules
+      - expansion_does_not_invent_domain_truth
+    success_transition: P6
+    block_conditions:
+      - unsupported_calculus
+      - ambiguous_semantics
+      - unresolved_calculus_reference
+  - ordinal: 6
+    id: P6
+    name: semantic_ir_construction
+    from_state: calculus_expansion
+    to_state: semantic_ir_construction
+    operation: construct_semantic_ir
+    consumes:
+      - expanded_semantic_model
+    produces:
+      - semantic_ir
+    guarantees:
+      - semantic_ir_is_provider_neutral
+      - semantic_ir_preserves_source_coordinates
+    success_transition: P7
+  - ordinal: 7
+    id: P7
+    name: dependency_graph_construction
+    from_state: semantic_ir_construction
+    to_state: dependency_graph_construction
+    operation: construct_dependency_graph
+    consumes:
+      - semantic_ir
+    produces:
+      - semantic_dependency_graph
+      - compilation_dependency_closure
+    success_transition: P8
+    block_conditions:
+      - dependency_cycle_without_admitted_fixed_point_semantics
+      - unresolved_dependency
+  - ordinal: 8
+    id: P8
+    name: target_binding_composition_and_coverage_validation
+    from_state: dependency_graph_construction
+    to_state: binding_composition
+    operation:
+      - compose_target_bindings
+      - validate_binding_coverage
+    consumes:
+      - semantic_ir
+      - requested_outputs
+      - explicit_binding_chains
+      - target_capability_profiles
+      - target_bindings
+    produces:
+      - validated_binding_chains
+      - binding_coverage_report
+    guarantees:
+      - binding_order_is_explicit
+      - no_binding_precedence_is_inferred
+      - adjacent_ir_contracts_compose_exactly
+      - bindings_do_not_manufacture_source_semantics
+    success_transition: P9
+    block_conditions:
+      - target_binding_missing
+      - incompatible_binding_chain
+      - target_capability_insufficient
+      - lowering_coverage_incomplete
+      - forbidden_dependency
+  - ordinal: 9
+    id: P9
+    name: target_lowering
+    from_state: binding_composition
+    to_state: target_lowering
+    operation: lower_to_target_ir
+    consumes:
+      - semantic_ir
+      - validated_binding_chains
+    produces:
+      - target_ir_set
+    guarantees:
+      - lowering_preserves_applicable_semantics
+      - abstraction_does_not_increase
+      - no_new_semantic_decision
+    success_transition: P10
+    block_conditions:
+      - lowering_unavailable
+      - target_capability_insufficient
+  - ordinal: 10
+    id: P10
+    name: artifact_planning
+    from_state: target_lowering
+    to_state: artifact_planning
+    operation: construct_artifact_plan
+    consumes:
+      - target_ir_set
+      - compilation_dependency_closure
+      - authorized_output_roots
+    produces:
+      - artifact_plan
+    guarantees:
+      - artifact_plan_is_deterministic
+      - output_dependencies_are_explicit
+      - every_output_retains_binding_chain
+      - every_output_retains_source_provenance
+    success_transition: no_change_check
+    block_conditions:
+      - unauthorized_output_path
+      - artifact_limit_exceeded
+  - ordinal: 10.5
+    id: no_change_check
+    name: effective_change_detection
+    class: workflow_guard
+    consumes:
+      - artifact_plan
+      - prior_compilation_receipt
+    conditions:
+      - when: no_prior_receipt
+        transition: P11
+      - when: effective_inputs_changed
+        transition: P11
+      - when: artifact_plan_digest_changed
+        transition: P11
+      - when: effective_inputs_unchanged_and_outputs_current
+        transition: no_change
+    guarantees:
+      - prior_receipt_is_acceleration_only
+      - prior_receipt_does_not_become_authority
+      - unchanged_outputs_are_not_rewritten
+  - ordinal: 11
+    id: P11
+    name: rendering
+    from_state: artifact_planning
+    to_state: rendering
+    operation: render_artifact_plan
+    consumes:
+      - artifact_plan
+      - target_ir_set
+    produces:
+      - compiled_artifact_set
+    guarantees:
+      - rendering_introduces_no_new_semantic_decisions
+      - compiler_writes_only_authorized_paths
+      - unowned_authored_regions_are_preserved
+      - untrusted_generated_output_is_not_executed
+    success_transition: P12
+    failure_conditions:
+      - render_failed
+      - unauthorized_output_path
+      - compiler_owned_region_violation
+  - ordinal: 12
+    id: P12
+    name: structural_validation
+    from_state: rendering
+    to_state: structural_validation
+    operation: structurally_validate_outputs
+    consumes:
+      - compiled_artifact_set
+      - applicable_output_schemas
+    produces:
+      - structural_validation_result
+    success_transition: P13
+    failure_conditions:
+      - structural_validation_failed
+      - malformed_compiled_artifact
+  - ordinal: 13
+    id: P13
+    name: reference_interpretation
+    from_state: structural_validation
+    to_state: reference_interpretation
+    operation: reference_interpret
+    consumes:
+      - semantic_ir
+      - applicable_reference_interpreters
+    produces:
+      - reference_semantics
+    guarantees:
+      - reference_interpretation_is_independent_of_target_rendering
+    success_transition: P14
+    failure_conditions:
+      - reference_evaluation_failed
+  - ordinal: 14
+    id: P14
+    name: target_observation
+    from_state: reference_interpretation
+    to_state: target_observation
+    operation: observe_compiled_target_where_applicable
+    consumes:
+      - compiled_artifact_set
+      - target_observation_profile
+    produces:
+      - observed_target_semantics
+    conditions:
+      - when: target_observation_applicable
+        execute: true
+      - when: target_observation_not_applicable
+        produce: structural_or_projected_semantics_for_equivalence
+    success_transition: P15
+    failure_conditions:
+      - target_observation_failed
+  - ordinal: 15
+    id: P15
+    name: semantic_equivalence_comparison
+    from_state: target_observation
+    to_state: semantic_equivalence
+    operation: compare_semantic_equivalence
+    consumes:
+      - reference_semantics
+      - observed_target_semantics
+      - equivalence_mode
+    supported_equivalence_modes:
+      - EXACT
+      - SET
+      - SEQUENCE
+      - STRUCTURAL
+    deferred_equivalence_modes:
+      - NUMERIC_TOLERANCE
+      - TRACE
+    produces:
+      - semantic_equivalence_report
+      - first_divergence_report_when_applicable
+    success_transition: P16
+    failure_conditions:
+      - semantic_divergence
+    guarantees:
+      - earliest_reliable_divergence_is_reported_where_possible
+  - ordinal: 16
+    id: P16
+    name: receipt_and_provenance_emission
+    from_state: semantic_equivalence
+    to_state: receipt_emission
+    operation:
+      - emit_compilation_receipt
+      - emit_provenance
+      - emit_conformance_handoff_where_applicable
+    consumes:
+      - exact_source_coordinates
+      - semantic_ir
+      - artifact_plan
+      - compiled_artifact_set
+      - structural_validation_result
+      - semantic_equivalence_report
+      - compilation_profile
+      - compiler_identity
+      - compiler_version
+    produces:
+      - compilation_receipt
+      - provenance_record
+      - conformance_handoff
+    guarantees:
+      - receipt_binds_exact_effective_inputs
+      - receipt_binds_exact_outputs
+      - receipt_binds_exact_compiler_and_profile
+      - receipt_does_not_grant_authority
+      - conformance_handoff_does_not_claim_owner_native_conformance
+    success_transition: succeeded
+transitions:
+  global:
+    - from: any_nonterminal_state
+      when: material_semantic_unknown_detected
+      to: blocked
+    - from: any_nonterminal_state
+      when: unresolved_reference_detected
+      to: blocked
+    - from: any_nonterminal_state
+      when: source_digest_invalid
+      to: blocked
+    - from: any_nonterminal_state
+      when: authority_boundary_violation_detected
+      to: blocked
+    - from: any_nonterminal_state
+      when: deterministic_operation_failure
+      to: failed
+    - from: any_nonterminal_state
+      when: budget_exhausted
+      to: blocked
+    - from: any_nonterminal_state
+      when: deadline_exceeded
+      to: blocked
+failure_semantics:
+  fail_closed: true
+  block_on:
+    - unresolved_reference
+    - unknown_operator
+    - ambiguous_semantic_meaning
+    - type_mismatch
+    - dimension_mismatch
+    - dependency_cycle
+    - missing_target_binding
+    - incompatible_binding_chain
+    - target_capability_insufficiency
+    - unavailable_lowering
+    - invalid_source_digest
+    - semantic_divergence_where_equivalence_required
+    - unauthorized_output_path
+    - forbidden_dependency
+    - budget_exhaustion
+    - material_semantic_unknown
+  never_coerce:
+    unknown:
+      - zero
+      - false
+      - empty
+      - default
+      - pass
+      - best_effort_success
+  rules:
+    - infrastructure_failure_must_not_become_semantic_success
+    - render_failure_must_not_become_partial_success
+    - missing_binding_must_not_trigger_implicit_provider_selection
+    - semantic_divergence_must_not_be_silently_accepted
+    - failed_validation_must_not_emit_success_receipt
+recovery:
+  resumable: true
+  resume_requirements:
+    - exact_compilation_identity
+    - exact_source_coordinates
+    - exact_profile_coordinates
+    - current_upstream_digests
+    - valid_prior_stage_receipts_where_reused
+  rules:
+    - historical_stage_artifacts_are_immutable
+    - correction_creates_successor_artifact
+    - stale_stage_output_is_not_reused
+    - unchanged_valid_stage_output_may_be_reused
+    - affected_dependency_closure_controls_recompilation
+    - prior_receipt_is_evidence_not_authority
+incremental_compilation:
+  enabled: true
+  affected_rule: >
+    Recompile only the transitive dependent closure of materially changed
+    semantic inputs, profiles, calculi, bindings, or target capability facts.
+  requirements:
+    - unchanged_output_not_rewritten
+    - unchanged_valid_stage_may_be_reused
+    - changed_binding_invalidates_only_outputs_using_that_binding_chain
+    - changed_semantic_input_invalidates_its_transitive_dependents
+    - cache_has_zero_semantic_authority
+    - stale_state_is_digest_detectable
+security:
+  requirements:
+    - path_traversal_blocked
+    - absolute_unauthorized_paths_blocked
+    - compiler_owned_region_boundaries_enforced
+    - forbidden_dependency_blocked
+    - untrusted_output_not_executed
+    - arbitrary_shell_invocation_from_semantic_spec_forbidden
+    - target_provider_package_import_in_compiler_core_forbidden
+    - canonical_path_requires_no_llm_credentials
+    - canonical_path_requires_no_model_sdk
+    - canonical_path_can_run_without_network_when_all_inputs_are_present
+outputs:
+  success:
+    required:
+      - compiled_artifact_set
+      - artifact_plan
+      - semantic_equivalence_report
+      - compilation_receipt
+      - provenance_record
+    conditional:
+      - conformance_handoff
+  no_change:
+    required:
+      - no_change_result
+      - current_compilation_coordinates
+      - prior_valid_receipt_ref
+    must_not:
+      - rewrite_unchanged_artifacts
+  failure:
+    required:
+      - typed_failure
+      - failing_pass_ref
+      - exact_subject_coordinates
+      - diagnostic_coordinates
+    optional:
+      - first_divergence_report
+  blocked:
+    required:
+      - typed_block_reason
+      - unresolved_or_invalid_coordinates
+      - required_resolution
+receipts:
+  workflow_receipt:
+    ref: l9.semantic-compiler.receipt/compilation@1
+    subject: exact_semantic_compilation
+    required_bindings:
+      - semantic_spec_ref
+      - semantic_spec_digest
+      - semantic_input_refs
+      - semantic_input_digests
+      - semantic_algebra_ref
+      - domain_calculus_refs
+      - target_capability_profile_refs
+      - target_binding_refs
+      - binding_chains
+      - compilation_profile_ref
+      - compilation_profile_digest
+      - semantic_ir_digest
+      - artifact_plan_digest
+      - output_digests
+      - equivalence_result
+      - compiler_identity
+      - compiler_version
+    grants_authority: false
+conformance_handoff:
+  emit_when: target_owner_conformance_is_required
+  required:
+    - exact_compiled_subject
+    - exact_output_digests
+    - exact_source_semantic_coordinates
+    - exact_binding_chain
+    - exact_compilation_profile
+    - applicable_owner_conformance_refs
+  rules:
+    - compiler_does_not_mark_owner_native_conformance_pass
+    - handoff_is_evidence_bearing_not_authoritative
+    - independent_target_owner_remains_conformance_authority
+determinism:
+  invariant: >
+    Identical effective semantic inputs, exact dependency coordinates,
+    calculi, capability profiles, binding chains, compilation profile,
+    and compiler version produce identical canonical semantic outputs
+    and artifact digests.
+  no_change_invariant: >
+    If the effective input closure and expected output digests are unchanged,
+    the workflow terminates NO_CHANGE without rewriting artifacts.
+projection_targets:
+  # These are future Workflow Calculus realizations of this WorkflowSpec.
+  # They do not alter the workflow semantics.
+  candidates:
+    - id: human.sop
+      target_class: human_workflow
+    - id: agent.general
+      target_class: agent_instruction_surface
+    - id: github.actions
+      target_class: hosted_workflow
+      admissible_only_when:
+        - target_can_preserve_all_required_workflow_semantics
+        - authority_boundaries_are_preserved
+        - required_failure_transitions_are_representable
+        - no_semantic_step_is_silently_dropped
+    - id: skill.compatible
+      target_class: agent_skill_projection
+  universal_rule: >
+    No target projection may acquire workflow semantics absent from this
+    WorkflowSpec or silently discard required source semantics.
+validation:
+  required: true
+  acceptance:
+    - exact_pass_order_P0_through_P16
+    - every_stage_preserves_source_coordinates
+    - every_stage_preserves_exact_digests
+    - unresolved_semantics_fail_closed
+    - binding_chain_is_explicit
+    - target_capability_insufficiency_blocks
+    - reference_interpreter_is_independent_of_rendering
+    - same_inputs_produce_same_digests
+    - unchanged_second_compile_returns_NO_CHANGE
+    - affected_change_recompiles_only_dependency_closure
+    - unauthorized_output_path_blocks
+    - authored_unowned_region_is_preserved
+    - no_llm_required
+    - no_network_required_when_all_inputs_are_local
+    - no_target_provider_package_in_core
+    - semantic_divergence_reports_first_reliable_divergence
+    - compilation_receipt_binds_exact_inputs_and_outputs
+    - conformance_handoff_does_not_claim_owner_conformance
+provenance:
+  semantic_owner: Quantum-L9/l9-semantic-compiler
+  source_refs:
+    - Quantum-L9/.github
+    - Quantum-L9/l9-semantic-compiler
+    - L9_Semantic_Compiler_Dev_Pack_v1.0.1
+  source_revision: l9.revision/workflow-spec-candidate
+  source_digest: null
+unknowns:
+  material:
+    - exact admitted WorkflowSpec schema coordinate
+    - exact admitted Workflow Calculus coordinate
+    - exact workflow receipt schema coordinate
+    - exact typed failure taxonomy coordinates after v3.5 convergence
+    - exact target-observation contract
+    - exact resumable-stage receipt contract
+    - exact workflow projection binding coordinates
+  non_material:
+    - additional future workflow projection targets
+  policy:
+    material_unknowns_block_admission: true
+    unknowns_must_not_be_inferred: true
