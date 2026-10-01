@@ -1,0 +1,229 @@
+schema: l9.repository-semantics/v1
+
+repository:
+  id: null
+  name: null
+  canonical_repository: null
+  status: candidate
+
+identity:
+  repo: null
+  class: product-source-repository
+  semantic_owner: null
+
+product_binding:
+  product_ref: null
+  topology:
+    schema_ref: l9.product-topology/v1
+    source_path: product-topology.yaml
+    revision_ref: null
+    digest: null
+  exact_binding_required: true
+  stale_topology_binding_policy: fail_closed
+  inherit:
+    - product_identity
+    - product_kind
+    - product_archetype
+    - product_purpose
+    - semantic_boundary
+    - capabilities
+    - product_contracts
+    - product_relationships
+    - identity_topology
+    - effects
+    - admission_semantics
+    - lifecycle
+    - conformance_requirements
+  rules:
+    - repository_spec_must_not_restate_product_semantics_as_independent_authority
+    - product_topology_remains_authoritative_for_product_meaning
+    - repository_spec_may_project_product_semantics_but_must_not_reinterpret_them
+    - product_topology_revision_change_invalidates_affected_repository_projections
+
+mission:
+  summary: null
+  repository_responsibility: null
+
+ownership:
+  owns: []
+  does_not_own: []
+
+authority_order:
+  - global_admitted_l9_semantics
+  - exact_bound_product_topology
+  - repository_spec_for_repository_scoped_semantics
+  - repository_source_and_executable_contracts
+  - derived_repository_projections
+
+authority_rules:
+  scoped_authority_required: true
+  product_semantics_resolve_from: product_binding.topology
+  repository_semantics_resolve_from: this_repository_spec
+  derived_projection_authority: none
+  conflicts:
+    product_topology_vs_repository_spec: product_topology_wins_for_product_semantics
+    repository_spec_vs_generated_projection: repository_spec_wins
+    canonical_source_vs_generated_projection: canonical_source_wins
+    unresolved_cross_scope_conflict: fail_closed
+
+source_surfaces:
+  authoritative:
+    product:
+      - path: product-topology.yaml
+        semantic_role: product_contract
+        authority_source: product_semantic_owner
+    domain: []
+    repository:
+      - path: repository-spec.yaml
+        semantic_role: repository_contract
+        authority_source: repository_owner
+  derived: []
+  rules:
+    - derived_surface_must_reference_exact_source_semantic_digest
+    - derived_surface_must_reference_exact_projection_profile
+    - derived_surface_must_not_become_semantic_authority
+    - generated_surface_must_not_contain_unbound_independent_semantic_content
+
+repository_structure:
+  semantic_roots: []
+  implementation_roots: []
+  validation_roots: []
+  fixture_roots: []
+  documentation_roots: []
+  generated_roots: []
+  rules:
+    - canonical_semantics_must_not_live_only_in_generated_roots
+    - implementation_must_not_become_semantic_authority
+    - fixtures_must_trace_to_governing_semantics
+    - generated_files_must_be_mechanically_identifiable
+
+capabilities:
+  source: product_topology
+  independently_declared_here: false
+  expected_product_capability_refs: []
+  rules:
+    - repository_spec_does_not_create_product_capabilities
+    - capability_projection_must_preserve_product_topology_coordinates
+
+invariants:
+  - id: REPO-001
+    statement: >
+      Product semantics are inherited from the exact bound ProductTopology and
+      MUST NOT be independently restated as repository authority.
+  - id: REPO-002
+    statement: >
+      RepositorySpec owns only repository-scoped semantics not already owned by
+      ProductTopology, global semantics, or domain canonical sources.
+  - id: REPO-003
+    statement: >
+      Generated repository views are derived artifacts and MUST NOT become
+      independent semantic authorities.
+  - id: REPO-004
+    statement: >
+      Every repository projection MUST bind exact source semantic digests,
+      compiler version, projection profile coordinates, and generated artifact digest.
+  - id: REPO-005
+    statement: >
+      Material semantic input change MUST invalidate exactly the affected
+      downstream repository projection closure.
+  - id: REPO-006
+    statement: >
+      An unchanged effective semantic input closure MUST NOT cause unchanged
+      generated artifacts to be rewritten.
+  - id: REPO-007
+    statement: >
+      Human-authored repository regions outside explicitly compiler-owned
+      projection regions MUST be preserved byte-for-byte.
+  - id: REPO-008
+    statement: >
+      Repository projection compilation MUST NOT require an LLM.
+  - id: REPO-009
+    statement: >
+      Generated instruction or documentation surfaces MUST contain no independent
+      semantic law beyond their admitted source semantics.
+  - id: REPO-010
+    statement: >
+      RepositorySpec is a revision-bound semantic input and is not an alternate
+      product semantic language.
+  - id: REPO-011
+    statement: >
+      Repository projection success MUST NOT imply product admission, runtime
+      admission, deployment authorization, or target-owner conformance.
+
+forbidden:
+  - duplicate_product_semantics_in_repository_spec
+  - generated_surface_as_source_of_truth
+  - handwritten_semantic_drift_in_generated_regions
+  - independently_maintained_duplicate_capability_ledgers
+  - independently_maintained_duplicate_ownership_ledgers
+  - hidden_llm_dependency
+  - generated_projection_self_admission
+  - repository_projection_as_product_architecture_authority
+  - repository_spec_as_alternate_product_semantic_language
+  - compiler_owned_write_outside_authorized_projection_region
+
+commands:
+  validate: null
+  rules:
+    - validation_command_must_be_repository_local
+    - validation_failure_blocks_repository_projection_admission
+
+projection_compilation:
+  calculus_ref: null
+  semantic_inputs:
+    required:
+      - repository_spec
+      - product_topology
+    exact_revision_binding_required: true
+    exact_digest_binding_required: true
+  outputs: []
+  target_bindings: []
+  metadata_required_on_every_output:
+    - source_semantic_digest
+    - semantic_input_digests
+    - compiler_version
+    - projection_profile_ref
+    - projection_profile_version
+    - generated_digest
+  staleness:
+    rule: >
+      A projection is stale when any material source semantic digest or
+      applicable projection-profile digest differs from the coordinates bound
+      into the generated artifact.
+    policy: recompile_affected_dependency_closure
+  incremental_compilation:
+    enabled: true
+    prior_receipt_may_accelerate: true
+    prior_receipt_is_authority: false
+    requirements:
+      - no_change_returns_NO_CHANGE
+      - unchanged_artifact_not_rewritten
+      - cache_not_authority
+
+validation:
+  repository_projection:
+    required: true
+    acceptance:
+      - exact_product_topology_binding
+      - exact_repository_spec_binding
+      - source_change_marks_affected_outputs_stale
+      - unchanged_outputs_not_rewritten
+      - repository_spec_is_semantic_input_not_alternate_language
+      - generated_surfaces_contain_no_independent_semantic_content
+      - no_llm_dependency
+
+provenance:
+  semantic_owner: null
+  repository: null
+  source_refs: []
+  product_topology_revision: null
+  product_topology_digest: null
+  repository_spec_revision: null
+  repository_spec_digest: null
+
+unknowns:
+  material: []
+  non_material: []
+  policy:
+    material_unknowns_block_admission: true
+    unknowns_must_not_be_inferred: true

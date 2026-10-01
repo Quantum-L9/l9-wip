@@ -1,0 +1,238 @@
+schema: l9.product-topology/v1
+
+product:
+  id: null
+  kind: null
+  archetype_ref: null
+  name: null
+  versioning_family: null
+  status: candidate
+
+identity:
+  semantic_owner: null
+  semantic_scope: null
+  canonical_repository: null
+  dimensions:
+    product:
+      identity_ref: null
+    release:
+      identity_ref: null
+    runtime:
+      identity_ref: null
+    constellation:
+      identity_ref: null
+    actor:
+      identity_ref: null
+    surface:
+      identity_ref: null
+  resolution:
+    contract_ref: l9.contract/identity-resolution@1
+    assertion_schema_ref: l9.schema/identity-assertion@1
+    unknown_policy: fail_closed
+    evidence_source_refs: []
+  identity_contract_refs:
+    - l9.contract/identity-topology@1
+    - l9.contract/identity-resolution@1
+  predecessor_refs: []
+
+purpose:
+  statement: null
+  primary_responsibility: null
+  capability_refs: []
+  objectives: []
+  non_goals: []
+
+boundary:
+  owns: []
+  does_not_own: []
+  authority_boundary_refs:
+    - l9.contract/authority-boundary@1
+  semantic_boundary_refs:
+    - l9.contract/product-topology@1
+    - l9.contract/product-kind@1
+
+requirements:
+  invariant_refs: []
+  contract_refs:
+    - l9.contract/product-topology@1
+    - l9.contract/product-kind@1
+    - l9.contract/authority-boundary@1
+    - l9.contract/hard-constraint@1
+    - l9.contract/provenance-and-coordinate@1
+    - l9.contract/identity-topology@1
+    - l9.contract/identity-resolution@1
+  hard_constraints: []
+  operational_requirements: []
+
+capabilities:
+  provides: []
+  requires: []
+  optional: []
+  degraded_without: []
+  forbidden: []
+
+consumption:
+  model: null
+  public_entry_modes: []
+  invocation_contract_refs: []
+  consumer_requirements: []
+  forbidden_consumption_modes: []
+
+deployment:
+  model: null
+  deployment_unit: null
+  runtime_boundary: null
+  scaling_boundary: null
+  failure_boundary: null
+  upgrade_boundary: null
+  artifact_forms: []
+  deployment_constraints: []
+
+architecture:
+  required_pattern_refs: []
+  optional_pattern_refs: []
+  forbidden_pattern_refs: []
+  structural_constraints: []
+
+contracts:
+  public: []
+  consumed:
+    - l9.contract/product-topology@1
+  produced: []
+  required:
+    - l9.contract/authority-boundary@1
+    - l9.contract/provenance-and-coordinate@1
+  schemas: []
+
+interfaces:
+  actions: []
+  forbidden_actions: []
+
+ports:
+  inbound: []
+  outbound: []
+
+adapters:
+  inbound: []
+  outbound: []
+
+relationships:
+  products: []
+  forbidden_relationships: []
+
+bindings:
+  provider_bindings: []
+
+providers:
+  allowed: []
+  prohibited: []
+  provider_independence_required: true
+
+technology:
+  hard_constraints: []
+  preferences: []
+
+state:
+  owns_authoritative_state: null
+  cache_authority: null
+  state_semantic_refs: []
+  persistence_ports: []
+
+runtime:
+  participation_model: null
+  process_model: null
+  concurrency_model: null
+  resource_model: null
+  health_contract_refs: []
+  readiness_contract_refs: []
+
+communication:
+  constellation_boundary_required: null
+  transport_contract_refs: []
+  routing_authority_ref: null
+  forbidden_paths: []
+
+security:
+  authentication_contract_refs: []
+  authorization_contract_refs: []
+  trust_source_refs: []
+  credential_scope: []
+  isolation_requirement_refs: []
+
+configuration:
+  namespaces: []
+  forbidden: []
+
+effects:
+  effect_classes: []
+  consequential_operations: []
+  idempotency_contract_refs: []
+
+receipts:
+  emits: []
+  consumes: []
+  canonicalization_ref: l9.receipt-canonicalization/v1
+
+failure:
+  taxonomy_refs: []
+  fail_closed_conditions: []
+  degradable_conditions: []
+  unknown_outcome_rules: []
+
+recovery:
+  restart_semantics: []
+  replay_semantics: []
+  compensation_semantics: []
+
+observability:
+  capability_metrics: []
+  provider_metrics: []
+  correlation_identity_refs: []
+
+governance:
+  profile_refs: []
+  profile_selection_contract_refs: []
+  rules: []
+
+admission:
+  subject: exact_product_revision
+  authority_ref: l9.authority/product-admission
+  requirements:
+    - valid ProductTopology
+    - exact source revision
+  kind_specific_requirements: []
+  evidence_requirement_refs: []
+  decision_ref: null
+
+lifecycle:
+  family_ref: null
+  applicable_state_refs: []
+
+conformance:
+  profile_refs: []
+  required_classes: []
+  negative_proof_refs: []
+  final_conformance_required: true
+
+compatibility:
+  semantic_compatibility_refs: []
+  provider_compatibility_refs: []
+
+distribution:
+  artifact_forms: []
+  release_contract_refs: []
+
+build:
+  compilation_profile_ref: null
+  source_owned_surfaces:
+    - ProductTopology
+
+provenance:
+  authority_ref: null
+  source_revision: null
+  source_refs: []
+
+unknowns:
+  material: []
+  non_material: []
+  resolution_requirement_refs: []

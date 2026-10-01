@@ -1,0 +1,219 @@
+# Canonical WorkflowSpec template.
+# Exact WorkflowSpec / Workflow Calculus coordinates remain authority-bound.
+schema: l9.workflow-spec/v1
+
+workflow:
+  id: null
+  name: null
+  version: 1
+  status: candidate
+  semantic_owner: null
+  product_ref: null
+  repository_ref: null
+  calculus_ref: null
+
+purpose:
+  statement: null
+  primary_responsibility: null
+
+principles:
+  - exact_inputs_only
+  - deterministic_given_pinned_inputs
+  - no_hidden_defaults
+  - no_hidden_provider_selection
+  - fail_closed
+  - provenance_preserved_through_every_stage
+  - generated_artifacts_remain_derived
+
+authority:
+  roles: {}
+
+inputs:
+  required: {}
+  conditional: {}
+  optional: {}
+
+preconditions: []
+
+context:
+  required: []
+  derived: []
+  forbidden:
+    - ambient_head_as_exact_revision
+    - mutable_live_documentation_as_authority
+    - unresolved_provider_preference
+    - implicit_binding_precedence
+    - conversation_history_as_required_semantic_input
+
+capabilities:
+  required: []
+  workflow_internal: []
+  forbidden: []
+
+state_machine:
+  initial_state: requested
+  terminal_states:
+    success:
+      - succeeded
+      - no_change
+    non_success:
+      - failed
+      - blocked
+  states:
+    requested:
+      class: pending
+    succeeded:
+      class: terminal_success
+    no_change:
+      class: terminal_success
+    failed:
+      class: terminal_failure
+    blocked:
+      class: terminal_failure
+
+passes: []
+
+transitions:
+  global:
+    - from: any_nonterminal_state
+      when: material_unknown_detected
+      to: blocked
+    - from: any_nonterminal_state
+      when: unresolved_reference_detected
+      to: blocked
+    - from: any_nonterminal_state
+      when: source_digest_invalid
+      to: blocked
+    - from: any_nonterminal_state
+      when: authority_boundary_violation_detected
+      to: blocked
+    - from: any_nonterminal_state
+      when: deterministic_operation_failure
+      to: failed
+    - from: any_nonterminal_state
+      when: budget_exhausted
+      to: blocked
+    - from: any_nonterminal_state
+      when: deadline_exceeded
+      to: blocked
+
+failure_semantics:
+  fail_closed: true
+  block_on:
+    - unresolved_reference
+    - ambiguous_semantic_meaning
+    - invalid_source_digest
+    - authority_boundary_violation
+    - material_unknown
+    - budget_exhaustion
+  never_coerce:
+    unknown:
+      - zero
+      - false
+      - empty
+      - default
+      - pass
+      - best_effort_success
+  rules:
+    - infrastructure_failure_must_not_become_semantic_success
+    - failed_validation_must_not_emit_success_receipt
+
+recovery:
+  resumable: null
+  resume_requirements: []
+  rules:
+    - historical_stage_artifacts_are_immutable
+    - correction_creates_successor_artifact
+    - stale_stage_output_is_not_reused
+    - unchanged_valid_stage_output_may_be_reused
+    - prior_receipt_is_evidence_not_authority
+
+incremental_compilation:
+  enabled: null
+  affected_rule: null
+  requirements:
+    - unchanged_output_not_rewritten
+    - cache_has_zero_semantic_authority
+    - stale_state_is_digest_detectable
+
+security:
+  requirements:
+    - path_traversal_blocked
+    - absolute_unauthorized_paths_blocked
+    - forbidden_dependency_blocked
+    - untrusted_output_not_executed
+    - canonical_path_requires_no_llm_credentials
+    - canonical_path_can_run_without_network_when_all_inputs_are_present
+
+outputs:
+  success:
+    required: []
+    conditional: []
+  no_change:
+    required: []
+    must_not:
+      - rewrite_unchanged_artifacts
+  failure:
+    required:
+      - typed_failure
+      - exact_subject_coordinates
+    optional: []
+  blocked:
+    required:
+      - typed_block_reason
+      - unresolved_or_invalid_coordinates
+      - required_resolution
+
+receipts:
+  workflow_receipt:
+    ref: null
+    subject: null
+    required_bindings: []
+    grants_authority: false
+
+conformance_handoff:
+  emit_when: null
+  required: []
+  rules:
+    - handoff_is_evidence_bearing_not_authoritative
+
+determinism:
+  invariant: >
+    Identical effective inputs, exact dependency coordinates, applicable
+    profiles, bindings, and implementation version produce identical
+    canonical outputs and digests.
+  no_change_invariant: >
+    If the effective input closure and expected output digests are unchanged,
+    the workflow terminates NO_CHANGE without rewriting artifacts.
+
+projection_targets:
+  candidates: []
+  universal_rule: >
+    No target projection may acquire workflow semantics absent from this
+    WorkflowSpec or silently discard required source semantics.
+
+validation:
+  required: true
+  acceptance:
+    - every_stage_preserves_exact_coordinates
+    - every_stage_preserves_exact_digests
+    - unresolved_semantics_fail_closed
+    - same_inputs_produce_same_digests
+    - unchanged_second_execution_returns_NO_CHANGE
+    - unauthorized_output_path_blocks
+    - no_llm_required
+    - no_network_required_when_all_inputs_are_local
+    - receipt_binds_exact_inputs_and_outputs
+
+provenance:
+  semantic_owner: null
+  source_refs: []
+  source_revision: null
+  source_digest: null
+
+unknowns:
+  material: []
+  non_material: []
+  policy:
+    material_unknowns_block_admission: true
+    unknowns_must_not_be_inferred: true
