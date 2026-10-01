@@ -1,0 +1,1354 @@
+schema: l9.product-topology/v1
+
+product:
+  id: l9-world-model
+  kind: node
+  archetype_ref: null
+  name: L9 World Model
+  versioning_family: semantic_version
+  status: candidate
+
+identity:
+  semantic_owner: Quantum-L9/l9-world-model
+  semantic_scope: canonical_modeled_world_state
+  canonical_repository: Quantum-L9/l9-world-model
+  dimensions:
+    product:
+      identity_ref: l9.product/l9-world-model
+    release:
+      identity_ref: l9.release/l9-world-model
+    runtime:
+      identity_ref: l9.runtime/l9-world-model
+    constellation:
+      identity_ref: l9.constellation/l9-world-model
+    actor:
+      identity_ref: null
+    surface:
+      identity_ref: null
+  resolution:
+    contract_ref: l9.contract/identity-resolution@1
+    assertion_schema_ref: l9.schema/identity-assertion@1
+    unknown_policy: fail_closed
+    evidence_source_refs: []
+  identity_contract_refs:
+    - l9.contract/identity-topology@1
+    - l9.contract/identity-resolution@1
+  predecessor_refs:
+    - Quantum-L9/Cursor-Governance/WIP/World Model.md
+    - Quantum-L9/Cursor-Governance/WIP/Architecture .md
+    - Quantum-L9/l9-wip:extract/quantum-animation/Quantum Animation/01_quantum_animation_world_model_build_spec.yaml
+
+purpose:
+  statement: >
+    Provide one provider-neutral L9 World Model capability that maintains,
+    reconstructs, resolves, branches, explains, compares, and projects a
+    canonical modeled representation of a domain world at exact coordinates
+    from admitted typed world events under explicitly bound World Domain
+    semantics, while preserving source authority, provenance, revision
+    history, hypothetical isolation, deterministic replay, and derived-view
+    non-authority.
+  primary_responsibility: >
+    Own the canonical semantics and runtime behavior required to represent a
+    modeled world as exact coordinate-bound revisions produced by deterministic
+    reduction of admitted WorldEvents under an exact World Domain binding.
+  capability_refs:
+    - l9.world-model.capability/resolve
+    - l9.world-model.capability/query
+    - l9.world-model.capability/observe
+    - l9.world-model.capability/history
+    - l9.world-model.capability/lineage
+    - l9.world-model.capability/diff
+    - l9.world-model.capability/branch
+    - l9.world-model.capability/project
+  objectives:
+    - provide one reusable world-model semantic core across heterogeneous domains
+    - preserve strict separation between global World Model semantics and World Domain semantics
+    - maintain exact coordinate-bound modeled state
+    - maintain immutable revision lineage
+    - ensure deterministic event reduction
+    - preserve external source authority
+    - preserve provenance from modeled state to establishing events and supporting evidence
+    - support exact historical reconstruction
+    - support bounded current-state resolution and query
+    - support causal lineage reconstruction
+    - support exact state comparison across coordinates
+    - support isolated hypothetical branches
+    - support deterministic replay
+    - support provider-neutral persistence
+    - support provider-neutral projection
+    - support replaceable provider realizations
+    - support multiple derived representations without semantic migration
+    - permit domains to specialize world semantics without forking the world-model runtime
+    - preserve Unknown, stale, partial, conflicting, degraded, and unavailable states explicitly
+    - prevent projections from becoming competing sources of truth
+    - prevent memory from becoming modeled-world authority
+    - prevent provider identity from becoming product semantics
+    - minimize core implementation surface
+    - maximize reusable domain leverage
+  non_goals:
+    - own external source-system truth outside the modeled-world semantic boundary
+    - own WorkItem state
+    - own campaign continuity
+    - acquire external evidence
+    - own evidentiary proof
+    - own research semantics
+    - own ingest semantics
+    - own durable semantic memory
+    - own context compilation
+    - perform architectural reasoning
+    - perform formal reasoning
+    - perform probabilistic reasoning
+    - perform numerical reasoning
+    - select plans or interventions
+    - execute external mutations
+    - authorize external actions
+    - grant deployment authority
+    - grant product admission
+    - become a general-purpose database
+    - become a graph database
+    - become a graph-memory engine
+    - expose provider-native schemas as canonical World Model semantics
+    - expose provider-native graph models as canonical World Model semantics
+    - expose provider-native storage models as canonical World Model semantics
+    - make retrieved memory authoritative
+    - make projections authoritative
+    - make visualizations authoritative
+    - make hypothetical state canonical
+    - infer missing World Domain semantics
+    - silently promote observations to modeled-world state
+    - treat transport success as semantic success
+    - require a specific persistence technology
+    - require a specific graph technology
+    - require a specific memory technology
+    - require a specific query language
+    - require an LLM in canonical observation admission or canonical reduction
+
+boundary:
+  owns:
+    - world identity semantics
+    - exact WorldCoordinate semantics
+    - persistent WorldEntity identity semantics
+    - StateAddress semantics
+    - StateCell semantics
+    - WorldObservation candidate semantics
+    - observation-admission semantics
+    - WorldEvent semantics
+    - WorldEvent acceptance semantics
+    - canonical modeled-world-state semantics
+    - WorldRevision semantics
+    - WorldSnapshot semantics
+    - deterministic world-reduction semantics
+    - exact-state reconstruction semantics
+    - exact historical replay semantics
+    - causal world-lineage semantics
+    - world history semantics
+    - exact world-state diff semantics
+    - bounded world-query semantics
+    - WorldBranch semantics
+    - hypothetical-event semantics
+    - branch isolation semantics
+    - branch invalidation semantics
+    - branch rebase semantics
+    - World Domain binding semantics
+    - World Domain compatibility semantics
+    - projection-request semantics
+    - projection-result semantics
+    - projection provenance semantics
+    - derived projection non-authority semantics
+    - canonical modeled-state transition semantics
+    - modeled-state revision conflict semantics
+    - observation-admission receipt semantics
+    - world-transition receipt semantics
+    - world-query receipt semantics
+    - world-branch receipt semantics
+    - world-projection receipt semantics
+    - world capability failure semantics
+  does_not_own:
+    - global L9 semantic authority
+    - ProductTopology semantics
+    - ProductKind semantics
+    - global identity semantics
+    - source-system business truth
+    - repository source truth
+    - Git source-tree truth
+    - external runtime truth
+    - WorkItem state semantics
+    - campaign state semantics
+    - evidence acquisition
+    - evidence proof semantics
+    - memory semantics
+    - context compilation semantics
+    - research semantics
+    - ingest semantics
+    - reasoning semantics
+    - architectural synthesis
+    - planning semantics
+    - execution authority
+    - mutation authority
+    - routing authority
+    - admission authority
+    - provider capability truth
+    - database semantics
+    - graph-engine semantics
+    - graph-memory semantics
+    - vector-retrieval semantics
+    - transport semantics
+    - domain-specific entity meaning
+    - domain-specific event meaning
+    - domain-specific relation meaning
+    - domain-specific state-plane meaning
+    - domain-specific coordinate meaning
+    - domain-specific observation-admission law
+    - domain-specific reducer law
+    - domain-specific projection meaning
+    - deployment authority
+    - external artifact promotion
+    - provider selection authority
+    - derived-view authority
+  authority_boundary_refs:
+    - l9.contract/authority-boundary@1
+  semantic_boundary_refs:
+    - l9.contract/product-topology@1
+    - l9.contract/product-kind@1
+    - l9.world-model.contract/world-domain@1
+    - l9.world-model.contract/world-state@1
+    - l9.world-model.contract/world-event@1
+
+requirements:
+  invariant_refs:
+    - l9.world-model.invariant/one-address-per-material-state-value@1
+    - l9.world-model.invariant/exact-world-coordinate@1
+    - l9.world-model.invariant/entity-identity-state-separation@1
+    - l9.world-model.invariant/event-only-canonical-transition@1
+    - l9.world-model.invariant/observation-is-not-state@1
+    - l9.world-model.invariant/source-authority-preserved@1
+    - l9.world-model.invariant/deterministic-reduction@1
+    - l9.world-model.invariant/revision-lineage@1
+    - l9.world-model.invariant/provenance-complete@1
+    - l9.world-model.invariant/history-immutable@1
+    - l9.world-model.invariant/replay-equivalence@1
+    - l9.world-model.invariant/domain-bound@1
+    - l9.world-model.invariant/domain-subordinate@1
+    - l9.world-model.invariant/domain-semantics-not-hardcoded@1
+    - l9.world-model.invariant/branch-isolation@1
+    - l9.world-model.invariant/hypothetical-noncanonical@1
+    - l9.world-model.invariant/branch-does-not-execute@1
+    - l9.world-model.invariant/projection-derived@1
+    - l9.world-model.invariant/projection-provider-neutral@1
+    - l9.world-model.invariant/persistence-provider-neutral@1
+    - l9.world-model.invariant/memory-provider-neutral@1
+    - l9.world-model.invariant/representation-neutral@1
+    - l9.world-model.invariant/unknown-preserved@1
+    - l9.world-model.invariant/stale-not-current@1
+    - l9.world-model.invariant/unavailable-not-negative@1
+    - l9.world-model.invariant/transport-not-semantic-success@1
+    - l9.world-model.invariant/query-does-not-authorize@1
+    - l9.world-model.invariant/projection-does-not-authorize@1
+    - l9.world-model.invariant/receipt-does-not-authorize@1
+    - l9.world-model.invariant/domain-cannot-weaken-core@1
+    - l9.world-model.invariant/exact-input-transition@1
+    - l9.world-model.invariant/no-hidden-provider-selection@1
+    - l9.world-model.invariant/no-hidden-domain-selection@1
+    - l9.world-model.invariant/no-llm-canonical-reducer@1
+    - l9.world-model.invariant/no-direct-peer-store-access@1
+    - l9.world-model.invariant/no-provider-schema-as-world-schema@1
+  contract_refs:
+    - l9.contract/product-topology@1
+    - l9.contract/product-kind@1
+    - l9.contract/authority-boundary@1
+    - l9.contract/hard-constraint@1
+    - l9.contract/provenance-and-coordinate@1
+    - l9.contract/identity-topology@1
+    - l9.contract/identity-resolution@1
+    - l9.world-model.contract/world-domain@1
+    - l9.world-model.contract/world-coordinate@1
+    - l9.world-model.contract/world-entity@1
+    - l9.world-model.contract/state-address@1
+    - l9.world-model.contract/state-cell@1
+    - l9.world-model.contract/world-observation@1
+    - l9.world-model.contract/observation-admission@1
+    - l9.world-model.contract/world-event@1
+    - l9.world-model.contract/world-state@1
+    - l9.world-model.contract/world-revision@1
+    - l9.world-model.contract/world-snapshot@1
+    - l9.world-model.contract/world-branch@1
+    - l9.world-model.contract/world-query@1
+    - l9.world-model.contract/world-projection@1
+    - l9.world-model.contract/world-state-persistence@1
+    - l9.world-model.contract/world-transition-transaction@1
+  hard_constraints:
+    - every material authoritative modeled state value has an exact StateAddress
+    - every authoritative modeled state value is valid only at an exact WorldCoordinate
+    - persistent WorldEntity identity is separate from mutable modeled state
+    - canonical modeled state changes only through admitted typed WorldEvents
+    - WorldObservations cannot directly mutate canonical modeled state
+    - observation admission preserves source authority and exact evidence coordinates
+    - source-owned truth remains source-owned after modeling
+    - modeled-world authority never launders or transfers source-system authority
+    - canonical world reduction is deterministic
+    - canonical world reduction does not require an LLM
+    - identical exact reduction inputs produce identical successor state and digest
+    - every WorldRevision identifies its exact predecessor revision
+    - every WorldRevision identifies the exact accepted event or atomic accepted event set that established it
+    - every material StateCell identifies its establishing event
+    - every material StateCell preserves applicable source and evidence provenance
+    - every WorldSnapshot binds exact world revision and exact domain binding
+    - historical revisions are immutable
+    - corrections create successor events and successor revisions
+    - historical correction never rewrites an earlier WorldRevision
+    - replay from accepted events reconstructs the same modeled state as the corresponding valid snapshot
+    - exact World Domain identity revision and digest bind every canonical reduction
+    - unresolved World Domain semantics block canonical transition
+    - incompatible World Domain versions never silently compose
+    - domain-specific semantics never become hidden global World Model semantics
+    - hypothetical branches remain isolated from canonical modeled state
+    - hypothetical events remain noncanonical
+    - branch promotion cannot copy hypothetical state directly into canonical state
+    - a branch-inspired real transition must be independently authorized executed observed admitted and reduced
+    - projections remain derived and rebuildable
+    - projection failure cannot redefine canonical state
+    - projection provider identity cannot define World Model semantics
+    - persistence provider identity cannot define World Model semantics
+    - memory provider identity cannot define World Model semantics
+    - graph representation is not required by canonical World Model semantics
+    - property-graph semantics are not required by canonical World Model semantics
+    - vector-memory semantics are not required by canonical World Model semantics
+    - provider substitution does not change product semantics
+    - missing evidence remains explicit
+    - stale evidence remains explicit
+    - conflicting observations remain explicit until resolved by applicable admission semantics
+    - unavailable observation sources do not create negative world assertions
+    - transport success does not constitute observation admission
+    - query success does not grant mutation authority
+    - projection success does not grant mutation authority
+    - receipt generation does not grant mutation authority
+    - World Domains cannot redefine global World Model invariants
+    - material Unknown affecting canonical transition validity blocks transition
+    - bounded queries preserve exact coordinate and revision metadata
+    - canonical history remains reconstructible from revision and event lineage
+    - provider-native identities do not replace WorldEntity identity
+    - provider-native timestamps do not silently replace WorldCoordinate semantics
+    - direct backing-store reads by consumers are forbidden
+    - direct backing-store writes by consumers are forbidden
+  operational_requirements:
+    - independently deployable
+    - independently scalable
+    - independently health-checkable
+    - independently readiness-checkable
+    - exact runtime identity
+    - canonical L9 constellation transport for cross-node invocation
+    - bounded query execution
+    - bounded branch execution
+    - bounded projection execution
+    - explicit revision conflict detection
+    - exact World Domain binding validation
+    - exact state reconstruction
+    - snapshot and replay validation
+    - explicit provider degradation
+    - explicit projection degradation
+    - explicit stale-result semantics
+    - explicit unavailable-result semantics
+    - explicit conflict semantics
+    - no direct peer database access
+    - no direct peer routing
+    - no hidden provider selection
+    - no hidden World Domain selection
+    - no hidden fallback that changes semantics
+    - no cross-world scope escape
+    - no authority gain from data availability
+
+capabilities:
+  provides:
+    - capability_ref: l9.world-model.capability/resolve
+      contract_refs:
+        - l9.world-model.contract/world-resolve@1
+      semantics: >
+        Resolve canonical modeled world state at an exact WorldCoordinate and
+        WorldRevision or return explicit unavailable stale conflicting or
+        insufficient status.
+    - capability_ref: l9.world-model.capability/query
+      contract_refs:
+        - l9.world-model.contract/world-query@1
+      semantics: >
+        Query a bounded subset of canonical modeled world state while
+        preserving revision coordinate provenance coverage and degradation.
+    - capability_ref: l9.world-model.capability/observe
+      contract_refs:
+        - l9.world-model.contract/world-observation@1
+        - l9.world-model.contract/observation-admission@1
+        - l9.world-model.contract/canonical-world-transition@1
+      semantics: >
+        Evaluate an evidence-bound candidate observation under exact World
+        Domain admission semantics and, when admitted and authorized, commit
+        the resulting canonical WorldEvent transition.
+    - capability_ref: l9.world-model.capability/history
+      contract_refs:
+        - l9.world-model.contract/world-history@1
+      semantics: >
+        Resolve canonical revision and event history for a world subject scope
+        or StateAddress.
+    - capability_ref: l9.world-model.capability/lineage
+      contract_refs:
+        - l9.world-model.contract/world-lineage@1
+      semantics: >
+        Explain why modeled state is present by tracing StateCells through
+        establishing events supporting evidence source authority and causal
+        lineage.
+    - capability_ref: l9.world-model.capability/diff
+      contract_refs:
+        - l9.world-model.contract/world-diff@1
+      semantics: >
+        Compare two exact WorldCoordinates or WorldRevisions without silently
+        collapsing Unknown unavailable stale or incomparable state.
+    - capability_ref: l9.world-model.capability/branch
+      contract_refs:
+        - l9.world-model.contract/world-branch@1
+      semantics: >
+        Create and resolve isolated noncanonical hypothetical trajectories from
+        an exact canonical base revision without mutating canonical modeled
+        world state.
+    - capability_ref: l9.world-model.capability/project
+      contract_refs:
+        - l9.world-model.contract/world-projection@1
+      semantics: >
+        Produce a rebuildable target representation from exact modeled world
+        state under an explicit projection profile without granting authority
+        to the target representation.
+  requires: []
+  optional:
+    - capability_ref: l9.evidence.capability/verify
+      contract_refs: []
+    - capability_ref: l9.memory.capability/publish
+      contract_refs: []
+    - capability_ref: l9.semantic-compiler.capability/compile
+      contract_refs: []
+  degraded_without:
+    - capability_ref: l9.evidence.capability/verify
+      contract_refs: []
+  forbidden:
+    - l9.world-model.capability/external-source-mutation
+    - l9.world-model.capability/evidence-acquisition
+    - l9.world-model.capability/evidence-ownership
+    - l9.world-model.capability/memory-ownership
+    - l9.world-model.capability/context-compilation
+    - l9.world-model.capability/reasoning
+    - l9.world-model.capability/architecture-selection
+    - l9.world-model.capability/routing
+    - l9.world-model.capability/provider-authority
+    - l9.world-model.capability/semantic-promotion
+    - l9.world-model.capability/external-action-execution
+
+consumption:
+  model: remote_invocation
+  public_entry_modes:
+    - constellation
+  invocation_contract_refs:
+    - l9.world-model.contract/world-resolve@1
+    - l9.world-model.contract/world-query@1
+    - l9.world-model.contract/world-observation@1
+    - l9.world-model.contract/world-history@1
+    - l9.world-model.contract/world-lineage@1
+    - l9.world-model.contract/world-diff@1
+    - l9.world-model.contract/world-branch@1
+    - l9.world-model.contract/world-projection@1
+  consumer_requirements:
+    - exact world identity
+    - exact requested operation
+    - bounded query branch or projection scope where applicable
+    - explicit authorization for consequential operations
+    - exact expected WorldRevision for canonical state transition
+    - exact World Domain binding where not already resolvable from world identity
+    - explicit handling of Unknown degraded stale and conflicting outcomes
+  forbidden_consumption_modes:
+    - direct_peer_database_access
+    - direct_peer_backing_store_read
+    - direct_peer_backing_store_write
+    - provider_native_api_as_world_contract
+    - persistence_adapter_as_public_world_api
+    - projection_provider_as_public_world_api
+    - graph_provider_as_public_world_api
+    - memory_provider_as_public_world_api
+    - ambient_conversation_history_as_required_world_state
+    - retrieved_memory_as_canonical_world_state
+    - projection_as_canonical_world_state
+    - hypothetical_branch_as_canonical_world_state
+
+deployment:
+  model: independent_runtime
+  deployment_unit: node_runtime
+  runtime_boundary: independent_world_model_runtime
+  scaling_boundary: world_identity_and_declared_partition_boundary
+  failure_boundary: world_model_runtime_and_world_partition
+  upgrade_boundary: world_model_release_plus_domain_compatibility_boundary
+  artifact_forms:
+    - container_image
+    - source_distribution
+  deployment_constraints:
+    - semantic core remains independently testable without constellation transport
+    - deterministic reducer remains independently testable without persistence provider
+    - deterministic reducer remains independently testable without projection provider
+    - deterministic reducer remains independently testable without memory capability
+    - canonical reduction path requires no LLM credentials
+    - provider bindings remain deployment concerns
+    - deployment never self-admits the product
+    - deployment never self-admits the runtime
+    - persistence-provider replacement requires conformance proof
+    - projection-provider replacement requires conformance proof
+    - exact runtime identity remains observable
+    - health and readiness are independently exposed
+    - no provider-specific schema becomes canonical World Model schema
+
+architecture:
+  required_pattern_refs:
+    - l9.pattern/semantic-core-gate-adapter@1
+    - l9.pattern/runnable-node@1
+    - l9.pattern/provider-neutral-persistence@1
+    - l9.pattern/read-model-non-authority@1
+    - l9.pattern/global-plus-domain-layering@1
+    - l9.pattern/reference-model-conformance@1
+  optional_pattern_refs:
+    - l9.pattern/atomic-state-receipt-journal-outbox@1
+    - l9.pattern/canonical-source-derived-projections@1
+    - l9.pattern/facts-plus-lineage-compiled-views@1
+    - l9.pattern/fixture-backed-conformance@1
+  forbidden_pattern_refs: []
+  structural_constraints:
+    - World Model semantic core is independent from constellation transport mechanics
+    - World Model semantic core is independent from persistence-provider mechanics
+    - World Model semantic core is independent from projection-provider mechanics
+    - World Model semantic core is independent from memory-provider mechanics
+    - World Model semantic core contains no domain-specific entity vocabulary
+    - World Model semantic core contains no domain-specific event vocabulary
+    - World Model semantic core contains no domain-specific relationship vocabulary
+    - World Model semantic core contains no provider-specific graph vocabulary
+    - World Domain semantics bind through an explicit extension contract
+    - global World Model law outranks World Domain specialization
+    - World Domain specialization cannot weaken core invariants
+    - canonical state transition is observation admission followed by WorldEvent followed by deterministic reduction followed by revision commit
+    - canonical state transition does not depend on derived projections
+    - canonical state transition does not depend on memory publication
+    - canonical state transition does not depend on visualization
+    - canonical state transition does not depend on graph materialization
+    - canonical state transition does not depend on LLM judgment
+    - derived read models are disposable and rebuildable
+    - canonical modeled state is reconstructible without derived read models
+    - branches are isolated from canonical revisions
+    - branch operations never imply external execution
+    - exact WorldCoordinates are preserved across resolve query history lineage diff branch and projection operations
+    - provider replacement does not alter public semantic contracts
+    - source-system authority remains externally owned
+    - modeled-world authority remains scoped to the admitted modeled representation
+
+contracts:
+  public:
+    - l9.world-model.contract/world-domain@1
+    - l9.world-model.contract/world-coordinate@1
+    - l9.world-model.contract/world-entity@1
+    - l9.world-model.contract/state-address@1
+    - l9.world-model.contract/state-cell@1
+    - l9.world-model.contract/world-observation@1
+    - l9.world-model.contract/observation-admission@1
+    - l9.world-model.contract/world-event@1
+    - l9.world-model.contract/world-state@1
+    - l9.world-model.contract/world-revision@1
+    - l9.world-model.contract/world-snapshot@1
+    - l9.world-model.contract/world-resolve@1
+    - l9.world-model.contract/world-query@1
+    - l9.world-model.contract/world-history@1
+    - l9.world-model.contract/world-lineage@1
+    - l9.world-model.contract/world-diff@1
+    - l9.world-model.contract/world-branch@1
+    - l9.world-model.contract/world-projection@1
+    - l9.world-model.contract/domain-binding@1
+    - l9.world-model.contract/world-state-persistence@1
+    - l9.world-model.contract/world-transition-transaction@1
+    - l9.world-model.contract/canonical-world-transition@1
+    - l9.world-model.contract/projection-non-authority@1
+    - l9.world-model.contract/health@1
+    - l9.world-model.contract/readiness@1
+  consumed:
+    - l9.contract/product-topology@1
+    - l9.contract/product-kind@1
+    - l9.contract/authority-boundary@1
+    - l9.contract/hard-constraint@1
+    - l9.contract/provenance-and-coordinate@1
+    - l9.contract/identity-topology@1
+    - l9.contract/identity-resolution@1
+  produced:
+    - l9.world-model.contract/world-state@1
+    - l9.world-model.contract/world-revision@1
+    - l9.world-model.contract/world-snapshot@1
+    - l9.world-model.contract/world-transition-receipt@1
+    - l9.world-model.contract/observation-admission-receipt@1
+    - l9.world-model.contract/world-query-receipt@1
+    - l9.world-model.contract/world-branch-receipt@1
+    - l9.world-model.contract/world-projection-receipt@1
+  required:
+    - l9.contract/authority-boundary@1
+    - l9.contract/provenance-and-coordinate@1
+    - l9.contract/hard-constraint@1
+  schemas:
+    - l9.world-model.schema/world-domain@1
+    - l9.world-model.schema/world-coordinate@1
+    - l9.world-model.schema/world-entity@1
+    - l9.world-model.schema/state-address@1
+    - l9.world-model.schema/state-cell@1
+    - l9.world-model.schema/world-observation@1
+    - l9.world-model.schema/world-event@1
+    - l9.world-model.schema/world-state@1
+    - l9.world-model.schema/world-revision@1
+    - l9.world-model.schema/world-snapshot@1
+    - l9.world-model.schema/world-branch@1
+    - l9.world-model.schema/world-projection@1
+    - l9.world-model.schema/world-transition-receipt@1
+
+interfaces:
+  actions:
+    - id: world.resolve
+      capability_ref: l9.world-model.capability/resolve
+      contract_ref: l9.world-model.contract/world-resolve@1
+      effect_class: read
+    - id: world.query
+      capability_ref: l9.world-model.capability/query
+      contract_ref: l9.world-model.contract/world-query@1
+      effect_class: read
+    - id: world.observe
+      capability_ref: l9.world-model.capability/observe
+      contract_ref: l9.world-model.contract/world-observation@1
+      effect_class: canonical_modeled_state_transition
+    - id: world.history
+      capability_ref: l9.world-model.capability/history
+      contract_ref: l9.world-model.contract/world-history@1
+      effect_class: read
+    - id: world.lineage
+      capability_ref: l9.world-model.capability/lineage
+      contract_ref: l9.world-model.contract/world-lineage@1
+      effect_class: read
+    - id: world.diff
+      capability_ref: l9.world-model.capability/diff
+      contract_ref: l9.world-model.contract/world-diff@1
+      effect_class: read
+    - id: world.branch
+      capability_ref: l9.world-model.capability/branch
+      contract_ref: l9.world-model.contract/world-branch@1
+      effect_class: noncanonical_hypothetical_state
+    - id: world.project
+      capability_ref: l9.world-model.capability/project
+      contract_ref: l9.world-model.contract/world-projection@1
+      effect_class: derived_artifact_production
+  forbidden_actions:
+    - world.execute_external_action
+    - world.mutate_source_system
+    - world.authorize_external_action
+    - world.promote_memory_to_truth
+    - world.promote_projection_to_truth
+    - world.promote_hypothetical_branch_to_canon
+    - world.infer_missing_domain_semantics
+    - world.override_source_authority
+    - world.select_provider_as_semantic_owner
+    - world.route_peer_directly
+    - world.rewrite_historical_revision
+
+ports:
+  inbound:
+    - id: world-capability
+      contract_refs:
+        - l9.world-model.contract/world-resolve@1
+        - l9.world-model.contract/world-query@1
+        - l9.world-model.contract/world-observation@1
+        - l9.world-model.contract/world-history@1
+        - l9.world-model.contract/world-lineage@1
+        - l9.world-model.contract/world-diff@1
+        - l9.world-model.contract/world-branch@1
+        - l9.world-model.contract/world-projection@1
+  outbound: []
+
+adapters:
+  inbound:
+    - id: canonical-transport-adapter
+      role: translate canonical L9 transport invocation into World Model capability requests without altering semantic intent
+  outbound:
+    - id: world-state-persistence-adapter
+      role: implement the provider-neutral WorldStatePersistence contract
+    - id: world-projection-adapter
+      role: implement declared projection profiles without acquiring modeled-world authority
+    - id: world-domain-adapter
+      role: bind an admitted World Domain to the reusable World Model core without redefining global World Model semantics
+
+relationships:
+  products: []
+  forbidden_relationships:
+    - provider_as_semantic_owner
+    - graph_engine_as_world_model
+    - graph_memory_as_world_model
+    - memory_service_as_world_state_authority
+    - context_service_as_world_state_authority
+    - WorkItem_state_service_as_world_semantic_owner
+    - projection_provider_as_canonical_state
+    - visualization_as_canonical_state
+    - direct_peer_backing_store_dependency
+
+bindings:
+  provider_bindings: []
+
+providers:
+  allowed: []
+  prohibited:
+    - provider_as_world_semantic_owner
+    - persistence_provider_as_world_semantic_owner
+    - projection_provider_as_world_semantic_owner
+    - graph_provider_as_world_semantic_owner
+    - memory_provider_as_world_semantic_owner
+    - transport_provider_as_world_semantic_owner
+    - llm_as_canonical_world_reducer
+    - llm_as_implicit_observation_admission_authority
+    - provider_native_schema_as_WorldDomain_schema
+    - provider_native_identity_as_WorldEntity_identity
+  provider_independence_required: true
+
+technology:
+  hard_constraints:
+    - canonical World Model semantics remain independent of storage technology
+    - canonical World Model semantics remain independent of graph technology
+    - canonical World Model semantics remain independent of memory technology
+    - canonical World Model semantics remain independent of query-provider technology
+    - canonical World Model semantics remain independent of transport implementation
+    - canonical World Model semantics remain independent of visualization technology
+    - canonical World Model semantics remain independent of LLM provider
+    - canonical World Model semantics remain independent of vector database technology
+    - canonical World Model semantics remain independent of property-graph technology
+    - canonical World Model semantics remain independent of relational-database technology
+    - canonical world reduction is deterministic
+    - canonical world reduction requires no LLM
+    - canonical state is reconstructible without any derived projection provider
+  preferences:
+    - minimal implementation surface
+    - deterministic local reference implementation
+    - adapters over bespoke infrastructure
+    - reusable L9 capabilities before new provider-specific implementations
+    - simple provider substitution
+    - standard serialization formats
+    - explicit schema validation
+    - content-addressed receipts and artifacts where applicable
+    - incremental projection rebuild where applicable
+
+state:
+  owns_authoritative_state: true
+  cache_authority: none
+  state_semantic_refs:
+    - l9.world-model.contract/world-state@1
+    - l9.world-model.contract/world-revision@1
+    - l9.world-model.contract/world-snapshot@1
+    - l9.world-model.contract/world-event@1
+    - l9.world-model.contract/world-branch@1
+  persistence_ports:
+    - id: world-state-persistence
+      contract_ref: l9.world-model.contract/world-state-persistence@1
+      semantics: >
+        Persist exact WorldRevisions, immutable canonical WorldEvents,
+        checkpoints or snapshots, and concurrency metadata without redefining
+        World Model semantics.
+      authority: implementation_only
+      provider_binding: null
+  state_rules:
+    - authoritative state means canonical modeled-world state within the World Model semantic boundary
+    - authoritative modeled-world state does not transfer authority from external source systems
+    - every canonical revision is immutable
+    - every canonical mutation is revision-checked
+    - every canonical mutation is event-backed
+    - every canonical mutation emits a receipt
+    - caches and read models have zero canonical-state authority
+    - WorldBranches remain explicitly noncanonical
+    - state provider replacement cannot change canonical state semantics
+
+runtime:
+  participation_model: constellation_node
+  process_model: independent_service
+  concurrency_model: revision_checked_transition_with_provider_neutral_fencing_or_equivalent_atomicity
+  resource_model: bounded_by_world_scope_operation_scope_query_bounds_branch_bounds_and_projection_bounds
+  health_contract_refs:
+    - l9.world-model.contract/health@1
+  readiness_contract_refs:
+    - l9.world-model.contract/readiness@1
+  runtime_requirements:
+    - runtime identity is exact
+    - runtime release identity is observable
+    - current World Domain compatibility is observable
+    - persistence availability is observable
+    - provider degradation is observable
+    - query saturation is observable
+    - projection degradation is observable
+    - revision conflict rates are observable
+    - reducer failures are observable
+    - replay verification failures are observable
+    - semantic health remains distinct from transport health
+
+communication:
+  constellation_boundary_required: true
+  transport_contract_refs: []
+  routing_authority_ref: null
+  forbidden_paths:
+    - direct_peer_dispatch
+    - direct_peer_database_access
+    - direct_peer_backing_store_access
+    - provider_native_transport_as_public_world_contract
+    - routing_decision_inside_world_model_semantics
+    - consumer_selected_peer_url_as_semantic_binding
+
+security:
+  authentication_contract_refs: []
+  authorization_contract_refs: []
+  trust_source_refs: []
+  credential_scope:
+    - world-model runtime receives only credentials required for bound adapters
+    - persistence credentials remain adapter-scoped
+    - projection-provider credentials remain adapter-scoped
+    - source-system credentials are not canonical World Model state
+    - secrets are not emitted in receipts projections history or lineage
+  isolation_requirement_refs: []
+  requirements:
+    - callers cannot escape world scope by constructing identifiers
+    - callers cannot escape domain scope by constructing StateAddresses
+    - canonical transition authorization is separate from capability availability
+    - branch creation never grants external mutation authority
+    - projection providers cannot acquire canonical write authority
+    - persistence providers cannot acquire semantic authority
+    - malformed observations fail closed
+    - unresolved source authority fails closed when material
+    - unsupported World Domain contracts fail closed
+    - untrusted projection output is never executed automatically
+    - provider response payloads are validated at adapter boundaries
+
+configuration:
+  namespaces:
+    - world_domains
+    - persistence_bindings
+    - projection_bindings
+    - runtime_limits
+    - query_limits
+    - branch_limits
+    - projection_limits
+  forbidden:
+    - provider_identity_as_semantic_law
+    - graph_backend_as_semantic_law
+    - memory_backend_as_semantic_law
+    - storage_backend_as_semantic_law
+    - implicit_WorldDomain_selection
+    - implicit_provider_precedence
+    - hidden_default_WorldDomain
+    - hidden_default_persistence_provider
+    - hidden_default_projection_provider
+    - mutable_live_documentation_as_runtime_semantic_authority
+    - conversation_history_as_required_world_state
+
+effects:
+  effect_classes:
+    - read_only_world_resolution
+    - read_only_world_query
+    - read_only_world_history
+    - read_only_world_lineage
+    - read_only_world_diff
+    - canonical_modeled_state_transition
+    - noncanonical_hypothetical_branch_transition
+    - derived_projection_generation
+  consequential_operations:
+    - id: admit-world-observation
+      effect_class: canonical_modeled_state_transition
+      requires:
+        - exact world identity
+        - exact expected revision
+        - exact World Domain binding
+        - valid observation
+        - required evidence and source authority
+        - authorization where applicable
+    - id: commit-world-event
+      effect_class: canonical_modeled_state_transition
+      requires:
+        - admitted WorldEvent
+        - exact predecessor revision
+        - deterministic reducer
+        - exact World Domain binding
+    - id: create-world-branch
+      effect_class: noncanonical_hypothetical_branch_transition
+      requires:
+        - exact canonical base revision
+        - bounded branch policy
+    - id: project-world-state
+      effect_class: derived_projection_generation
+      requires:
+        - exact source WorldRevision
+        - explicit projection profile
+  idempotency_contract_refs:
+    - l9.world-model.contract/world-transition-idempotency@1
+    - l9.world-model.contract/world-projection-idempotency@1
+  rules:
+    - duplicate observation delivery must not silently create duplicate canonical semantic effects
+    - replayed transition requests require stable idempotency identity
+    - derived projection retries may not create new canonical world revisions
+    - branch retries may not mutate canonical world state
+
+receipts:
+  emits:
+    - l9.world-model.receipt/observation-admission@1
+    - l9.world-model.receipt/world-transition@1
+    - l9.world-model.receipt/world-query@1
+    - l9.world-model.receipt/world-history@1
+    - l9.world-model.receipt/world-lineage@1
+    - l9.world-model.receipt/world-diff@1
+    - l9.world-model.receipt/world-branch@1
+    - l9.world-model.receipt/world-projection@1
+    - l9.world-model.receipt/replay-verification@1
+  consumes: []
+  canonicalization_ref: l9.receipt-canonicalization/v1
+  receipt_rules:
+    - receipts bind exact world identity
+    - receipts bind exact WorldRevision where applicable
+    - receipts bind exact WorldCoordinate where applicable
+    - receipts bind exact World Domain revision and digest where applicable
+    - transition receipts bind exact predecessor and successor revisions
+    - transition receipts bind accepted WorldEvent identity
+    - observation receipts preserve admitted rejected blocked or Unknown status
+    - projection receipts bind exact source revision and projection profile
+    - receipts preserve degraded partial stale conflict denied and unavailable semantics
+    - receipts never grant authority by existence
+    - receipts never contain secrets
+
+failure:
+  taxonomy_refs:
+    - l9.world-model.failure/domain-unresolved@1
+    - l9.world-model.failure/domain-incompatible@1
+    - l9.world-model.failure/observation-invalid@1
+    - l9.world-model.failure/evidence-insufficient@1
+    - l9.world-model.failure/source-authority-unresolved@1
+    - l9.world-model.failure/revision-conflict@1
+    - l9.world-model.failure/reducer-failure@1
+    - l9.world-model.failure/replay-divergence@1
+    - l9.world-model.failure/persistence-unavailable@1
+    - l9.world-model.failure/projection-unavailable@1
+    - l9.world-model.failure/query-bound-exceeded@1
+    - l9.world-model.failure/branch-bound-exceeded@1
+    - l9.world-model.failure/projection-bound-exceeded@1
+    - l9.world-model.failure/scope-violation@1
+    - l9.world-model.failure/authorization-denied@1
+    - l9.world-model.failure/corrupt-state@1
+  fail_closed_conditions:
+    - unresolved World Domain
+    - incompatible World Domain
+    - invalid World Domain digest
+    - unresolved world identity
+    - invalid expected revision
+    - material evidence insufficiency for an observation requiring evidence
+    - unresolved source authority when material
+    - invalid observation contract
+    - deterministic reducer failure
+    - replay divergence
+    - canonical state corruption
+    - world scope violation
+    - authorization denial
+    - missing required persistence guarantee
+    - material Unknown affecting canonical transition validity
+  degradable_conditions:
+    - optional projection provider unavailable
+    - optional memory-publication capability unavailable
+    - nonessential lineage projection unavailable
+    - optional read-model provider stale when canonical state remains resolvable
+    - bounded query can return an explicit partial result under a contract that permits partiality
+  unknown_outcome_rules:
+    - provider timeout is not negative domain state
+    - unavailable evidence is not evidence of absence
+    - unavailable projection is not absent world state
+    - stale observation is not current truth
+    - conflicting observations remain conflict until domain admission semantics resolve them
+    - unresolved World Domain meaning remains Unknown
+    - unresolved provider binding cannot be silently defaulted
+    - exhausted query bounds produce explicit bounded insufficiency
+    - branch simulation failure does not mutate or invalidate canonical world state
+
+recovery:
+  restart_semantics:
+    - runtime restart does not change canonical modeled state
+    - canonical state is restored from exact persisted revision state and event lineage
+    - derived projections may be rebuilt
+    - branch recovery requires exact branch base revision and branch event sequence
+    - interrupted canonical transition cannot be guessed complete
+    - interrupted transition outcome must resolve from persistence transaction evidence or remain Unknown
+  replay_semantics:
+    - full canonical event replay reconstructs deterministic state
+    - replay uses exact historical World Domain coordinates applicable to each event
+    - replay never silently substitutes current World Domain semantics for historical semantics
+    - snapshot replay and full event replay must agree for equivalent coordinates
+    - divergence blocks readiness until reconciled
+  compensation_semantics:
+    - world-state correction uses successor events
+    - historical events are never deleted merely to simplify current state
+    - external real-world compensation remains owned by the applicable external executor
+    - a compensating real-world action is modeled only after observation and admission
+  recovery_requirements:
+    - exact latest committed revision detectable
+    - incomplete transition detectable
+    - duplicate event identity detectable
+    - state corruption detectable
+    - snapshot staleness detectable
+    - projection staleness detectable
+    - branch base invalidation detectable
+
+observability:
+  capability_metrics:
+    - world_resolve_requests_total
+    - world_query_requests_total
+    - world_observations_total
+    - observation_admissions_total
+    - observation_rejections_total
+    - observation_blocked_total
+    - world_transitions_total
+    - world_revision_conflicts_total
+    - world_reducer_failures_total
+    - world_replay_verifications_total
+    - world_replay_divergences_total
+    - world_history_requests_total
+    - world_lineage_requests_total
+    - world_diff_requests_total
+    - world_branches_created_total
+    - world_branch_operations_total
+    - world_projection_requests_total
+    - world_projection_failures_total
+    - world_query_bound_exceeded_total
+    - world_branch_bound_exceeded_total
+    - world_projection_bound_exceeded_total
+    - stale_observations_total
+    - conflicting_observations_total
+    - material_unknowns_total
+    - canonical_world_revision
+  provider_metrics:
+    - persistence_provider_latency
+    - persistence_provider_errors
+    - persistence_provider_conflicts
+    - projection_provider_latency
+    - projection_provider_errors
+    - optional_dependency_degradation
+  correlation_identity_refs:
+    - world_id
+    - world_revision
+    - world_event_id
+    - observation_id
+    - branch_id
+    - projection_id
+    - request_id
+    - correlation_id
+  rules:
+    - transport status and semantic status are separately observable
+    - provider identity is observable without becoming semantic authority
+    - exact World Domain identity is observable
+    - exact product release identity is observable
+    - no raw credentials are logged
+    - no secrets are emitted in metrics
+    - projection health remains distinct from canonical world-state health
+    - memory publication health remains distinct from canonical world-state health
+
+governance:
+  profile_refs:
+    - l9.world-model.profile/core@1
+  profile_selection_contract_refs:
+    - l9.world-model.contract/profile-selection@1
+  rules:
+    - World Domain admission is explicit
+    - World Domain compatibility is evaluated before canonical reduction
+    - provider selection never grants semantic authority
+    - projection-profile selection never grants semantic authority
+    - runtime configuration cannot weaken hard invariants
+    - domain configuration cannot weaken global World Model invariants
+    - historical semantic coordinates remain resolvable for replay
+    - incompatible semantic evolution requires explicit migration or blocked status
+    - conformance success does not equal product admission
+    - successful runtime deployment does not equal product admission
+    - successful projection does not equal runtime readiness
+    - generated artifacts remain derived
+    - material Unknowns cannot be suppressed by configuration
+
+admission:
+  subject: exact_product_revision
+  authority_ref: l9.authority/product-admission
+  requirements:
+    - valid ProductTopology
+    - exact source revision
+    - exact ProductTopology digest
+    - World Model semantic core contract pack complete
+    - public wire contracts schema-locked
+    - provider-neutral persistence port contract schema-locked
+    - World Domain extension contract schema-locked
+    - canonical reducer determinism proven
+    - exact revision-conflict behavior proven
+    - event replay equivalence proven
+    - branch isolation proven
+    - projection non-authority proven
+    - provider substitution boundary proven
+    - negative conformance fixtures passing
+    - no direct backing-store consumer path
+    - no provider-specific semantic leakage
+    - no LLM dependency in canonical reducer path
+  kind_specific_requirements:
+    - independent runtime identity
+    - independent health
+    - independent readiness
+    - canonical transport participation
+    - no direct peer routing
+  evidence_requirement_refs:
+    - l9.world-model.evidence/core-conformance@1
+    - l9.world-model.evidence/reducer-determinism@1
+    - l9.world-model.evidence/replay-equivalence@1
+    - l9.world-model.evidence/branch-isolation@1
+    - l9.world-model.evidence/projection-non-authority@1
+    - l9.world-model.evidence/provider-neutrality@1
+  decision_ref: null
+
+lifecycle:
+  family_ref: null
+  applicable_state_refs:
+    - candidate
+    - admitted
+    - deprecated
+    - retired
+
+conformance:
+  profile_refs:
+    - l9.world-model.conformance/core@1
+    - l9.world-model.conformance/domain-binding@1
+    - l9.world-model.conformance/reducer@1
+    - l9.world-model.conformance/replay@1
+    - l9.world-model.conformance/branch-isolation@1
+    - l9.world-model.conformance/projection-non-authority@1
+    - l9.world-model.conformance/provider-substitution@1
+  required_classes:
+    - semantic_boundary
+    - authority_preservation
+    - domain_subordination
+    - deterministic_reduction
+    - revision_integrity
+    - provenance_integrity
+    - replay_equivalence
+    - branch_isolation
+    - projection_non_authority
+    - persistence_provider_neutrality
+    - projection_provider_neutrality
+    - failure_semantics
+    - transport_boundary
+    - security_boundary
+  negative_proof_refs:
+    - l9.world-model.negative/observation-cannot-bypass-admission@1
+    - l9.world-model.negative/domain-cannot-weaken-core@1
+    - l9.world-model.negative/projection-cannot-write-canon@1
+    - l9.world-model.negative/branch-cannot-write-canon@1
+    - l9.world-model.negative/memory-cannot-become-world-state@1
+    - l9.world-model.negative/provider-schema-cannot-become-world-schema@1
+    - l9.world-model.negative/provider-outage-cannot-become-domain-negative@1
+    - l9.world-model.negative/stale-observation-cannot-become-current@1
+    - l9.world-model.negative/query-cannot-grant-authority@1
+    - l9.world-model.negative/replay-divergence-cannot-pass-readiness@1
+    - l9.world-model.negative/direct-peer-store-access-forbidden@1
+    - l9.world-model.negative/llm-cannot-be-canonical-reducer@1
+  final_conformance_required: true
+
+compatibility:
+  semantic_compatibility_refs:
+    - l9.world-model.compat/world-domain@1
+    - l9.world-model.compat/world-event@1
+    - l9.world-model.compat/world-state@1
+    - l9.world-model.compat/world-revision@1
+    - l9.world-model.compat/world-snapshot@1
+    - l9.world-model.compat/world-projection@1
+  provider_compatibility_refs:
+    - l9.world-model.compat/persistence-provider@1
+    - l9.world-model.compat/projection-provider@1
+  rules:
+    - World Domain compatibility is semantic not provider-based
+    - provider compatibility cannot override semantic incompatibility
+    - current runtime may support multiple compatible World Domain revisions only when exact binding remains explicit
+    - historical replay retains historical semantic coordinates
+    - incompatible World Domain evolution requires explicit migration or blocked state
+    - provider replacement requires capability and conformance compatibility
+    - projection-provider compatibility never grants canonical-state authority
+
+distribution:
+  artifact_forms:
+    - source_repository
+    - container_image
+    - contract_pack
+    - schema_pack
+    - conformance_fixture_pack
+  release_contract_refs:
+    - l9.world-model.contract/release@1
+
+build:
+  compilation_profile_ref: null
+  source_owned_surfaces:
+    - ProductTopology
+    - World Model semantic contracts
+    - World Model schemas
+    - World Model invariants
+    - World Model conformance profiles
+    - World Model reference reducer
+    - World Model provider-neutral port definitions
+  derived_surfaces:
+    - generated documentation
+    - generated API schemas
+    - generated transport bindings
+    - generated projection schemas
+    - generated conformance reports
+  rules:
+    - source-owned semantic surfaces remain authoritative over generated projections
+    - generated surfaces contain no independent semantic law
+    - compiler output does not self-admit the product
+    - unchanged effective semantic inputs do not require semantic output change
+    - build tooling does not become product-semantic authority
+
+provenance:
+  authority_ref: Quantum-L9/.github/semantics
+  source_revision: null
+  source_refs:
+    - Quantum-L9/.github/semantics
+    - Quantum-L9/Cursor-Governance/WIP/World Model.md
+    - Quantum-L9/Cursor-Governance/WIP/Architecture .md
+    - Quantum-L9/l9-wip:extract/quantum-animation/Quantum Animation/01_quantum_animation_world_model_build_spec.yaml
+    - l9_agent_intelligence_loop_resume_v1.0.0/ARCHITECTURE.md
+    - l9_agent_intelligence_loop_resume_v1.0.0/shared/00_CONSTITUTION.md
+    - l9_agent_intelligence_loop_resume_v1.0.0/shared/04_SHARED_INVARIANTS.md
+    - l9_agent_intelligence_loop_resume_v1.0.0/shared/07_CONTRACT_LAW.yaml
+
+unknowns:
+  material:
+    - id: U-WM-001
+      item: exact admitted ProductArchetype reference for l9-world-model
+      reason: >
+        No exact current archetype coordinate has been bound into this
+        candidate topology.
+      blocks:
+        - final_product_admission
+    - id: U-WM-002
+      item: exact admitted lifecycle family and lifecycle-state coordinates
+      reason: >
+        Lifecycle semantics must resolve from current canonical upstream
+        semantics rather than be invented locally.
+      blocks:
+        - final_product_admission
+    - id: U-WM-003
+      item: exact canonical constellation transport contract coordinates
+      reason: >
+        Cross-node transport is required, but the precise current canonical
+        contract coordinates have not been bound into this candidate file.
+      blocks:
+        - runtime_admission
+    - id: U-WM-004
+      item: exact world-state persistence provider
+      reason: >
+        Persistence semantics are defined by a provider-neutral port and
+        provider selection is intentionally deferred.
+      blocks: []
+    - id: U-WM-005
+      item: exact world-state persistence substrate compatibility profile
+      reason: >
+        Reuse of an existing generic state substrate is preferred if it
+        satisfies the WorldStatePersistence contract, but no provider is
+        constitutionally selected here.
+      blocks:
+        - implementation_selection
+    - id: U-WM-006
+      item: exact projection provider set
+      reason: >
+        Projection semantics are intentionally representation-neutral and no
+        graph relational timeline visualization or future provider is selected
+        by ProductTopology.
+      blocks: []
+    - id: U-WM-007
+      item: exact externally serialized schemas for World Model public contracts
+      reason: >
+        Semantic boundaries are sufficiently defined for ProductTopology, but
+        wire schemas require separate explicit design and golden vectors before
+        implementation.
+      blocks:
+        - implementation
+        - product_admission
+    - id: U-WM-008
+      item: exact first admitted World Domain
+      reason: >
+        Engineered System Model is the leading first domain candidate, but
+        domain admission is a separate concern from global World Model product
+        definition.
+      blocks:
+        - first_domain_integration
+    - id: U-WM-009
+      item: exact mapping between evidence-owner receipts and WorldObservation admission
+      reason: >
+        Evidence remains independently owned and the precise serialized seam
+        must be schema-locked before implementation.
+      blocks:
+        - evidence_integrated_observation_admission
+    - id: U-WM-010
+      item: exact memory-publication seam
+      reason: >
+        World Model may optionally publish governed contextual knowledge to the
+        owning memory capability, but the precise contract is not yet locked.
+      blocks: []
+    - id: U-WM-011
+      item: exact semantic-compiler relationship
+      reason: >
+        Semantic Compiler may become useful for derived World Domain,
+        projection, or repository artifacts, but it is not required for the
+        canonical World Model semantic definition and its exact integration is
+        intentionally deferred.
+      blocks: []
+    - id: U-WM-012
+      item: exact scaling partition strategy
+      reason: >
+        Scaling must preserve world identity revision ordering and transaction
+        boundaries; the concrete partition strategy is a realization decision.
+      blocks:
+        - production_readiness
+    - id: U-WM-013
+      item: exact atomic transition realization
+      reason: >
+        The semantic requirement for revision-checked atomic transition is
+        locked, while concrete transactional or fenced realization remains
+        provider-bound.
+      blocks:
+        - implementation
+    - id: U-WM-014
+      item: exact historical World Domain migration protocol
+      reason: >
+        Historical replay must preserve historical semantics, but the canonical
+        protocol for domain evolution and migration requires a dedicated
+        contract.
+      blocks:
+        - incompatible_domain_upgrade
+  non_material:
+    - id: U-WM-N001
+      item: initial graph projection technology
+      reason: >
+        Graph projection is derived and provider-neutral; choosing one provider
+        does not affect ProductTopology semantics.
+    - id: U-WM-N002
+      item: initial visualization technology
+      reason: >
+        Visualization is a derived projection and has zero canonical-state
+        authority.
+    - id: U-WM-N003
+      item: initial local development persistence technology
+      reason: >
+        Local realization may vary behind the persistence contract without
+        changing product semantics.
+    - id: U-WM-N004
+      item: initial implementation language
+      reason: >
+        No implementation language is required by the semantic architecture.
+    - id: U-WM-N005
+      item: initial query implementation strategy
+      reason: >
+        Query realization remains replaceable behind stable world-query
+        semantics.
+  resolution_requirement_refs:
+    - l9.contract/authority-boundary@1
+    - l9.contract/identity-resolution@1
+    - l9.contract/provenance-and-coordinate@1
+    - l9.world-model.contract/world-domain@1
+    - l9.world-model.contract/world-state-persistence@1
+    - l9.world-model.contract/world-observation@1
+    - l9.world-model.contract/world-query@1

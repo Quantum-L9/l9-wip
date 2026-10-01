@@ -1,0 +1,1332 @@
+schema: l9.repository-semantics/v1
+
+repository:
+  id: l9-world-model
+  name: l9-world-model
+  canonical_repository: Quantum-L9/l9-world-model
+  status: candidate
+
+identity:
+  repo: Quantum-L9/l9-world-model
+  class: product-source-repository
+  semantic_owner: Quantum-L9/l9-world-model
+
+product_binding:
+  product_ref: l9.product/l9-world-model
+  topology:
+    schema_ref: l9.product-topology/v1
+    source_path: product-topology.yaml
+    revision_ref: null
+    digest: null
+  exact_binding_required: true
+  stale_topology_binding_policy: fail_closed
+  inherit:
+    - product_identity
+    - product_kind
+    - product_archetype
+    - product_purpose
+    - semantic_boundary
+    - capabilities
+    - product_contracts
+    - product_relationships
+    - identity_topology
+    - effects
+    - admission_semantics
+    - lifecycle
+    - conformance_requirements
+  rules:
+    - repository_spec_must_not_restate_product_semantics_as_independent_authority
+    - product_topology_remains_authoritative_for_product_meaning
+    - repository_spec_may_project_product_semantics_but_must_not_reinterpret_them
+    - product_topology_revision_change_invalidates_affected_repository_projections
+    - world_model_product_semantics_must_resolve_from_exact_bound_product_topology
+    - repository_layout_must_not_create_world_model_semantics
+    - provider_bindings_must_not_become_product_semantics
+    - domain_packages_must_not_redefine_global_world_model_semantics
+    - generated_contract_views_must_not_become_semantic_authority
+    - implementation_details_must_not_become_world_domain_semantics
+
+mission:
+  summary: >
+    Organize the canonical source repository for l9-world-model so that global
+    World Model product semantics, reusable semantic core contracts, World Domain
+    extension boundaries, deterministic reducer implementation, provider-neutral
+    ports, provider adapters, conformance fixtures, reference implementations,
+    workflow definitions, validation tooling, and derived projections remain
+    mechanically separable and authority-safe.
+  repository_responsibility: >
+    Preserve an exact repository realization of the bound l9-world-model
+    ProductTopology without creating an alternate product semantic language,
+    while making source authority, semantic roots, implementation roots,
+    provider adapters, domain extension surfaces, validation roots, fixtures,
+    generated outputs, and projection ownership mechanically identifiable.
+
+ownership:
+  owns:
+    - repository-scoped source organization
+    - repository-local semantic root placement
+    - repository-local implementation root placement
+    - repository-local validation root placement
+    - repository-local fixture root placement
+    - repository-local generated-root placement
+    - repository-local documentation-root placement
+    - repository-local command surfaces
+    - repository-local build and validation orchestration
+    - repository-local source-to-generated projection boundaries
+    - repository-local generated-region ownership markers
+    - repository-local module and package organization
+    - repository-local provider-adapter placement
+    - repository-local World Domain extension package placement
+    - repository-local reference implementation placement
+    - repository-local conformance test organization
+    - repository-local workflow-spec placement
+    - repository-local schema and contract packaging
+    - repository-local release artifact assembly
+  does_not_own:
+    - l9-world-model product semantics
+    - World Model semantic ownership
+    - World Domain semantics outside repository-local packaging
+    - global L9 semantics
+    - ProductKind semantics
+    - ProductTopology semantics
+    - world-state authority
+    - source-system truth
+    - WorkItem state semantics
+    - evidence semantics
+    - memory semantics
+    - context semantics
+    - reasoning semantics
+    - routing authority
+    - admission authority
+    - provider semantics
+    - persistence-provider semantics
+    - projection-provider semantics
+    - transport semantics
+    - generated artifact semantic authority
+    - deployment authority
+    - runtime admission authority
+
+authority_order:
+  - global_admitted_l9_semantics
+  - exact_bound_product_topology
+  - admitted_world_model_contracts_and_schemas
+  - admitted_world_domain_extension_contracts
+  - repository_spec_for_repository_scoped_semantics
+  - repository_source_and_executable_contracts
+  - canonical_reference_implementation
+  - provider_neutral_port_definitions
+  - provider_adapters
+  - fixtures_and_tests
+  - derived_repository_projections
+
+authority_rules:
+  scoped_authority_required: true
+  product_semantics_resolve_from: product_binding.topology
+  repository_semantics_resolve_from: this_repository_spec
+  world_model_semantics_resolve_from:
+    - product-topology.yaml
+    - canonical semantic contract roots
+    - canonical schema roots
+  world_domain_semantics_resolve_from:
+    - explicitly admitted domain package roots
+  generated_projection_authority: none
+  implementation_authority: none_for_semantic_meaning
+  provider_adapter_authority: none_for_semantic_meaning
+  fixture_authority: evidence_only
+  documentation_authority: derived_unless_explicitly_declared_source
+  conflicts:
+    product_topology_vs_repository_spec: product_topology_wins_for_product_semantics
+    repository_spec_vs_generated_projection: repository_spec_wins
+    canonical_source_vs_generated_projection: canonical_source_wins
+    global_world_model_contract_vs_domain_extension: global_world_model_contract_wins
+    world_domain_contract_vs_provider_adapter: world_domain_contract_wins
+    semantic_contract_vs_reference_implementation: semantic_contract_wins
+    port_contract_vs_provider_adapter: port_contract_wins
+    canonical_schema_vs_generated_schema_projection: canonical_schema_wins
+    unresolved_cross_scope_conflict: fail_closed
+
+source_surfaces:
+  authoritative:
+    product:
+      - path: product-topology.yaml
+        semantic_role: product_contract
+        authority_source: product_semantic_owner
+    domain:
+      - path: semantics/
+        semantic_role: world_model_semantic_source_root
+        authority_source: product_semantic_owner
+      - path: contracts/
+        semantic_role: canonical_world_model_contract_root
+        authority_source: product_semantic_owner
+      - path: schemas/
+        semantic_role: canonical_world_model_schema_root
+        authority_source: product_semantic_owner
+      - path: domains/
+        semantic_role: world_domain_extension_root
+        authority_source: declared_domain_semantic_owner
+      - path: conformance/
+        semantic_role: canonical_conformance_profile_root
+        authority_source: product_semantic_owner
+    repository:
+      - path: repository-spec.yaml
+        semantic_role: repository_contract
+        authority_source: repository_owner
+      - path: workflow-spec.yaml
+        semantic_role: repository_workflow_contract
+        authority_source: repository_owner
+  executable:
+    - path: src/
+      semantic_role: implementation
+      authority_source: canonical_semantic_sources
+    - path: runtime/
+      semantic_role: runtime_shell
+      authority_source: canonical_semantic_sources
+    - path: ports/
+      semantic_role: provider_neutral_port_implementation
+      authority_source: canonical_contracts
+    - path: adapters/
+      semantic_role: provider_adapter_implementation
+      authority_source: canonical_port_contracts
+    - path: reference/
+      semantic_role: reference_implementation
+      authority_source: canonical_semantic_sources
+    - path: cli/
+      semantic_role: repository_local_command_surface
+      authority_source: repository_spec
+  evidentiary:
+    - path: tests/
+      semantic_role: implementation_and_boundary_evidence
+      authority_source: governing_contracts_and_invariants
+    - path: fixtures/
+      semantic_role: golden_conformance_evidence
+      authority_source: conformance_profiles
+    - path: validation/
+      semantic_role: repository_validation_implementation
+      authority_source: repository_spec_and_product_contracts
+  derived:
+    - path: generated/
+      semantic_role: generated_projection_root
+      source_semantic_refs:
+        - product-topology.yaml
+        - repository-spec.yaml
+        - workflow-spec.yaml
+        - semantics/
+        - contracts/
+        - schemas/
+    - path: docs/generated/
+      semantic_role: generated_documentation
+      source_semantic_refs:
+        - product-topology.yaml
+        - repository-spec.yaml
+        - workflow-spec.yaml
+        - contracts/
+        - schemas/
+        - semantics/
+  rules:
+    - derived_surface_must_reference_exact_source_semantic_digest
+    - derived_surface_must_reference_exact_projection_profile
+    - derived_surface_must_not_become_semantic_authority
+    - generated_surface_must_not_contain_unbound_independent_semantic_content
+    - executable_source_must_trace_to_governing_contracts
+    - provider_adapter_source_must_trace_to_provider_neutral_port_contracts
+    - domain_extension_source_must_trace_to_global_world_domain_extension_contract
+    - reference_implementation_must_not_override_canonical_contract_meaning
+    - tests_must_identify_the_contract_or_invariant_they_prove
+    - fixtures_must_be_version_bound_to_their_conformance_profile
+    - generated_documentation_must_be_mechanically_identifiable
+    - manual_edit_of_generated_semantic_regions_is_forbidden
+
+repository_structure:
+  semantic_roots:
+    - path: semantics/
+      purpose: >
+        Canonical product-owned semantic law not already owned by global L9
+        semantics, including World Model invariants, semantic definitions,
+        authority boundaries, lifecycle-neutral product rules, and reusable
+        world-model semantic registries.
+      allowed_content:
+        - canonical semantic definitions
+        - invariant registries
+        - semantic ownership records
+        - semantic compatibility rules
+        - authority boundary definitions
+      forbidden_content:
+        - provider configuration
+        - provider-native schema
+        - deployment-specific credentials
+        - generated semantic copies
+        - domain-specific semantics outside admitted extension boundaries
+    - path: contracts/
+      purpose: >
+        Canonical provider-neutral public and internal semantic contracts owned
+        by l9-world-model.
+      allowed_content:
+        - WorldDomain contracts
+        - WorldCoordinate contracts
+        - WorldEntity contracts
+        - StateAddress contracts
+        - StateCell contracts
+        - WorldObservation contracts
+        - observation admission contracts
+        - WorldEvent contracts
+        - WorldState contracts
+        - WorldRevision contracts
+        - WorldSnapshot contracts
+        - WorldBranch contracts
+        - WorldQuery contracts
+        - history contracts
+        - lineage contracts
+        - diff contracts
+        - projection contracts
+        - persistence port contracts
+        - transition transaction contracts
+        - health contracts
+        - readiness contracts
+      forbidden_content:
+        - provider-native persistence APIs as universal contracts
+        - provider-native graph APIs as universal contracts
+        - provider-native memory APIs as universal contracts
+        - provider-specific routing payloads
+    - path: schemas/
+      purpose: >
+        Versioned serialized schemas for canonical World Model contracts after
+        field-level schema lock.
+      allowed_content:
+        - canonical JSON Schema
+        - canonical YAML schema descriptors
+        - compatibility metadata
+        - canonical valid and invalid schema examples
+      forbidden_content:
+        - undocumented schema forks
+        - provider-native schemas presented as canonical World Model schemas
+    - path: conformance/
+      purpose: >
+        Canonical conformance profiles and product-owned fixture requirements
+        for implementations providers and World Domains.
+      allowed_content:
+        - core conformance profiles
+        - domain-binding conformance profiles
+        - reducer conformance profiles
+        - replay conformance profiles
+        - branch-isolation conformance profiles
+        - projection non-authority profiles
+        - provider-substitution profiles
+        - negative proof profiles
+      forbidden_content:
+        - provider-specific shortcuts presented as universal conformance law
+  implementation_roots:
+    - path: src/
+      purpose: reusable provider-neutral World Model implementation
+    - path: runtime/
+      purpose: independent node runtime composition and lifecycle
+    - path: ports/
+      purpose: provider-neutral behavioral port implementations and interfaces
+    - path: adapters/
+      purpose: replaceable provider and integration adapters
+    - path: reference/
+      purpose: simple deterministic reference implementations used for conformance
+    - path: cli/
+      purpose: repository-local validation development and conformance commands
+  validation_roots:
+    - path: validation/
+      purpose: deterministic repository and semantic-boundary validators
+    - path: tests/
+      purpose: unit integration contract security and regression tests
+  fixture_roots:
+    - path: fixtures/core/
+      purpose: global World Model semantic conformance fixtures
+    - path: fixtures/domains/
+      purpose: World Domain extension conformance fixtures
+    - path: fixtures/providers/
+      purpose: provider substitution and adapter conformance fixtures
+    - path: fixtures/replay/
+      purpose: canonical replay equivalence fixtures
+    - path: fixtures/branches/
+      purpose: branch isolation and hypothetical-state fixtures
+    - path: fixtures/projections/
+      purpose: projection non-authority and determinism fixtures
+    - path: fixtures/negative/
+      purpose: forbidden bypass and failure-semantic fixtures
+  documentation_roots:
+    - path: docs/
+      purpose: human-facing derived and explanatory documentation
+    - path: docs/architecture/
+      purpose: repository-scoped architecture explanations derived from source semantics
+    - path: docs/generated/
+      purpose: generated documentation projections
+  generated_roots:
+    - path: generated/
+      purpose: machine-generated projections compiled from canonical source semantics
+    - path: docs/generated/
+      purpose: generated documentation
+  domain_roots:
+    - path: domains/
+      purpose: >
+        Admitted World Domain packages that specialize the reusable World Model
+        through declared extension contracts without modifying global World
+        Model semantics.
+  rules:
+    - canonical_semantics_must_not_live_only_in_generated_roots
+    - implementation_must_not_become_semantic_authority
+    - fixtures_must_trace_to_governing_semantics
+    - generated_files_must_be_mechanically_identifiable
+    - provider_adapters_must_reside_below_provider_neutral_port_contracts
+    - domain_packages_must_reside_below_world_domain_extension_contract
+    - domain_packages_must_not_patch_world_model_core_semantics
+    - provider_specific_code_must_not_reside_in_semantic_roots
+    - generated_contracts_must_not_be_hand_maintained
+    - generated_documentation_must_not_create_semantic_law
+    - canonical_contract_schemas_must_not_be_duplicated_in_provider_packages
+    - reference_implementation_must_remain_replaceable
+    - semantic_core_must_remain_testable_without_provider_adapters
+    - canonical_reducer_must_remain_testable_without_network
+    - canonical_reducer_must_remain_testable_without_graph_provider
+    - canonical_reducer_must_remain_testable_without_memory provider
+    - repository_structure_must_keep_global_core_domain_extensions_and_provider_adapters_separable
+    - repository_structure_must_allow_future_provider_replacement_without_semantic_source_migration
+
+capabilities:
+  source: product_topology
+  independently_declared_here: false
+  expected_product_capability_refs:
+    - l9.world-model.capability/resolve
+    - l9.world-model.capability/query
+    - l9.world-model.capability/observe
+    - l9.world-model.capability/history
+    - l9.world-model.capability/lineage
+    - l9.world-model.capability/diff
+    - l9.world-model.capability/branch
+    - l9.world-model.capability/project
+  implementation_mapping:
+    l9.world-model.capability/resolve:
+      expected_roots:
+        - src/
+        - contracts/
+        - schemas/
+        - tests/
+    l9.world-model.capability/query:
+      expected_roots:
+        - src/
+        - contracts/
+        - tests/
+    l9.world-model.capability/observe:
+      expected_roots:
+        - src/
+        - contracts/
+        - schemas/
+        - ports/
+        - tests/
+    l9.world-model.capability/history:
+      expected_roots:
+        - src/
+        - ports/
+        - tests/
+    l9.world-model.capability/lineage:
+      expected_roots:
+        - src/
+        - tests/
+    l9.world-model.capability/diff:
+      expected_roots:
+        - src/
+        - tests/
+    l9.world-model.capability/branch:
+      expected_roots:
+        - src/
+        - contracts/
+        - tests/
+        - fixtures/branches/
+    l9.world-model.capability/project:
+      expected_roots:
+        - src/
+        - ports/
+        - adapters/
+        - tests/
+        - fixtures/projections/
+  rules:
+    - repository_spec_does_not_create_product_capabilities
+    - capability_projection_must_preserve_product_topology_coordinates
+    - implementation_presence_does_not_imply_capability_admission
+    - capability_availability_requires_conformance_evidence
+    - provider_adapter_presence_does_not_create_new_product_capability
+    - domain_package_presence_does_not_create_new_global_world_model_capability
+    - optional_provider_absence_must_not_remove_canonical_product_semantics
+    - generated_capability_documentation_is_not_capability_authority
+
+invariants:
+  - id: REPO-001
+    statement: >
+      Product semantics are inherited from the exact bound ProductTopology and
+      MUST NOT be independently restated as repository authority.
+  - id: REPO-002
+    statement: >
+      RepositorySpec owns only repository-scoped semantics not already owned by
+      ProductTopology, global semantics, World Model contracts, or admitted
+      World Domain semantic owners.
+  - id: REPO-003
+    statement: >
+      Generated repository views are derived artifacts and MUST NOT become
+      independent semantic authorities.
+  - id: REPO-004
+    statement: >
+      Every repository projection MUST bind exact source semantic digests,
+      compiler version, projection-profile coordinates, and generated artifact
+      digest.
+  - id: REPO-005
+    statement: >
+      Material semantic input change MUST invalidate exactly the affected
+      downstream repository projection closure.
+  - id: REPO-006
+    statement: >
+      An unchanged effective semantic input closure MUST NOT cause unchanged
+      generated artifacts to be rewritten.
+  - id: REPO-007
+    statement: >
+      Human-authored repository regions outside explicitly compiler-owned
+      projection regions MUST be preserved byte-for-byte.
+  - id: REPO-008
+    statement: >
+      Repository projection compilation MUST NOT require an LLM.
+  - id: REPO-009
+    statement: >
+      Generated instruction documentation schema or projection surfaces MUST
+      contain no independent semantic law beyond admitted source semantics.
+  - id: REPO-010
+    statement: >
+      RepositorySpec is a revision-bound semantic input and is not an alternate
+      product semantic language.
+  - id: REPO-011
+    statement: >
+      Repository projection success MUST NOT imply product admission, runtime
+      admission, deployment authorization, or target-owner conformance.
+  - id: REPO-WM-001
+    statement: >
+      Global World Model semantics MUST remain structurally separable from
+      World Domain specializations.
+  - id: REPO-WM-002
+    statement: >
+      A World Domain package MUST specialize only through the admitted
+      WorldDomain extension contract and MUST NOT patch canonical World Model
+      semantics.
+  - id: REPO-WM-003
+    statement: >
+      Provider-specific persistence graph memory transport or projection code
+      MUST remain below provider-neutral port or adapter boundaries.
+  - id: REPO-WM-004
+    statement: >
+      No provider-native schema MAY be imported into canonical World Model
+      schemas as product law merely because a provider is selected.
+  - id: REPO-WM-005
+    statement: >
+      The deterministic reducer implementation MUST be testable without network
+      access and without any optional projection or memory provider.
+  - id: REPO-WM-006
+    statement: >
+      The canonical reducer implementation MUST NOT depend on an LLM.
+  - id: REPO-WM-007
+    statement: >
+      A provider adapter MUST NOT reinterpret WorldEvent WorldRevision
+      WorldCoordinate StateAddress or WorldDomain semantics.
+  - id: REPO-WM-008
+    statement: >
+      A derived graph timeline visualization table index or other read model
+      MUST be rebuildable from canonical source state and MUST have zero
+      canonical-state authority.
+  - id: REPO-WM-009
+    statement: >
+      The canonical World Model implementation MUST remain operable at the
+      semantic-core level when all optional projection providers are absent.
+  - id: REPO-WM-010
+    statement: >
+      The repository MUST contain negative conformance fixtures proving that
+      projections branches memory providers and provider-native storage cannot
+      mutate canonical modeled state outside admitted transition semantics.
+  - id: REPO-WM-011
+    statement: >
+      Historical replay fixtures MUST bind the exact World Domain coordinates
+      applicable to the events being replayed.
+  - id: REPO-WM-012
+    statement: >
+      Repository-local documentation MUST NOT silently replace exact semantic
+      source coordinates with prose-only descriptions.
+  - id: REPO-WM-013
+    statement: >
+      Domain fixtures MAY extend global fixtures but MUST NOT redefine expected
+      behavior of global conformance cases.
+  - id: REPO-WM-014
+    statement: >
+      Provider fixture suites MUST prove adapter equivalence against the
+      provider-neutral contract and MUST NOT grant the provider additional
+      semantic authority.
+  - id: REPO-WM-015
+    statement: >
+      Repository commands MUST invoke repository-local validation and MUST NOT
+      rely on ambient mutable remote state for canonical validation when exact
+      inputs are already present.
+  - id: REPO-WM-016
+    statement: >
+      Canonical contract identifiers and schema identifiers MUST have one
+      source-owned declaration location.
+  - id: REPO-WM-017
+    statement: >
+      Generated language bindings MAY repeat structure mechanically but MUST
+      remain digest-bound projections of canonical contract schemas.
+  - id: REPO-WM-018
+    statement: >
+      A provider implementation MAY be removed and replaced without requiring a
+      ProductTopology semantic rewrite when the replacement satisfies the same
+      admitted port and compatibility contracts.
+  - id: REPO-WM-019
+    statement: >
+      The repository MUST make generated regions machine-identifiable and MUST
+      reject semantic hand edits within compiler-owned generated regions.
+  - id: REPO-WM-020
+    statement: >
+      Build or projection cache state MUST have zero semantic authority.
+  - id: REPO-WM-021
+    statement: >
+      Test success against one provider MUST NOT be generalized into
+      provider-neutral conformance unless the provider-neutral fixture profile
+      is satisfied.
+  - id: REPO-WM-022
+    statement: >
+      Repository structure MUST preserve the distinction between canonical
+      semantic source, executable implementation, evidence-producing tests,
+      derived projections, and provider configuration.
+  - id: REPO-WM-023
+    statement: >
+      An implementation module MUST NOT become the only location where a
+      required semantic invariant is expressed.
+  - id: REPO-WM-024
+    statement: >
+      A World Domain implementation MUST expose its exact domain identity,
+      revision, digest, and compatibility coordinates through the declared
+      domain package boundary.
+  - id: REPO-WM-025
+    statement: >
+      Provider selection configuration MUST NOT appear in global World Model
+      contract definitions.
+  - id: REPO-WM-026
+    statement: >
+      Repository admission evidence MUST bind the exact candidate repository
+      revision and exact ProductTopology revision.
+  - id: REPO-WM-027
+    statement: >
+      Canonical replay and reference reduction tests MUST remain available even
+      when production-grade providers are not installed.
+  - id: REPO-WM-028
+    statement: >
+      Example domains and sample providers MUST be clearly marked as
+      non-authoritative examples unless separately admitted.
+  - id: REPO-WM-029
+    statement: >
+      Tool-specific query languages MUST terminate at adapter boundaries and
+      MUST NOT appear in canonical public World Model contracts.
+  - id: REPO-WM-030
+    statement: >
+      Repository release artifacts MUST preserve exact provenance to
+      ProductTopology RepositorySpec WorkflowSpec canonical contracts schemas
+      source revision and generated artifact digests.
+
+forbidden:
+  - duplicate_product_semantics_in_repository_spec
+  - generated_surface_as_source_of_truth
+  - handwritten_semantic_drift_in_generated_regions
+  - independently_maintained_duplicate_capability_ledgers
+  - independently_maintained_duplicate_ownership_ledgers
+  - hidden_llm_dependency
+  - generated_projection_self_admission
+  - repository_projection_as_product_architecture_authority
+  - repository_spec_as_alternate_product_semantic_language
+  - compiler_owned_write_outside_authorized_projection_region
+  - domain_package_redefines_world_model_core
+  - provider_adapter_redefines_world_model_contract
+  - provider_native_schema_as_canonical_schema
+  - graph_engine_as_repository_semantic_root
+  - memory_engine_as_repository_semantic_root
+  - storage_engine_as_repository_semantic_root
+  - transport_provider_as_repository_semantic_root
+  - provider_specific_query_language_in_public_contracts
+  - direct_peer_database_coupling
+  - direct_peer_backing_store_coupling
+  - direct_peer_runtime_import
+  - generated_documentation_as_only_semantic_definition
+  - generated_schema_as_only_schema_source
+  - reference_implementation_as_only_semantic_definition
+  - projection_provider_writes_canonical_state
+  - branch_storage_writes_canonical_state_without_admission
+  - memory_publication_writes_canonical_state
+  - tests_depend_on_ambient_mutable_head_for_exact_revision_semantics
+  - fixture_without_governing_contract_or_invariant
+  - provider_secret_in_semantic_source
+  - provider_credentials_in_generated_artifacts
+  - cross_domain_semantic_import_without_declared_dependency
+  - domain_specific_event_type_in_global_core_without_canonical_promotion
+  - domain_specific_state_plane_in_global_core_without_canonical_promotion
+  - domain_specific_relation_type_in_global_core_without_canonical_promotion
+  - provider_specific_identity_as_WorldEntity_identity
+  - provider_native_timestamp_as_implicit_WorldCoordinate
+  - hidden_provider_precedence
+  - hidden_domain_precedence
+  - implicit_default_domain
+  - implicit_default_projection_provider
+  - implicit_default_persistence_provider
+
+commands:
+  validate: ./validation/validate_repository.sh
+  test: ./validation/test_repository.sh
+  conformance: ./validation/run_conformance.sh
+  replay_verify: ./validation/verify_replay.sh
+  projection_verify: ./validation/verify_projections.sh
+  domain_verify: ./validation/verify_domains.sh
+  provider_verify: ./validation/verify_provider_adapters.sh
+  rules:
+    - validation_command_must_be_repository_local
+    - validation_failure_blocks_repository_projection_admission
+    - commands_must_not_require_an_llm_for_canonical_semantic_validation
+    - commands_must_not_require_network_when_all_required_exact_inputs_are_local
+    - command_success_must_not_self_admit_product_or_runtime
+    - conformance_commands_must_bind_candidate_revision
+    - conformance_commands_must_emit machine-readable result
+    - replay_verification_failure_blocks_runtime_readiness_claim
+    - domain_verification_failure_blocks_domain_binding_claim
+    - provider_verification_failure_blocks_provider_compatibility_claim
+    - projection_verification_failure_does_not_corrupt_canonical_state
+
+projection_compilation:
+  calculus_ref: null
+  semantic_inputs:
+    required:
+      - repository_spec
+      - product_topology
+      - canonical_world_model_semantics
+      - canonical_world_model_contracts
+      - canonical_world_model_schemas
+    conditional:
+      - admitted_world_domain_packages
+      - selected_projection_profiles
+      - selected_provider_binding_descriptors
+    exact_revision_binding_required: true
+    exact_digest_binding_required: true
+  outputs:
+    - id: generated-contract-documentation
+      class: documentation_projection
+      source_refs:
+        - contracts/
+        - schemas/
+        - semantics/
+      target_root: docs/generated/contracts/
+    - id: generated-api-schema-bundle
+      class: schema_projection
+      source_refs:
+        - contracts/
+        - schemas/
+      target_root: generated/api/
+    - id: generated-domain-registry
+      class: registry_projection
+      source_refs:
+        - domains/
+        - contracts/
+      target_root: generated/domains/
+    - id: generated-conformance-index
+      class: conformance_projection
+      source_refs:
+        - conformance/
+        - fixtures/
+      target_root: generated/conformance/
+    - id: generated-runtime-metadata
+      class: runtime_metadata_projection
+      source_refs:
+        - product-topology.yaml
+        - repository-spec.yaml
+        - workflow-spec.yaml
+      target_root: generated/runtime/
+  target_bindings: []
+  metadata_required_on_every_output:
+    - source_semantic_digest
+    - semantic_input_digests
+    - compiler_version
+    - projection_profile_ref
+    - projection_profile_version
+    - generated_digest
+  staleness:
+    rule: >
+      A projection is stale when any material source semantic digest, exact
+      ProductTopology binding, exact RepositorySpec binding, applicable World
+      Domain digest, schema digest, contract digest, or applicable projection
+      profile digest differs from the coordinates bound into the generated
+      artifact.
+    policy: recompile_affected_dependency_closure
+    detection_requirements:
+      - exact source digest comparison
+      - exact profile digest comparison
+      - exact domain digest comparison when applicable
+      - exact generated artifact digest comparison
+      - no modification-time-only staleness inference
+  incremental_compilation:
+    enabled: true
+    prior_receipt_may_accelerate: true
+    prior_receipt_is_authority: false
+    requirements:
+      - no_change_returns_NO_CHANGE
+      - unchanged_artifact_not_rewritten
+      - cache_not_authority
+      - only_affected_outputs_recompiled
+      - unchanged_human_regions_preserved_byte_for_byte
+      - stale_generated_output_never_treated_as_current
+      - failed_partial_compile_does_not_replace_last_valid_projection
+      - generated_output_digest_is_verified_after_write
+  semantic_preservation:
+    required: true
+    requirements:
+      - no independent semantic content introduced
+      - all generated semantic statements trace to canonical sources
+      - no source requirement silently omitted
+      - no provider-specific semantics introduced into provider-neutral outputs
+      - World Domain specialization preserved without promotion to global core
+      - derived output authority remains none
+
+validation:
+  repository_projection:
+    required: true
+    acceptance:
+      - exact_product_topology_binding
+      - exact_repository_spec_binding
+      - source_change_marks_affected_outputs_stale
+      - unchanged_outputs_not_rewritten
+      - repository_spec_is_semantic_input_not_alternate_language
+      - generated_surfaces_contain_no_independent_semantic_content
+      - no_llm_dependency
+      - provider_specific_semantics_do_not_leak_into_global_contracts
+      - domain_specific_semantics_do_not_leak_into_global_core_without_admission
+      - generated_regions_are_mechanically_identifiable
+      - exact_projection_provenance_is_present
+  semantic_roots:
+    required: true
+    acceptance:
+      - canonical_contracts_have_single_source_owned_location
+      - canonical_schemas_have_single_source_owned_location
+      - World Model invariants are not implementation-only
+      - provider-neutral ports are explicit
+      - World Domain extension boundary is explicit
+  implementation_boundary:
+    required: true
+    acceptance:
+      - implementation_traces_to_semantic_contracts
+      - reference_implementation_is_replaceable
+      - canonical_reducer_has_no_llm_dependency
+      - canonical_reducer_has_no_graph_dependency
+      - canonical_reducer_has_no_memory_provider_dependency
+      - canonical_reducer_has_no_projection_provider_dependency
+      - provider_adapters_cannot_redefine_semantics
+  domain_boundary:
+    required: true
+    acceptance:
+      - every_domain_has_exact_identity_revision_and_digest
+      - every_domain_declares_compatibility
+      - domain_extensions_use_only_admitted_extension_surface
+      - domain_cannot_weaken_global_invariants
+      - domain_fixtures_extend_not_redefine_global_conformance
+  provider_boundary:
+    required: true
+    acceptance:
+      - persistence_provider_behind_port
+      - projection_provider_behind_port
+      - provider_identity_not_in_public_semantics
+      - provider_native_queries_not_in_public_contracts
+      - provider_outage_preserves_semantic_failure_class
+      - provider_substitution_conformance_exists
+  replay:
+    required: true
+    acceptance:
+      - exact_event_sequence_reconstructs_expected_state
+      - snapshot_and_full_replay_equivalent
+      - historical_domain_coordinates_preserved
+      - replay_divergence_fails
+      - replay_does_not_use_current_domain_semantics_for_historical_events_unless_explicitly_migrated
+  branch_isolation:
+    required: true
+    acceptance:
+      - branch_state_is_noncanonical
+      - branch_event_does_not_enter_canonical_history
+      - branch_provider_cannot_write_canonical_state
+      - branch_discard_leaves_canonical_state_unchanged
+      - branch_rebase_requires_explicit_current_canonical_base
+  projection_non_authority:
+    required: true
+    acceptance:
+      - projection_can_be_deleted_and_rebuilt
+      - projection_staleness_detectable
+      - projection_failure_does_not_mutate_canonical_state
+      - projection_provider_cannot_grant_canonical_authority
+      - projection_output_binds_source_world_revision
+  negative_paths:
+    required: true
+    acceptance:
+      - direct_backing_store_access_rejected
+      - hidden_provider_default_rejected
+      - hidden_domain_default_rejected
+      - stale_projection_rejected_as_current
+      - provider_native_schema_rejected_as_canonical
+      - domain_core_override_rejected
+      - llm_reducer_dependency_rejected
+      - projection_write_to_canon_rejected
+      - memory_write_to_canon_rejected
+      - branch_direct_promotion_rejected
+
+release_layout:
+  required_artifacts:
+    - product-topology.yaml
+    - repository-spec.yaml
+    - workflow-spec.yaml
+    - canonical semantic contract pack
+    - canonical schema pack
+    - conformance profile pack
+    - conformance fixture pack
+    - reference implementation
+    - runtime implementation
+    - validation tooling
+    - release manifest
+  optional_artifacts:
+    - provider adapters
+    - World Domain packages
+    - generated documentation
+    - generated client bindings
+    - generated projection schemas
+  manifest_requirements:
+    - repository revision
+    - ProductTopology revision and digest
+    - RepositorySpec revision and digest
+    - WorkflowSpec revision and digest
+    - canonical contract digests
+    - canonical schema digests
+    - conformance profile digests
+    - fixture digests
+    - runtime artifact digests
+    - provider adapter artifact digests when distributed
+    - World Domain artifact digests when distributed
+    - generated artifact digests
+  rules:
+    - release_manifest_is_evidence_not_semantic_authority
+    - generated_artifact_omission_does_not_change_source_semantics
+    - source_semantic_artifacts_must_be_exactly_identifiable
+    - independently_versioned_domain_packages_must_not_be_implicitly_promoted_to_core
+
+dependency_policy:
+  direct_dependencies:
+    allowed:
+      - global admitted L9 semantic contracts
+      - schema validation libraries
+      - deterministic serialization and canonicalization libraries
+      - provider-neutral runtime libraries
+      - explicitly admitted local implementation dependencies
+    forbidden:
+      - provider SDK as public semantic contract
+      - graph database client as global semantic dependency
+      - memory provider client as global semantic dependency
+      - persistence provider client in semantic core
+      - LLM SDK in canonical reducer path
+      - peer L9 node implementation import
+      - direct peer database driver for cross-node integration
+  optional_dependencies:
+    - provider adapters
+    - projection implementations
+    - local development tooling
+    - generated client tooling
+  rules:
+    - optional dependency absence cannot alter canonical semantic meaning
+    - provider SDKs remain adapter-local
+    - dependency version changes affecting semantics require compatibility review
+    - transitive provider dependency cannot leak provider-native types across semantic boundaries
+    - canonical core tests must run without optional providers
+    - exact dependency lock is required for release evidence
+
+world_domain_packaging:
+  root: domains/
+  package_contract_ref: l9.world-model.contract/world-domain@1
+  required_surfaces:
+    - domain identity
+    - domain semantic owner
+    - domain version
+    - domain digest
+    - compatible World Model semantic version range
+    - coordinate schema
+    - entity type registry
+    - state address profiles
+    - state plane registry
+    - relation registry
+    - event type registry
+    - observation admission profiles
+    - reducer registry
+    - derivation registry
+    - projection profile registry
+    - domain invariants
+    - domain conformance fixtures
+  optional_surfaces:
+    - domain-specific query profiles
+    - domain-specific branch policies
+    - domain-specific visualization profiles
+    - domain-specific migration definitions
+  forbidden_surfaces:
+    - replacement global WorldEvent semantics
+    - replacement global WorldRevision semantics
+    - weakened global branch-isolation law
+    - weakened global provenance law
+    - weakened global reducer-determinism law
+    - provider-specific persistence requirement presented as domain law
+    - provider-specific graph requirement presented as domain law
+    - provider-specific memory requirement presented as domain law
+  admission_rules:
+    - domain package is not active merely because present in repository
+    - domain binding requires exact identity revision and digest
+    - incompatible domain package fails closed
+    - domain package cannot silently depend on another domain package
+    - cross-domain dependency must be explicit and version-bound
+    - domain semantic change invalidates affected compiled projections and fixtures
+    - domain admission does not admit the World Model product itself
+
+provider_adapter_policy:
+  persistence:
+    port_contract_ref: l9.world-model.contract/world-state-persistence@1
+    root: adapters/persistence/
+    requirements:
+      - exact revision compare-and-set or equivalent atomic transition behavior
+      - immutable event persistence or semantically equivalent guarantee
+      - exact revision retrieval
+      - historical event retrieval
+      - snapshot or checkpoint persistence where supported
+      - corruption detection support
+      - explicit unavailable and conflict semantics
+      - no provider-native semantic reinterpretation
+    forbidden:
+      - provider_specific_revision_semantics_leak
+      - provider_specific_world_identity_leak
+      - provider_generated_event_as_canonical_WorldEvent_without_core_admission
+  projection:
+    port_contract_ref: l9.world-model.contract/world-projection@1
+    root: adapters/projection/
+    requirements:
+      - exact source WorldRevision binding
+      - projection-profile binding
+      - rebuildability
+      - staleness detectability
+      - zero canonical write authority
+      - explicit provider degradation
+    forbidden:
+      - projection_provider_as_canonical_state_store
+      - graph_provider_as_world_semantic_owner
+      - projection_query_result_auto_promoted_to_canonical_state
+  integration:
+    root: adapters/integration/
+    requirements:
+      - integration payloads normalized to provider-neutral canonical contracts
+      - external provider identities preserved as provenance not semantic ownership
+      - no direct peer store access
+    forbidden:
+      - direct_peer_database_adapter
+      - direct_peer_internal_api_import
+      - hidden_routing_logic
+
+reference_implementation:
+  root: reference/
+  purpose: >
+    Provide a minimal deterministic implementation of canonical reducer,
+    replay, branch-overlay, diff, and projection-contract behavior sufficient
+    to prove semantic conformance independently of production-grade providers.
+  required_capabilities:
+    - deterministic in-memory or file-backed canonical reduction suitable for tests
+    - exact revision chaining
+    - replay
+    - snapshot reconstruction
+    - branch isolation
+    - state diff
+    - provider-neutral projection contract test harness
+  prohibited:
+    - production provider lock-in
+    - LLM dependency
+    - graph database dependency
+    - memory engine dependency
+    - network dependency for local fixture execution
+    - semantic behavior not defined in canonical contracts
+  authority: none
+  rules:
+    - reference implementation is evidence of one conforming realization
+    - reference implementation does not become semantic authority
+    - production implementation may differ internally while satisfying identical semantic contracts
+
+test_strategy:
+  unit:
+    required:
+      - StateAddress canonicalization
+      - WorldCoordinate validation
+      - WorldEntity identity separation
+      - observation validation
+      - observation admission
+      - deterministic reduction
+      - revision chaining
+      - StateCell provenance
+      - snapshot construction
+      - query boundedness
+      - history
+      - lineage
+      - diff
+      - branch overlays
+      - branch discard
+      - branch rebase
+      - projection provenance
+      - provider error mapping
+  contract:
+    required:
+      - public schema valid vectors
+      - public schema invalid vectors
+      - unknown field behavior
+      - compatibility behavior
+      - receipt canonicalization
+      - persistence port conformance
+      - projection port conformance
+      - World Domain extension conformance
+  integration:
+    required:
+      - canonical transition through persistence adapter
+      - conflict transition
+      - replay through persisted history
+      - snapshot restore
+      - provider outage
+      - projection provider outage
+      - domain incompatibility
+      - branch isolation
+      - exact source revision preservation
+  negative:
+    required:
+      - observation bypass rejected
+      - direct canonical write rejected
+      - stale expected revision rejected
+      - provider-native schema leak rejected
+      - provider-native query leak rejected
+      - World Domain invariant weakening rejected
+      - projection write authority rejected
+      - branch direct promotion rejected
+      - memory result promotion rejected
+      - stale projection as current rejected
+      - missing material evidence blocked
+      - provider timeout not translated to domain false
+      - LLM canonical reducer rejected
+      - direct peer backing-store access rejected
+  replay:
+    required:
+      - empty world to expected terminal world
+      - checkpoint plus suffix equals full replay
+      - deterministic repeated replay
+      - historical World Domain binding preserved
+      - corrupted event chain rejected
+      - missing event rejected
+      - reordered event sequence rejected where ordering is material
+  provider_substitution:
+    required:
+      - same canonical transition semantics across conforming persistence adapters
+      - same projection semantics across conforming equivalent projection adapters
+      - provider replacement leaves canonical contract unchanged
+
+security:
+  source_integrity:
+    requirements:
+      - canonical semantic files protected from generated overwrite
+      - generated roots cannot overwrite semantic roots
+      - domain packages cannot overwrite global semantic roots
+      - provider adapters cannot overwrite contract roots
+      - release artifacts bind source digests
+  secrets:
+    allowed_locations:
+      - external secret plane references
+      - local noncommitted development configuration where governed
+    forbidden_locations:
+      - semantic roots
+      - canonical schemas
+      - canonical fixtures
+      - generated documentation
+      - release manifests containing raw secrets
+  path_controls:
+    requirements:
+      - generated writes confined to declared generated roots
+      - projection compiler rejects path traversal
+      - absolute unauthorized output paths rejected
+      - domain package cannot write outside declared domain package boundary
+  dependency_controls:
+    requirements:
+      - provider dependencies isolated to adapter packages where practical
+      - untrusted generated output not executed automatically
+      - exact release dependency lock available
+      - dependency vulnerability review is release evidence not semantic authority
+
+observability:
+  repository_metrics:
+    - validation_pass_rate
+    - conformance_pass_rate
+    - replay_fixture_pass_rate
+    - projection_fixture_pass_rate
+    - provider_adapter_conformance_pass_rate
+    - domain_conformance_pass_rate
+    - generated_projection_staleness_count
+    - semantic_source_drift_count
+    - generated_region_drift_count
+  required_receipts:
+    - repository_validation_receipt
+    - conformance_receipt
+    - replay_verification_receipt
+    - projection_verification_receipt
+    - provider_adapter_conformance_receipt
+    - domain_conformance_receipt
+  rules:
+    - receipts bind exact repository revision
+    - receipts bind exact ProductTopology revision and digest
+    - receipts bind exact applicable semantic source digests
+    - provider identities are observable without becoming semantic authority
+    - failed validation remains distinct from unavailable validation tooling
+    - no secrets appear in receipts
+
+provenance:
+  semantic_owner: Quantum-L9/l9-world-model
+  repository: Quantum-L9/l9-world-model
+  source_refs:
+    - product-topology.yaml
+    - Quantum-L9/.github/semantics
+    - Quantum-L9/Cursor-Governance/WIP/World Model.md
+    - Quantum-L9/Cursor-Governance/WIP/Architecture .md
+    - Quantum-L9/l9-wip:extract/quantum-animation/Quantum Animation/01_quantum_animation_world_model_build_spec.yaml
+    - l9_agent_intelligence_loop_resume_v1.0.0/ARCHITECTURE.md
+    - l9_agent_intelligence_loop_resume_v1.0.0/shared/00_CONSTITUTION.md
+    - l9_agent_intelligence_loop_resume_v1.0.0/shared/04_SHARED_INVARIANTS.md
+    - l9_agent_intelligence_loop_resume_v1.0.0/shared/07_CONTRACT_LAW.yaml
+  product_topology_revision: null
+  product_topology_digest: null
+  repository_spec_revision: null
+  repository_spec_digest: null
+
+unknowns:
+  material:
+    - id: U-REPO-WM-001
+      item: exact canonical source revision for ProductTopology binding
+      reason: >
+        RepositorySpec requires an exact ProductTopology revision and digest
+        before repository admission.
+      blocks:
+        - repository_admission
+    - id: U-REPO-WM-002
+      item: exact current admitted upstream semantic coordinates
+      reason: >
+        Canonical Quantum-L9/.github semantic revisions must be bound rather
+        than inferred from template identifiers.
+      blocks:
+        - repository_admission
+    - id: U-REPO-WM-003
+      item: exact serialized schema set for World Model public contracts
+      reason: >
+        Product semantics are converged sufficiently for repository structure,
+        but field-level wire schemas still require explicit schema lock.
+      blocks:
+        - implementation
+        - repository_admission
+    - id: U-REPO-WM-004
+      item: exact provider-neutral WorldStatePersistence wire contract
+      reason: >
+        The semantic port is required and bounded, while its serialized schema
+        and provider conformance vectors remain to be locked.
+      blocks:
+        - persistence_adapter_implementation
+    - id: U-REPO-WM-005
+      item: exact first persistence adapter
+      reason: >
+        Repository architecture intentionally keeps persistence selection behind
+        the provider-neutral port.
+      blocks: []
+    - id: U-REPO-WM-006
+      item: exact first projection adapter set
+      reason: >
+        World projections are representation-neutral and provider selection is
+        intentionally deferred.
+      blocks: []
+    - id: U-REPO-WM-007
+      item: exact first admitted World Domain package
+      reason: >
+        Engineered System Model is a leading domain candidate but is not part
+        of the global World Model repository semantic authority until separately
+        admitted.
+      blocks:
+        - first_domain_release
+    - id: U-REPO-WM-008
+      item: exact World Domain package release strategy
+      reason: >
+        Domain packages may be co-repository or independently versioned; the
+        final distribution policy has not been admitted.
+      blocks:
+        - production_distribution_design
+    - id: U-REPO-WM-009
+      item: exact semantic compiler role in repository projection compilation
+      reason: >
+        Semantic Compiler is a strong candidate for deterministic repository
+        projection and artifact generation, but exact compilation profiles and
+        integration coordinates remain unbound.
+      blocks:
+        - generated_projection_implementation
+    - id: U-REPO-WM-010
+      item: exact canonical transport code-generation surface
+      reason: >
+        Runtime transport participation is required but generated or handwritten
+        transport bindings must follow the current admitted transport contracts.
+      blocks:
+        - runtime_integration
+    - id: U-REPO-WM-011
+      item: exact packaging language and implementation language
+      reason: >
+        Repository semantics do not require a language choice.
+      blocks:
+        - implementation_start
+    - id: U-REPO-WM-012
+      item: exact release artifact registry
+      reason: >
+        Release artifact destinations and distribution provider remain
+        realization concerns.
+      blocks:
+        - production_release
+    - id: U-REPO-WM-013
+      item: exact domain migration directory and protocol
+      reason: >
+        Historical World Domain evolution must be explicit but the canonical
+        migration contract remains unresolved.
+      blocks:
+        - incompatible_domain_upgrade
+    - id: U-REPO-WM-014
+      item: exact provider compatibility matrix format
+      reason: >
+        Provider substitution requires machine-readable compatibility evidence;
+        its final schema remains to be locked.
+      blocks:
+        - multi_provider_admission
+  non_material:
+    - id: U-REPO-WM-N001
+      item: exact local development database
+      reason: >
+        Local persistence is an adapter choice and does not affect repository
+        semantics if the persistence contract is satisfied.
+    - id: U-REPO-WM-N002
+      item: exact graph projection tool
+      reason: >
+        Graph representation is an optional projection provider and is not
+        canonical World Model architecture.
+    - id: U-REPO-WM-N003
+      item: exact visualization library
+      reason: >
+        Visualization is a derived projection concern.
+    - id: U-REPO-WM-N004
+      item: exact test runner implementation
+      reason: >
+        Test runner choice does not alter conformance semantics.
+    - id: U-REPO-WM-N005
+      item: exact documentation renderer
+      reason: >
+        Generated documentation tooling is replaceable.
+  policy:
+    material_unknowns_block_admission: true
+    unknowns_must_not_be_inferred: true
+    provider_unknowns_must_not_be_promoted_to_semantic_law: true
+    unresolved_domain_semantics_fail_closed: true
+    unresolved_generated_projection_tooling_does_not_block_core_semantic_design: true

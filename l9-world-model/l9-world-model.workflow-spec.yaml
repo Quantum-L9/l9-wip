@@ -1,0 +1,2101 @@
+schema: l9.workflow-spec/v1
+
+workflow:
+  id: l9-world-model
+  name: L9 World Model Governed Runtime Workflow
+  version: 1
+  status: candidate
+  semantic_owner: Quantum-L9/l9-world-model
+  product_ref: l9.product/l9-world-model
+  repository_ref: Quantum-L9/l9-world-model
+  calculus_ref: null
+
+purpose:
+  statement: >
+    Govern the deterministic runtime execution path by which l9-world-model
+    validates exact inputs, resolves an exact World Domain binding, admits or
+    rejects observations, reduces admitted WorldEvents into canonical modeled
+    world-state revisions, resolves and queries exact historical or current
+    state, evaluates lineage and diffs, creates isolated noncanonical
+    hypothetical branches, emits rebuildable projections, verifies replay
+    equivalence, and produces exact receipts without allowing providers,
+    projections, memory, transport, branches, or runtime mechanics to acquire
+    semantic authority.
+  primary_responsibility: >
+    Define the exact governed process for World Model capability execution while
+    preserving product semantics, domain semantics, source authority, exact
+    coordinates, deterministic reduction, immutable revision history, branch
+    isolation, provider neutrality, projection non-authority, explicit failure
+    semantics, and receipt-bound provenance.
+
+principles:
+  - exact_inputs_only
+  - deterministic_given_pinned_inputs
+  - no_hidden_defaults
+  - no_hidden_provider_selection
+  - no_hidden_domain_selection
+  - fail_closed
+  - provenance_preserved_through_every_stage
+  - generated_artifacts_remain_derived
+  - source_authority_preserved
+  - observations_do_not_directly_mutate_canonical_state
+  - canonical_state_changes_only_via_admitted_world_events
+  - historical_revisions_are_immutable
+  - corrections_create_successor_events_and_revisions
+  - domain_semantics_are_explicitly_bound
+  - domain_semantics_cannot_weaken_global_world_model_law
+  - provider_identity_is_not_semantic_authority
+  - projections_are_non_authoritative
+  - hypothetical_branches_are_noncanonical
+  - branch_execution_does_not_imply_real_world_execution
+  - transport_success_is_not_semantic_success
+  - query_success_is_not_authorization
+  - receipt_existence_is_not_authorization
+  - unavailable_is_not_false
+  - stale_is_not_current
+  - conflict_is_not_silently_resolved
+  - unknown_is_not_defaulted
+  - canonical_reduction_requires_no_llm
+  - canonical_replay_requires_no_llm
+  - canonical_path_does_not_require_projection_provider
+  - canonical_path_does_not_require_memory_provider
+  - canonical_path_does_not_require_graph_provider
+  - provider_outage_cannot_redefine_world_state
+  - exact_revision_conflicts_are_explicit
+  - same_inputs_produce_same_successor_state_digest
+  - unchanged_derived_outputs_are_not_rewritten
+  - cache_has_zero_semantic_authority
+
+authority:
+  roles:
+    global_semantics:
+      authority_class: canonical_semantics
+      source_ref: Quantum-L9/.github/semantics
+      owns:
+        - global L9 semantic law
+        - product kind law
+        - authority law
+        - identity law
+        - provenance and coordinate law
+    product_topology:
+      authority_class: product_semantics
+      source_ref: product-topology.yaml
+      owns:
+        - l9-world-model product meaning
+        - product capabilities
+        - product ownership boundary
+        - product provider independence
+        - product state semantics
+    repository_spec:
+      authority_class: repository_semantics
+      source_ref: repository-spec.yaml
+      owns:
+        - repository-scoped realization rules
+        - repository source organization
+        - projection compilation boundaries
+    world_model_core:
+      authority_class: world_model_semantics
+      source_ref: canonical world-model contracts and schemas
+      owns:
+        - WorldCoordinate semantics
+        - WorldEntity semantics
+        - StateAddress semantics
+        - StateCell semantics
+        - WorldObservation semantics
+        - WorldEvent semantics
+        - WorldRevision semantics
+        - WorldSnapshot semantics
+        - WorldBranch semantics
+        - world-query semantics
+        - world-projection semantics
+    world_domain:
+      authority_class: domain_semantics
+      source_ref: exact bound World Domain package
+      owns:
+        - domain coordinate specialization
+        - domain entity vocabulary
+        - domain relation vocabulary
+        - domain state-plane vocabulary
+        - domain event vocabulary
+        - domain observation-admission rules
+        - domain reducers
+        - domain derivations
+        - domain projection profiles
+      constraints:
+        - subordinate_to_global_world_model_semantics
+        - cannot_weaken_core_invariants
+        - exact_revision_and_digest_required
+    source_authority:
+      authority_class: external_or_domain_source_authority
+      source_ref: exact observation source coordinates
+      owns:
+        - source-owned facts within source scope
+      constraints:
+        - World Model does not acquire source-system ownership by modeling source observations
+    evidence:
+      authority_class: evidence_proof
+      source_ref: exact evidence references when required
+      owns:
+        - provenance proof
+        - exact source revision evidence
+        - lineage proof
+      constraints:
+        - evidence does not directly mutate world state
+    persistence_provider:
+      authority_class: implementation
+      source_ref: exact provider binding
+      owns:
+        - persistence mechanics only
+      constraints:
+        - cannot redefine World Model semantics
+        - cannot redefine revision semantics
+        - cannot define world identity
+    projection_provider:
+      authority_class: implementation
+      source_ref: exact provider binding
+      owns:
+        - representation mechanics only
+      constraints:
+        - zero canonical state authority
+        - cannot mutate canonical world state
+    runtime_caller:
+      authority_class: invocation_subject
+      source_ref: exact authenticated invocation
+      owns:
+        - requested intent within granted authority
+      constraints:
+        - availability does not grant authorization
+        - query rights do not imply mutation rights
+
+inputs:
+  required:
+    invocation:
+      contract_ref: l9.world-model.contract/world-capability-request@1
+      requirements:
+        - exact request identity
+        - exact world identity
+        - exact operation
+        - exact caller identity where authorization applies
+        - explicit bounds where operation can expand
+    product_topology:
+      contract_ref: l9.product-topology/v1
+      requirements:
+        - exact revision
+        - exact digest
+        - status compatible with runtime execution
+    repository_spec:
+      contract_ref: l9.repository-semantics/v1
+      requirements:
+        - exact revision
+        - exact digest
+    world_domain_binding:
+      contract_ref: l9.world-model.contract/domain-binding@1
+      requirements:
+        - exact domain identity
+        - exact domain version
+        - exact domain revision
+        - exact domain digest
+        - compatible World Model version
+        - valid domain conformance status
+    world_identity:
+      contract_ref: l9.world-model.contract/world-identity@1
+      requirements:
+        - exact world id
+        - exact semantic scope
+  conditional:
+    expected_world_revision:
+      required_when:
+        - canonical_state_transition
+        - revision_guarded_mutation
+      contract_ref: l9.world-model.contract/world-revision@1
+    world_observation:
+      required_when:
+        - operation_is_observe
+      contract_ref: l9.world-model.contract/world-observation@1
+    evidence_refs:
+      required_when:
+        - domain_admission_profile_requires_evidence
+        - source_authority_requires_evidence
+        - observation_is_not_self_authenticating_under_domain_contract
+      contract_ref: l9.contract/evidence-and-receipt@1
+    source_authority_ref:
+      required_when:
+        - operation_is_observe
+        - source_owned_truth_is_modeled
+      contract_ref: l9.contract/authority-boundary@1
+    world_coordinate:
+      required_when:
+        - resolving_nondefault_coordinate
+        - historical_query
+        - diff
+        - projection
+        - branch_from_coordinate
+      contract_ref: l9.world-model.contract/world-coordinate@1
+    query:
+      required_when:
+        - operation_is_query
+      contract_ref: l9.world-model.contract/world-query@1
+    history_request:
+      required_when:
+        - operation_is_history
+      contract_ref: l9.world-model.contract/world-history@1
+    lineage_request:
+      required_when:
+        - operation_is_lineage
+      contract_ref: l9.world-model.contract/world-lineage@1
+    diff_request:
+      required_when:
+        - operation_is_diff
+      contract_ref: l9.world-model.contract/world-diff@1
+    branch_request:
+      required_when:
+        - operation_is_branch
+      contract_ref: l9.world-model.contract/world-branch@1
+    projection_request:
+      required_when:
+        - operation_is_project
+      contract_ref: l9.world-model.contract/world-projection@1
+    persistence_binding:
+      required_when:
+        - canonical_state_read
+        - canonical_state_transition
+        - history
+        - replay
+      contract_ref: l9.world-model.contract/world-state-persistence@1
+    projection_binding:
+      required_when:
+        - operation_is_project
+        - projection_profile_requires_external_provider
+      contract_ref: l9.world-model.contract/world-projection-provider-binding@1
+    authorization:
+      required_when:
+        - canonical_state_transition
+        - privileged_world_read
+        - branch_operation_requiring_restricted_source_state
+      contract_ref: null
+    idempotency_key:
+      required_when:
+        - canonical_state_transition
+        - consequential_projection_with_external_side_effect
+      contract_ref: l9.world-model.contract/world-transition-idempotency@1
+  optional:
+    prior_snapshot:
+      contract_ref: l9.world-model.contract/world-snapshot@1
+    prior_projection_receipt:
+      contract_ref: l9.world-model.receipt/world-projection@1
+    prior_query_receipt:
+      contract_ref: l9.world-model.receipt/world-query@1
+    memory_publication_binding:
+      contract_ref: null
+    semantic_compiler_binding:
+      contract_ref: null
+    tracing_context:
+      contract_ref: null
+    resource_budget:
+      contract_ref: null
+
+preconditions:
+  - id: PRE-001
+    statement: Exact product topology revision and digest resolve and validate.
+  - id: PRE-002
+    statement: Exact repository spec revision and digest resolve and validate.
+  - id: PRE-003
+    statement: Exact World Domain binding resolves and is semantically compatible with the running World Model release.
+  - id: PRE-004
+    statement: World Domain binding has no material unresolved semantic conflict.
+  - id: PRE-005
+    statement: World identity resolves within caller scope.
+  - id: PRE-006
+    statement: Requested operation is provided by current admitted product capability surface.
+  - id: PRE-007
+    statement: Required authorization is present and valid for consequential operations.
+  - id: PRE-008
+    statement: Required provider bindings resolve without hidden fallback.
+  - id: PRE-009
+    statement: Canonical persistence binding satisfies required persistence-port semantics.
+  - id: PRE-010
+    statement: Material input digests validate before semantic execution.
+  - id: PRE-011
+    statement: Material Unknowns affecting requested semantic validity are absent or explicitly resolved.
+  - id: PRE-012
+    statement: Resource and query bounds are explicit for potentially expanding operations.
+  - id: PRE-013
+    statement: No prohibited provider-native payload has bypassed adapter normalization.
+  - id: PRE-014
+    statement: Exact expected revision is supplied for canonical state transition.
+  - id: PRE-015
+    statement: Observation requests include exact source identity and applicable evidence requirements.
+  - id: PRE-016
+    statement: Branch operations name an exact canonical base revision.
+  - id: PRE-017
+    statement: Projection operations name an exact source WorldRevision and projection profile.
+  - id: PRE-018
+    statement: Historical replay can resolve exact historical World Domain coordinates required by the selected event range.
+
+context:
+  required:
+    - exact global L9 semantic coordinates applicable to this product revision
+    - exact ProductTopology coordinates
+    - exact RepositorySpec coordinates
+    - exact World Model contract coordinates
+    - exact World Domain coordinates
+    - exact world identity
+    - exact requested operation
+    - exact caller authorization scope when required
+  derived:
+    - effective operation class
+    - effective domain compatibility
+    - effective reducer set
+    - effective admission profile
+    - effective projection profile
+    - effective persistence binding
+    - effective resource bounds
+    - effective current world revision
+    - exact semantic input closure
+  forbidden:
+    - ambient_head_as_exact_revision
+    - mutable_live_documentation_as_authority
+    - unresolved_provider_preference
+    - implicit_binding_precedence
+    - conversation_history_as_required_semantic_input
+    - provider_native_schema_as_world_semantics
+    - provider_native_identity_as_WorldEntity_identity
+    - provider_native_timestamp_as_implicit_WorldCoordinate
+    - retrieved_memory_as_canonical_world_state
+    - projection_output_as_canonical_world_state
+    - hypothetical_branch_as_canonical_world_state
+    - stale_snapshot_as_current_without_validation
+    - cache_as_semantic_authority
+    - runtime_default_domain_without_explicit_binding
+
+capabilities:
+  required:
+    - l9.world-model.capability/resolve
+    - l9.world-model.capability/query
+    - l9.world-model.capability/observe
+    - l9.world-model.capability/history
+    - l9.world-model.capability/lineage
+    - l9.world-model.capability/diff
+    - l9.world-model.capability/branch
+    - l9.world-model.capability/project
+  workflow_internal:
+    - validate_exact_input_closure
+    - resolve_world_domain
+    - resolve_world_identity
+    - resolve_world_revision
+    - validate_world_coordinate
+    - validate_state_address
+    - evaluate_observation_admission
+    - canonicalize_world_event
+    - execute_deterministic_reducer
+    - validate_successor_state
+    - commit_revision_atomically
+    - build_world_snapshot
+    - reconstruct_world_state
+    - verify_replay_equivalence
+    - build_causal_lineage
+    - compute_world_diff
+    - apply_hypothetical_branch_overlay
+    - validate_branch_isolation
+    - execute_projection
+    - validate_projection_provenance
+    - emit_canonical_receipt
+  forbidden:
+    - acquire_external_evidence
+    - perform_external_research
+    - mutate_external_source_system
+    - infer_authorization_from_availability
+    - infer_world_truth_from_memory
+    - infer_world_truth_from_projection
+    - infer_missing_domain_semantics
+    - route_around_canonical_transport
+    - invoke_provider_native_query_as_public_semantic_operation
+    - use_llm_as_canonical_reducer
+    - use_llm_as_implicit_observation_admission_authority
+    - promote_branch_state_directly_to_canonical_state
+
+state_machine:
+  initial_state: requested
+  terminal_states:
+    success:
+      - succeeded
+      - no_change
+    non_success:
+      - failed
+      - blocked
+  states:
+    requested:
+      class: pending
+      meaning: request accepted for validation only
+    inputs_validated:
+      class: active
+      meaning: exact required input closure has validated
+    semantics_bound:
+      class: active
+      meaning: global product and World Domain semantics are exactly bound
+    authority_validated:
+      class: active
+      meaning: applicable caller source and mutation authority checks have passed
+    current_state_resolved:
+      class: active
+      meaning: exact current or requested canonical world state has resolved
+    observation_validated:
+      class: active
+      meaning: candidate WorldObservation is structurally and provenance-valid
+    observation_admitted:
+      class: active
+      meaning: candidate observation has been accepted as an admitted WorldEvent under exact domain semantics
+    reducing:
+      class: active
+      meaning: deterministic reducer is producing candidate successor modeled state
+    successor_validated:
+      class: active
+      meaning: candidate successor state satisfies global and domain invariants
+    committing:
+      class: active
+      meaning: exact revision-guarded atomic commit is in progress
+    canonical_transition_committed:
+      class: active
+      meaning: canonical WorldRevision has been durably committed
+    querying:
+      class: active
+      meaning: bounded exact world-state query is being evaluated
+    reconstructing:
+      class: active
+      meaning: historical world state is being reconstructed
+    replay_verifying:
+      class: active
+      meaning: deterministic replay equivalence is being verified
+    lineage_resolving:
+      class: active
+      meaning: causal and evidentiary lineage is being reconstructed
+    diffing:
+      class: active
+      meaning: exact coordinate-bound modeled states are being compared
+    branching:
+      class: active
+      meaning: isolated noncanonical branch overlay is being evaluated
+    projecting:
+      class: active
+      meaning: rebuildable derived projection is being generated
+    receipt_emitting:
+      class: active
+      meaning: exact semantic result and provenance are being canonicalized into a receipt
+    succeeded:
+      class: terminal_success
+      meaning: requested semantic operation completed successfully
+    no_change:
+      class: terminal_success
+      meaning: requested operation proved no canonical or derived change was required
+    failed:
+      class: terminal_failure
+      meaning: deterministic operation failed after valid semantic entry
+    blocked:
+      class: terminal_failure
+      meaning: required authority semantic coordinate provider capability or material fact was unresolved invalid denied or unavailable
+
+passes:
+  - id: P00_REQUEST_CLASSIFICATION
+    name: Classify Request
+    inputs:
+      - invocation
+    operations:
+      - validate invocation envelope
+      - resolve requested capability
+      - classify requested effect class
+      - derive required input set
+      - derive required authorization class
+      - derive operation resource bounds
+    outputs:
+      - operation_class
+      - required_input_set
+      - authorization_requirement
+      - bound_policy_requirements
+    success_state: inputs_validated
+    failure_state: blocked
+
+  - id: P01_EXACT_INPUT_BINDING
+    name: Bind Exact Semantic Input Closure
+    inputs:
+      - product_topology
+      - repository_spec
+      - world_domain_binding
+      - world_identity
+      - operation-specific inputs
+    operations:
+      - verify exact revisions
+      - verify exact digests
+      - reject mutable or ambient references where exact coordinates are required
+      - compute semantic input closure
+      - verify no material required coordinate is unresolved
+    outputs:
+      - semantic_input_closure
+      - semantic_input_digests
+    success_state: semantics_bound
+    failure_state: blocked
+
+  - id: P02_DOMAIN_BINDING
+    name: Resolve and Validate World Domain
+    inputs:
+      - world_domain_binding
+      - semantic_input_closure
+    operations:
+      - resolve exact World Domain package
+      - verify domain identity
+      - verify domain revision
+      - verify domain digest
+      - verify World Model compatibility
+      - verify domain conformance status
+      - verify domain does not weaken core invariants
+      - resolve applicable coordinate schema
+      - resolve entity type registry
+      - resolve relation registry
+      - resolve event type registry
+      - resolve state plane registry
+      - resolve observation admission profiles
+      - resolve reducer registry
+      - resolve derivation registry
+      - resolve projection profiles
+    outputs:
+      - exact_domain_semantics
+      - exact_domain_calculi
+      - domain_compatibility_result
+    success_state: semantics_bound
+    failure_state: blocked
+
+  - id: P03_AUTHORITY_VALIDATION
+    name: Validate Authority Boundary
+    inputs:
+      - invocation
+      - operation_class
+      - authorization
+      - source_authority_ref
+      - world_identity
+      - exact_domain_semantics
+    operations:
+      - validate caller scope
+      - validate world scope
+      - validate operation authority
+      - validate source authority for observations
+      - ensure capability availability is not treated as authorization
+      - ensure branch rights do not imply canonical mutation rights
+      - ensure query rights do not imply canonical mutation rights
+      - ensure provider availability does not grant authority
+    outputs:
+      - effective_authority_envelope
+    success_state: authority_validated
+    failure_state: blocked
+
+  - id: P04_PROVIDER_BINDING
+    name: Resolve Required Provider Bindings
+    inputs:
+      - operation_class
+      - persistence_binding
+      - projection_binding
+      - semantic_input_closure
+    operations:
+      - resolve required provider-neutral ports
+      - validate provider compatibility
+      - validate provider adapter identity
+      - ensure provider-native contracts do not escape adapter boundary
+      - reject hidden provider fallback
+      - reject implicit provider precedence
+    outputs:
+      - effective_persistence_binding
+      - effective_projection_binding
+      - provider_compatibility_receipts
+    success_state: authority_validated
+    failure_state: blocked
+
+  - id: P05_RESOLVE_BASE_WORLD_STATE
+    name: Resolve Canonical Base World State
+    inputs:
+      - world_identity
+      - world_coordinate
+      - expected_world_revision
+      - effective_persistence_binding
+      - exact_domain_semantics
+    operations:
+      - resolve requested or current revision
+      - verify world identity matches stored scope
+      - validate requested WorldCoordinate
+      - validate snapshot freshness if snapshot used
+      - reconstruct from snapshot plus canonical event suffix when required
+      - reconstruct from canonical event history when no usable snapshot exists
+      - verify state digest
+      - verify revision lineage
+      - reject corrupt or incomplete canonical history
+    outputs:
+      - canonical_base_state
+      - canonical_base_revision
+      - canonical_base_digest
+      - reconstruction_provenance
+    success_state: current_state_resolved
+    failure_state: failed
+
+  - id: P06_OBSERVATION_VALIDATION
+    name: Validate Candidate WorldObservation
+    applies_when:
+      - operation_is_observe
+    inputs:
+      - world_observation
+      - evidence_refs
+      - source_authority_ref
+      - exact_domain_semantics
+      - effective_authority_envelope
+    operations:
+      - validate observation schema
+      - validate exact subject identity
+      - validate exact source identity
+      - validate observation coordinate
+      - validate observation time semantics
+      - validate required evidence references
+      - validate source revision where applicable
+      - validate freshness requirements
+      - preserve conflicting observations explicitly
+      - reject memory-only truth promotion
+      - reject projection-only truth promotion
+      - reject transport-only truth promotion
+    outputs:
+      - validated_observation
+      - observation_provenance
+      - observation_freshness
+      - observation_conflict_state
+    success_state: observation_validated
+    failure_state: blocked
+
+  - id: P07_OBSERVATION_ADMISSION
+    name: Evaluate Observation Admission
+    applies_when:
+      - operation_is_observe
+    inputs:
+      - validated_observation
+      - observation_provenance
+      - exact_domain_semantics
+      - canonical_base_state
+      - effective_authority_envelope
+    operations:
+      - select exact domain admission profile
+      - validate observation against domain invariants
+      - validate source authority compatibility
+      - evaluate whether evidence threshold is satisfied
+      - evaluate whether observation is stale
+      - evaluate whether observation conflicts with canonical modeled state
+      - evaluate whether conflict is resolvable under admitted domain law
+      - preserve unresolved material conflict as blocked
+      - canonicalize admitted semantic delta
+      - construct candidate WorldEvent
+      - bind event to exact source and evidence provenance
+    outputs:
+      - observation_admission_result
+      - admitted_world_event
+      - observation_admission_receipt
+    success_state: observation_admitted
+    no_change_state: no_change
+    failure_state: blocked
+
+  - id: P08_EVENT_CANONICALIZATION
+    name: Canonicalize WorldEvent
+    applies_when:
+      - admitted_world_event_present
+    inputs:
+      - admitted_world_event
+      - canonical_base_revision
+      - exact_domain_semantics
+    operations:
+      - validate event type
+      - validate event subject
+      - validate event coordinate
+      - validate event domain ownership
+      - validate event provenance
+      - validate event causal predecessor references
+      - canonicalize event serialization
+      - compute event digest
+      - verify idempotency identity
+      - detect duplicate canonical event
+    outputs:
+      - canonical_world_event
+      - canonical_world_event_digest
+      - duplicate_event_result
+    success_state: reducing
+    no_change_state: no_change
+    failure_state: blocked
+
+  - id: P09_DETERMINISTIC_REDUCTION
+    name: Reduce Canonical Event Into Candidate Successor State
+    applies_when:
+      - canonical_world_event_present
+    inputs:
+      - canonical_base_state
+      - canonical_base_revision
+      - canonical_world_event
+      - exact_domain_semantics
+      - exact_domain_calculi
+    operations:
+      - resolve exact reducer
+      - verify reducer version
+      - verify reducer is deterministic
+      - verify reducer path has no LLM dependency
+      - apply global World Model transition semantics
+      - apply admitted domain reducer semantics
+      - update exact StateAddresses
+      - preserve persistent WorldEntity identity
+      - update StateCell provenance
+      - derive exact candidate successor revision content
+      - compute candidate successor digest
+    outputs:
+      - candidate_successor_state
+      - candidate_successor_digest
+      - reducer_identity
+      - reducer_version
+      - reduction_trace
+    success_state: successor_validated
+    failure_state: failed
+
+  - id: P10_SUCCESSOR_VALIDATION
+    name: Validate Candidate Successor World State
+    applies_when:
+      - candidate_successor_state_present
+    inputs:
+      - canonical_base_state
+      - canonical_world_event
+      - candidate_successor_state
+      - exact_domain_semantics
+    operations:
+      - validate all material StateAddresses
+      - validate WorldEntity identity stability
+      - validate StateCell establishing event provenance
+      - validate global World Model invariants
+      - validate World Domain invariants
+      - validate no provider-native semantic leakage
+      - validate no projection-derived authority
+      - validate no hypothetical-state contamination
+      - validate no source-authority laundering
+      - validate exact coordinate progression
+      - validate successor digest
+    outputs:
+      - validated_successor_state
+      - validated_successor_digest
+      - successor_validation_result
+    success_state: committing
+    failure_state: blocked
+
+  - id: P11_ATOMIC_CANONICAL_COMMIT
+    name: Commit Canonical World Transition
+    applies_when:
+      - validated_successor_state_present
+    inputs:
+      - canonical_base_revision
+      - canonical_world_event
+      - validated_successor_state
+      - validated_successor_digest
+      - effective_persistence_binding
+      - idempotency_key
+    operations:
+      - validate exact expected predecessor revision
+      - execute provider-neutral atomic revision transition
+      - persist canonical WorldEvent
+      - persist successor WorldRevision
+      - persist transition receipt identity
+      - persist journal or equivalent transition evidence where provider contract requires it
+      - reject stale expected revision
+      - distinguish conflict from persistence unavailability
+      - verify resulting committed revision
+      - verify committed digest
+    outputs:
+      - committed_world_revision
+      - committed_world_state_digest
+      - world_transition_receipt
+    success_state: canonical_transition_committed
+    failure_state: failed
+    conflict_state: blocked
+
+  - id: P12_POST_COMMIT_REPLAY_CHECK
+    name: Verify Transition Replay Equivalence
+    applies_when:
+      - canonical_transition_committed
+      - replay_verification_required
+    inputs:
+      - committed_world_revision
+      - canonical_world_event
+      - canonical_base_revision
+      - exact_domain_semantics
+      - effective_persistence_binding
+    operations:
+      - reload exact predecessor state
+      - replay exact committed event under exact domain coordinates
+      - recompute successor state digest
+      - compare replay digest with committed successor digest
+      - emit divergence evidence if unequal
+    outputs:
+      - replay_verification_result
+      - replay_verification_receipt
+    success_state: receipt_emitting
+    failure_state: blocked
+
+  - id: P13_RESOLVE_OPERATION
+    name: Resolve Exact World State
+    applies_when:
+      - operation_is_resolve
+    inputs:
+      - canonical_base_state
+      - canonical_base_revision
+      - world_coordinate
+    operations:
+      - validate requested coordinate
+      - return exact canonical modeled state
+      - preserve world revision
+      - preserve domain binding
+      - preserve source and reconstruction provenance
+      - preserve stale degraded or unavailable status
+    outputs:
+      - world_resolve_result
+    success_state: receipt_emitting
+    failure_state: failed
+
+  - id: P14_QUERY_OPERATION
+    name: Execute Bounded World Query
+    applies_when:
+      - operation_is_query
+    inputs:
+      - canonical_base_state
+      - canonical_base_revision
+      - query
+      - exact_domain_semantics
+      - resource_budget
+    operations:
+      - validate query contract
+      - validate requested StateAddresses or semantic selectors
+      - enforce world scope
+      - enforce resource bounds
+      - evaluate query against canonical modeled state
+      - preserve coverage metadata
+      - preserve Unknown values
+      - preserve provenance
+      - preserve revision and coordinate
+      - return explicit partial result only when query contract permits it
+    outputs:
+      - world_query_result
+      - query_coverage
+    success_state: receipt_emitting
+    failure_state: failed
+    bound_exceeded_state: blocked
+
+  - id: P15_HISTORY_OPERATION
+    name: Resolve World History
+    applies_when:
+      - operation_is_history
+    inputs:
+      - history_request
+      - effective_persistence_binding
+      - world_identity
+      - exact_domain_semantics
+    operations:
+      - validate requested history bounds
+      - resolve exact revision range
+      - resolve exact canonical events
+      - preserve historical domain coordinates
+      - preserve causal ordering
+      - preserve source and evidence provenance
+      - reject missing history segments where completeness is required
+    outputs:
+      - world_history_result
+    success_state: receipt_emitting
+    failure_state: failed
+
+  - id: P16_LINEAGE_OPERATION
+    name: Resolve World State Lineage
+    applies_when:
+      - operation_is_lineage
+    inputs:
+      - lineage_request
+      - canonical_base_state
+      - effective_persistence_binding
+      - exact_domain_semantics
+    operations:
+      - resolve target StateCells
+      - identify establishing WorldEvents
+      - identify predecessor revisions
+      - identify supporting observations
+      - identify evidence references
+      - identify source authority references
+      - identify causal predecessor events
+      - preserve Unknown lineage gaps explicitly
+    outputs:
+      - world_lineage_result
+    success_state: receipt_emitting
+    failure_state: failed
+
+  - id: P17_DIFF_OPERATION
+    name: Compare Exact World States
+    applies_when:
+      - operation_is_diff
+    inputs:
+      - diff_request
+      - effective_persistence_binding
+      - exact_domain_semantics
+    operations:
+      - resolve exact left coordinate and revision
+      - resolve exact right coordinate and revision
+      - validate semantic comparability
+      - compare StateAddresses
+      - compare values
+      - compare existence
+      - compare provenance where requested
+      - classify added removed changed unchanged unknown and incomparable state
+      - preserve domain version differences
+    outputs:
+      - world_diff_result
+    success_state: receipt_emitting
+    failure_state: failed
+
+  - id: P18_BRANCH_BASE_RESOLUTION
+    name: Resolve Hypothetical Branch Base
+    applies_when:
+      - operation_is_branch
+    inputs:
+      - branch_request
+      - effective_persistence_binding
+      - exact_domain_semantics
+    operations:
+      - validate exact canonical base revision
+      - resolve canonical base state
+      - bind branch identity
+      - bind branch policy
+      - verify branch resource bounds
+      - verify branch cannot acquire canonical mutation authority
+    outputs:
+      - branch_base_state
+      - branch_base_revision
+      - branch_context
+    success_state: branching
+    failure_state: blocked
+
+  - id: P19_BRANCH_REDUCTION
+    name: Apply Hypothetical Branch Events
+    applies_when:
+      - operation_is_branch
+    inputs:
+      - branch_context
+      - branch_request
+      - branch_base_state
+      - exact_domain_semantics
+    operations:
+      - validate hypothetical event sequence
+      - mark every hypothetical event noncanonical
+      - apply deterministic branch reducers
+      - preserve branch-local provenance
+      - preserve canonical base revision
+      - prevent branch event persistence in canonical event stream
+      - prevent branch state persistence as canonical WorldRevision
+      - enforce branch bounds
+      - compute branch state digest
+    outputs:
+      - world_branch_result
+      - branch_state_digest
+      - branch_event_sequence
+    success_state: receipt_emitting
+    failure_state: failed
+    bound_exceeded_state: blocked
+
+  - id: P20_PROJECTION_SOURCE_RESOLUTION
+    name: Resolve Projection Source
+    applies_when:
+      - operation_is_project
+    inputs:
+      - projection_request
+      - effective_persistence_binding
+      - exact_domain_semantics
+    operations:
+      - resolve exact source WorldRevision
+      - resolve exact source modeled state
+      - resolve projection profile
+      - validate projection profile compatibility
+      - resolve projection provider when required
+      - validate projection provider compatibility
+      - reject hidden projection provider selection
+    outputs:
+      - projection_source_state
+      - projection_source_revision
+      - effective_projection_profile
+      - effective_projection_binding
+    success_state: projecting
+    failure_state: blocked
+
+  - id: P21_PROJECTION_EXECUTION
+    name: Generate Derived World Projection
+    applies_when:
+      - operation_is_project
+    inputs:
+      - projection_source_state
+      - projection_source_revision
+      - effective_projection_profile
+      - effective_projection_binding
+    operations:
+      - generate requested representation
+      - bind exact source WorldRevision
+      - bind exact source state digest
+      - bind exact projection profile
+      - bind exact provider identity when applicable
+      - compute generated artifact digest
+      - verify projection cannot write canonical state
+      - verify projection contains no unbound independent semantic law
+      - verify output staleness metadata
+    outputs:
+      - world_projection_result
+      - projection_artifact_digest
+      - projection_provenance
+    success_state: receipt_emitting
+    failure_state: failed
+
+  - id: P22_PROJECTION_NO_CHANGE
+    name: Detect Unchanged Derived Projection
+    applies_when:
+      - operation_is_project
+      - prior_projection_receipt_present
+    inputs:
+      - projection_source_revision
+      - effective_projection_profile
+      - prior_projection_receipt
+    operations:
+      - compare effective source semantic closure
+      - compare projection profile digest
+      - compare provider-independent expected artifact digest where deterministic
+      - classify output as unchanged only when all material inputs are unchanged
+      - avoid rewriting unchanged projection artifact
+    outputs:
+      - projection_change_classification
+    success_state: no_change
+    failure_state: projecting
+
+  - id: P23_RECEIPT_EMISSION
+    name: Emit Canonical Operation Receipt
+    inputs:
+      - operation_class
+      - semantic_input_closure
+      - operation result
+      - applicable provenance
+      - applicable provider identities
+      - applicable degradation state
+    operations:
+      - canonicalize receipt payload
+      - bind exact product revision
+      - bind exact repository revision
+      - bind exact World Domain coordinates
+      - bind exact world identity
+      - bind exact source WorldRevision
+      - bind exact resulting WorldRevision when applicable
+      - bind exact event identity when applicable
+      - bind exact evidence references when applicable
+      - bind exact provider identities when material
+      - preserve transport outcome separately from semantic outcome
+      - preserve partial stale unavailable denied conflict and blocked states
+      - compute canonical receipt digest
+      - verify receipt grants no authority
+    outputs:
+      - workflow_receipt
+    success_state: succeeded
+    failure_state: failed
+
+transitions:
+  global:
+    - from: any_nonterminal_state
+      when: material_unknown_detected
+      to: blocked
+    - from: any_nonterminal_state
+      when: unresolved_reference_detected
+      to: blocked
+    - from: any_nonterminal_state
+      when: source_digest_invalid
+      to: blocked
+    - from: any_nonterminal_state
+      when: authority_boundary_violation_detected
+      to: blocked
+    - from: any_nonterminal_state
+      when: domain_binding_invalid
+      to: blocked
+    - from: any_nonterminal_state
+      when: domain_incompatible
+      to: blocked
+    - from: any_nonterminal_state
+      when: hidden_provider_selection_detected
+      to: blocked
+    - from: any_nonterminal_state
+      when: hidden_domain_selection_detected
+      to: blocked
+    - from: any_nonterminal_state
+      when: world_scope_violation_detected
+      to: blocked
+    - from: any_nonterminal_state
+      when: authorization_denied
+      to: blocked
+    - from: any_nonterminal_state
+      when: deterministic_operation_failure
+      to: failed
+    - from: any_nonterminal_state
+      when: budget_exhausted
+      to: blocked
+    - from: any_nonterminal_state
+      when: deadline_exceeded
+      to: blocked
+    - from: any_nonterminal_state
+      when: canonical_state_corruption_detected
+      to: failed
+    - from: any_nonterminal_state
+      when: replay_divergence_detected
+      to: blocked
+
+  operation_routes:
+    resolve:
+      - from: authority_validated
+        when: provider_bindings_valid
+        to: current_state_resolved
+      - from: current_state_resolved
+        when: requested_operation_is_resolve
+        to: receipt_emitting
+      - from: receipt_emitting
+        when: receipt_valid
+        to: succeeded
+
+    query:
+      - from: authority_validated
+        when: provider_bindings_valid
+        to: current_state_resolved
+      - from: current_state_resolved
+        when: requested_operation_is_query
+        to: querying
+      - from: querying
+        when: query_complete
+        to: receipt_emitting
+      - from: receipt_emitting
+        when: receipt_valid
+        to: succeeded
+
+    observe:
+      - from: authority_validated
+        when: provider_bindings_valid
+        to: current_state_resolved
+      - from: current_state_resolved
+        when: requested_operation_is_observe
+        to: observation_validated
+      - from: observation_validated
+        when: observation_admissible
+        to: observation_admitted
+      - from: observation_validated
+        when: observation_semantically_rejected
+        to: receipt_emitting
+      - from: observation_admitted
+        when: event_canonicalized
+        to: reducing
+      - from: reducing
+        when: candidate_successor_produced
+        to: successor_validated
+      - from: successor_validated
+        when: successor_valid
+        to: committing
+      - from: committing
+        when: atomic_commit_succeeded
+        to: canonical_transition_committed
+      - from: canonical_transition_committed
+        when: replay_verification_required
+        to: replay_verifying
+      - from: canonical_transition_committed
+        when: replay_verification_not_required
+        to: receipt_emitting
+      - from: replay_verifying
+        when: replay_matches_committed_state
+        to: receipt_emitting
+      - from: receipt_emitting
+        when: receipt_valid
+        to: succeeded
+
+    history:
+      - from: authority_validated
+        when: provider_bindings_valid
+        to: reconstructing
+      - from: reconstructing
+        when: history_resolved
+        to: receipt_emitting
+      - from: receipt_emitting
+        when: receipt_valid
+        to: succeeded
+
+    lineage:
+      - from: authority_validated
+        when: provider_bindings_valid
+        to: current_state_resolved
+      - from: current_state_resolved
+        when: requested_operation_is_lineage
+        to: lineage_resolving
+      - from: lineage_resolving
+        when: lineage_complete
+        to: receipt_emitting
+      - from: receipt_emitting
+        when: receipt_valid
+        to: succeeded
+
+    diff:
+      - from: authority_validated
+        when: provider_bindings_valid
+        to: diffing
+      - from: diffing
+        when: diff_complete
+        to: receipt_emitting
+      - from: receipt_emitting
+        when: receipt_valid
+        to: succeeded
+
+    branch:
+      - from: authority_validated
+        when: branch_base_valid
+        to: branching
+      - from: branching
+        when: branch_result_complete
+        to: receipt_emitting
+      - from: receipt_emitting
+        when: receipt_valid
+        to: succeeded
+
+    project:
+      - from: authority_validated
+        when: projection_source_valid
+        to: projecting
+      - from: projecting
+        when: projection_generated
+        to: receipt_emitting
+      - from: projecting
+        when: projection_effective_inputs_unchanged
+        to: no_change
+      - from: receipt_emitting
+        when: receipt_valid
+        to: succeeded
+
+failure_semantics:
+  fail_closed: true
+  block_on:
+    - unresolved_reference
+    - ambiguous_semantic_meaning
+    - invalid_source_digest
+    - authority_boundary_violation
+    - material_unknown
+    - budget_exhaustion
+    - unresolved_world_identity
+    - unresolved_world_domain
+    - incompatible_world_domain
+    - invalid_world_domain_digest
+    - missing_required_authorization
+    - invalid_expected_revision
+    - revision_conflict
+    - stale_observation_when_freshness_is_material
+    - unresolved_material_observation_conflict
+    - evidence_insufficient_when_required
+    - source_authority_unresolved_when_material
+    - unsupported_event_type
+    - unsupported_state_address
+    - branch_base_revision_missing
+    - projection_profile_unresolved
+    - provider_binding_unresolved_when_required
+    - replay_divergence
+  fail_on:
+    - deterministic_reducer_failure
+    - canonical_state_corruption
+    - canonical_event_corruption
+    - canonical_revision_chain_corruption
+    - persistence_operation_failure_after_semantic_entry
+    - deterministic_projection_failure
+    - internal_invariant_violation
+  degradable:
+    - optional_projection_provider_unavailable
+    - optional_memory_publication_unavailable
+    - optional_read_model_stale
+    - bounded_partial_query_when_contract_allows_partial_result
+  never_coerce:
+    unknown:
+      - zero
+      - false
+      - empty
+      - default
+      - pass
+      - best_effort_success
+    unavailable:
+      - false
+      - absent
+      - empty_result
+      - semantic_negative
+    stale:
+      - current
+      - valid_without_metadata
+    conflict:
+      - latest_wins_without_domain_law
+      - arbitrary_provider_precedence
+    denied:
+      - unavailable
+      - not_found
+    provider_timeout:
+      - domain_false
+      - evidence_absent
+      - no_change
+  rules:
+    - infrastructure_failure_must_not_become_semantic_success
+    - failed_validation_must_not_emit_success_receipt
+    - transport_success_must_not_hide_semantic_failure
+    - persistence_unavailable_must_not_become_revision_conflict
+    - revision_conflict_must_not_become_persistence_unavailable
+    - provider_outage_must_not_become_domain_negative
+    - projection_failure_must_not_invalidate_canonical_world_state
+    - branch_failure_must_not_mutate_canonical_world_state
+    - memory_publication_failure_must_not_rollback_valid_canonical_transition_unless_explicitly_part_of_atomic_contract
+    - unsupported_domain_semantics_must_not_be_inferred
+    - replay_divergence_blocks_readiness
+    - stale_state_must_not_be_returned_as_current_without_explicit_stale_classification
+    - partial_history_must_not_be_returned_as_complete_history
+    - incomplete_lineage_must_be_explicit
+    - duplicate_idempotent_event_delivery_must_not_create_duplicate_semantic_effect
+
+recovery:
+  resumable: true
+  resume_requirements:
+    - exact workflow request identity
+    - exact world identity
+    - exact last durable semantic stage
+    - exact last committed WorldRevision when any
+    - exact World Domain coordinates
+    - exact provider binding coordinates
+    - exact receipt or transition evidence needed to distinguish committed from uncommitted outcome
+  rules:
+    - historical_stage_artifacts_are_immutable
+    - correction_creates_successor_artifact
+    - stale_stage_output_is_not_reused
+    - unchanged_valid_stage_output_may_be_reused
+    - prior_receipt_is_evidence_not_authority
+    - canonical_world_history_is_never_rewritten_for_recovery
+    - interrupted_transition_is_not_assumed_committed
+    - interrupted_transition_is_not_assumed_failed
+    - ambiguous_commit_outcome_requires_provider_resolution_or_remains_unknown
+    - canonical_transition_recovery_uses_idempotency_identity
+    - canonical_recovery_must_revalidate_expected_revision
+    - projection_recovery_may_rebuild_from_canonical_source
+    - branch_recovery_must_rebind_exact_base_revision
+    - replay_recovery_must_use_historical_domain_coordinates
+    - runtime_restart_does_not_change_semantic_state
+    - provider_restart_does_not_change_semantic_state
+  canonical_transition_recovery:
+    detect:
+      - committed revision exists
+      - committed event exists
+      - matching transition receipt exists
+      - expected predecessor matches
+      - successor digest validates
+    outcomes:
+      committed:
+        action: return_existing_transition_receipt
+      not_committed:
+        action: retry_only_if_idempotency_and_revision_preconditions_still_hold
+      ambiguous:
+        action: block
+  projection_recovery:
+    rules:
+      - derived projection may be discarded
+      - derived projection may be rebuilt
+      - invalid derived projection never mutates canonical state
+  branch_recovery:
+    rules:
+      - branch overlays may be recomputed from exact canonical base plus hypothetical event sequence
+      - branch rebuild does not change canonical state
+      - stale branch base is explicit
+
+incremental_compilation:
+  enabled: true
+  affected_rule: >
+    Derived projections and reusable reconstructed views are affected only when
+    their exact canonical source WorldRevision, exact World Domain semantic
+    closure, applicable projection profile, provider-independent transformation
+    semantics, or required implementation version changes.
+  requirements:
+    - unchanged_output_not_rewritten
+    - cache_has_zero_semantic_authority
+    - stale_state_is_digest_detectable
+    - no_change_requires_exact_input_closure_equivalence
+    - prior_receipt_may_accelerate_but_cannot_authorize
+    - unchanged_projection_profile_does_not_force_rewrite
+    - unchanged_source_revision_does_not_force_rewrite
+    - changed_domain_semantics_invalidates_affected_derived_outputs
+    - changed_projection_profile_invalidates_affected_projection_outputs
+    - provider_change_requires_compatibility_and_may_require_regeneration
+    - failed_rebuild_does_not_replace_last_valid_derived_artifact
+    - canonical_state_transition_is_not_skipped_based_on_cache
+
+security:
+  requirements:
+    - path_traversal_blocked
+    - absolute_unauthorized_paths_blocked
+    - forbidden_dependency_blocked
+    - untrusted_output_not_executed
+    - canonical_path_requires_no_llm_credentials
+    - canonical_path_can_run_without_network_when_all_inputs_are_present
+    - world_scope_authorization_enforced
+    - state_address_scope_authorization_enforced
+    - branch_scope_authorization_enforced
+    - projection_scope_authorization_enforced
+    - provider_credentials_remain_adapter_scoped
+    - raw provider_secrets_never_enter_canonical_world_state
+    - source_system_credentials_never_enter_world_receipts
+    - projection_provider_cannot_receive_canonical_write_capability
+    - memory_provider_cannot_receive_canonical_write_capability
+    - branch_runtime_cannot_receive_external_mutation_authority_by_default
+    - provider_payloads_validated_before_semantic_use
+    - domain_packages_validated_before_loading
+    - domain_package_identity_revision_and_digest_verified
+    - runtime_plugins_cannot_override_global_world_model_invariants
+    - direct_peer_backing_store_access_blocked
+    - public capability surface_cannot_expose_provider_native_credentials
+    - malformed_observation_fails_closed
+    - malformed_WorldEvent_fails_closed
+    - malformed_WorldCoordinate_fails_closed
+    - malformed_StateAddress_fails_closed
+
+outputs:
+  success:
+    required:
+      - semantic_outcome
+      - exact_subject_coordinates
+      - workflow_receipt
+    conditional:
+      canonical_transition:
+        required:
+          - committed_world_revision
+          - committed_world_state_digest
+          - world_transition_receipt
+          - observation_admission_receipt
+      resolve:
+        required:
+          - world_resolve_result
+          - source_world_revision
+      query:
+        required:
+          - world_query_result
+          - source_world_revision
+          - query_coverage
+      history:
+        required:
+          - world_history_result
+      lineage:
+        required:
+          - world_lineage_result
+      diff:
+        required:
+          - world_diff_result
+      branch:
+        required:
+          - world_branch_result
+          - branch_base_revision
+          - branch_state_digest
+      projection:
+        required:
+          - world_projection_result
+          - source_world_revision
+          - projection_artifact_digest
+          - projection_provenance
+      replay_verification:
+        required:
+          - replay_verification_result
+  no_change:
+    required:
+      - semantic_outcome
+      - exact_subject_coordinates
+      - workflow_receipt
+      - no_change_basis
+    must_not:
+      - rewrite_unchanged_artifacts
+      - create_new_canonical_world_revision_without_semantic_change
+      - create_duplicate_WorldEvent
+      - create_duplicate_projection_when_exact_output_is_unchanged
+  failure:
+    required:
+      - typed_failure
+      - exact_subject_coordinates
+      - failed_stage
+      - semantic_or_infrastructure_class
+    optional:
+      - partial_diagnostics
+      - provider_diagnostics
+      - conflict_coordinates
+      - recovery_requirements
+  blocked:
+    required:
+      - typed_block_reason
+      - unresolved_or_invalid_coordinates
+      - required_resolution
+    optional:
+      - material_unknowns
+      - denied_authority
+      - stale_coordinates
+      - conflicting_observations
+      - provider_unavailability
+      - revision_conflict
+  output_rules:
+    - outputs preserve exact World Domain coordinates
+    - outputs preserve exact WorldRevision where applicable
+    - outputs preserve semantic outcome separately from transport outcome
+    - outputs preserve degraded state
+    - outputs preserve partiality
+    - outputs preserve staleness
+    - outputs preserve conflict status
+    - outputs preserve Unknown
+    - outputs never contain raw credentials
+    - outputs never grant authority merely by existence
+
+receipts:
+  workflow_receipt:
+    ref: l9.world-model.receipt/workflow@1
+    subject: exact_world_model_operation
+    required_bindings:
+      - request_identity
+      - product_identity
+      - product_revision
+      - repository_revision
+      - world_identity
+      - World Domain identity
+      - World Domain revision
+      - World Domain digest
+      - operation
+      - semantic_outcome
+      - exact input digests
+      - applicable source WorldRevision
+      - applicable result WorldRevision
+      - applicable WorldEvent digest
+      - applicable evidence references
+      - applicable provider identities
+      - applicable projection profile
+      - applicable output digests
+      - degradation state
+      - failure or blocked class when non-success
+    grants_authority: false
+  specialized_receipts:
+    observation_admission:
+      ref: l9.world-model.receipt/observation-admission@1
+      required_bindings:
+        - observation_id
+        - world_id
+        - exact_domain_coordinates
+        - source_authority_ref
+        - evidence_refs
+        - admission_profile_ref
+        - admission_result
+        - admitted_world_event_ref_when_applicable
+      grants_authority: false
+    world_transition:
+      ref: l9.world-model.receipt/world-transition@1
+      required_bindings:
+        - world_id
+        - predecessor_world_revision
+        - successor_world_revision
+        - WorldEvent identity
+        - WorldEvent digest
+        - reducer identity
+        - reducer version
+        - exact_domain_coordinates
+        - successor_state_digest
+        - idempotency_identity
+      grants_authority: false
+    world_query:
+      ref: l9.world-model.receipt/world-query@1
+      required_bindings:
+        - world_id
+        - source_world_revision
+        - query_identity
+        - bounds
+        - coverage
+        - result_digest
+      grants_authority: false
+    world_history:
+      ref: l9.world-model.receipt/world-history@1
+      required_bindings:
+        - world_id
+        - exact_revision_range
+        - domain_coordinates
+        - result_digest
+      grants_authority: false
+    world_lineage:
+      ref: l9.world-model.receipt/world-lineage@1
+      required_bindings:
+        - world_id
+        - source_world_revision
+        - target_state_addresses
+        - establishing_event_refs
+        - evidence_refs
+        - source_authority_refs
+        - result_digest
+      grants_authority: false
+    world_diff:
+      ref: l9.world-model.receipt/world-diff@1
+      required_bindings:
+        - world_id
+        - left_world_revision
+        - right_world_revision
+        - comparability_class
+        - result_digest
+      grants_authority: false
+    world_branch:
+      ref: l9.world-model.receipt/world-branch@1
+      required_bindings:
+        - branch_id
+        - world_id
+        - canonical_base_revision
+        - hypothetical_event_digests
+        - branch_state_digest
+        - noncanonical_status
+      grants_authority: false
+    world_projection:
+      ref: l9.world-model.receipt/world-projection@1
+      required_bindings:
+        - projection_id
+        - world_id
+        - source_world_revision
+        - source_state_digest
+        - projection_profile_ref
+        - projection_profile_digest
+        - provider_identity_when_applicable
+        - generated_artifact_digest
+        - non_authoritative_status
+      grants_authority: false
+    replay_verification:
+      ref: l9.world-model.receipt/replay-verification@1
+      required_bindings:
+        - world_id
+        - replay_start_revision
+        - replay_end_revision
+        - exact_event_sequence_digest
+        - exact_historical_domain_coordinates
+        - expected_state_digest
+        - replayed_state_digest
+        - verification_result
+      grants_authority: false
+  canonicalization_ref: l9.receipt-canonicalization/v1
+  rules:
+    - receipts are immutable after emission
+    - corrected receipt information creates successor receipt
+    - receipt digest is computed from canonical representation
+    - receipt references never substitute for required authority
+    - receipt existence never implies admission
+    - receipt existence never implies authorization
+    - provider receipt is evidence not world semantic authority
+    - transport receipt is not semantic success receipt
+    - failed operations do not emit success receipts
+    - blocked operations preserve exact block cause
+    - no_change receipts bind exact no-change basis
+
+conformance_handoff:
+  emit_when:
+    - canonical_transition_committed
+    - replay_verification_completed
+    - projection_generated
+    - domain_binding_validated
+    - provider_binding_validated
+  required:
+    - exact candidate or runtime revision
+    - exact semantic coordinates
+    - exact result digest
+    - exact applicable conformance profile
+    - exact evidence refs
+    - semantic outcome
+  rules:
+    - handoff_is_evidence_bearing_not_authoritative
+    - handoff_does_not_self_admit_product
+    - handoff_does_not_self_admit_runtime
+    - handoff_does_not_grant_external_mutation_authority
+    - handoff_preserves_provider_identity_without_promoting_provider_authority
+
+determinism:
+  invariant: >
+    Identical effective inputs, exact ProductTopology and RepositorySpec
+    coordinates, exact World Domain coordinates, exact canonical predecessor
+    WorldRevision, exact admitted WorldEvent, exact reducer identity and
+    version, applicable profiles, explicit provider-neutral bindings, and
+    implementation version produce identical canonical successor modeled state
+    and canonical successor state digest.
+  event_reduction_invariant: >
+    A canonical WorldEvent reduced against the same exact predecessor modeled
+    state under the same exact World Domain semantics and reducer version MUST
+    produce the same StateAddress updates, StateCell provenance, successor
+    WorldRevision content, and successor digest.
+  replay_invariant: >
+    Replaying the exact accepted WorldEvent sequence from a valid canonical base
+    under the exact historical World Domain coordinates MUST reconstruct the
+    same canonical modeled state and digest as the corresponding committed
+    revision or valid snapshot.
+  snapshot_invariant: >
+    Resolving state from a valid snapshot plus the exact canonical event suffix
+    MUST produce the same modeled state as full replay over the equivalent
+    canonical event range.
+  branch_invariant: >
+    Applying the same ordered hypothetical branch event sequence to the same
+    exact canonical base revision under the same exact World Domain semantics
+    MUST produce the same noncanonical branch state digest.
+  projection_invariant: >
+    When a projection profile is declared deterministic, identical exact source
+    WorldRevision, source-state digest, profile digest, provider-independent
+    semantic inputs, and compatible implementation version produce identical
+    canonical projection content and artifact digest.
+  no_change_invariant: >
+    If the effective input closure and expected output digests are unchanged,
+    the workflow terminates NO_CHANGE without rewriting derived artifacts,
+    creating duplicate WorldEvents, or creating an unnecessary successor
+    WorldRevision.
+  forbidden_nondeterminism:
+    - ambient_current_time_as_semantic_input_unless_explicitly_bound
+    - random_seed_not_bound_as_input
+    - provider_default_not_bound_as_input
+    - mutable_remote_head_as_exact_input
+    - LLM_output_in_canonical_reducer
+    - unordered_iteration_affecting_semantic_digest
+    - locale_dependent_canonicalization
+    - noncanonical_float_serialization_affecting_digest
+    - implicit_current_domain_version
+    - implicit_current_projection_profile
+
+projection_targets:
+  candidates:
+    - profile_ref: l9.world-model.projection/state-table@1
+      representation_class: tabular
+      authority: none
+    - profile_ref: l9.world-model.projection/timeline@1
+      representation_class: temporal
+      authority: none
+    - profile_ref: l9.world-model.projection/topology@1
+      representation_class: structural
+      authority: none
+    - profile_ref: l9.world-model.projection/property-graph@1
+      representation_class: graph
+      authority: none
+    - profile_ref: l9.world-model.projection/context-slice@1
+      representation_class: bounded_context
+      authority: none
+    - profile_ref: l9.world-model.projection/visualization@1
+      representation_class: visual
+      authority: none
+  universal_rule: >
+    No target projection may acquire World Model semantics absent from the
+    canonical World Model and exact World Domain source semantics, silently
+    discard required provenance or Unknown states, mutate canonical modeled
+    state, or become a competing source of truth.
+  requirements:
+    - every projection binds exact source WorldRevision
+    - every projection binds exact source state digest
+    - every projection binds exact profile identity and digest
+    - every projection is rebuildable
+    - every projection has zero canonical-state authority
+    - projection provider is replaceable when compatible
+    - provider-native identity is not substituted for WorldEntity identity
+    - provider-native relationship semantics are not substituted for World Domain relation semantics
+    - stale projection is mechanically detectable
+    - projection failure is isolated from canonical world-state health
+
+validation:
+  required: true
+  acceptance:
+    - every_stage_preserves_exact_coordinates
+    - every_stage_preserves_exact_digests
+    - unresolved_semantics_fail_closed
+    - same_inputs_produce_same_digests
+    - unchanged_second_execution_returns_NO_CHANGE_where_applicable
+    - unauthorized_output_path_blocks
+    - no_llm_required
+    - no_network_required_when_all_inputs_are_local
+    - receipt_binds_exact_inputs_and_outputs
+    - canonical_reducer_has_no_provider_specific_semantic_dependency
+    - exact_WorldDomain_binding_required
+    - WorldDomain_cannot_weaken_global_invariants
+    - observation_cannot_bypass_admission
+    - source_authority_is_preserved
+    - evidence_is_not_silently_promoted_to_world_state
+    - memory_is_not_silently_promoted_to_world_state
+    - projection_is_not_silently_promoted_to_world_state
+    - transport_success_is_not_semantic_success
+    - canonical_transition_requires_exact_expected_revision
+    - stale_revision_conflict_is_explicit
+    - duplicate_idempotent_event_does_not_duplicate_effect
+    - historical_revision_is_immutable
+    - correction_creates_successor_event
+    - replay_equals_committed_state
+    - snapshot_plus_suffix_equals_full_replay
+    - branch_isolation_proven
+    - branch_event_never_enters_canonical_history
+    - branch_direct_promotion_rejected
+    - projection_provider_cannot_write_canon
+    - projection_staleness_detectable
+    - provider_native_schema_cannot_become_canonical_world_schema
+    - provider_outage_does_not_become_domain_negative
+    - query_bounds_are_enforced
+    - world_scope_is_enforced
+    - domain_scope_is_enforced
+    - receipts_grant_no_authority
+  positive_vectors:
+    - valid resolve at current revision
+    - valid resolve at historical revision
+    - valid bounded query
+    - valid observation admitted and committed
+    - valid observation semantically rejected without mutation
+    - valid duplicate idempotent observation returns existing semantic result
+    - valid history request
+    - valid lineage request
+    - valid diff
+    - valid isolated hypothetical branch
+    - valid deterministic projection
+    - valid no-change projection
+    - valid replay verification
+  negative_vectors:
+    - invalid ProductTopology digest
+    - invalid RepositorySpec digest
+    - unresolved World Domain
+    - incompatible World Domain
+    - World Domain attempts to weaken global invariant
+    - observation lacks required source authority
+    - observation lacks required evidence
+    - stale observation presented as current
+    - conflicting observation with no admitted resolution rule
+    - observation bypasses admission
+    - WorldEvent type not owned by bound domain
+    - stale expected revision
+    - persistence provider unavailable
+    - persistence provider returns malformed revision
+    - provider-native schema leaks into canonical contract
+    - graph projection attempts canonical write
+    - memory result presented as canonical state
+    - hypothetical branch presented as canonical state
+    - branch event inserted into canonical history
+    - projection provider unavailable
+    - projection output stale
+    - query exceeds bounds
+    - caller escapes world scope
+    - caller has read permission but not transition permission
+    - receipt presented as authority
+    - replay diverges from committed state
+    - historical replay substitutes current domain semantics
+    - LLM introduced into canonical reducer path
+    - hidden provider fallback attempted
+    - hidden domain fallback attempted
+    - direct peer backing-store access attempted
+
+provenance:
+  semantic_owner: Quantum-L9/l9-world-model
+  source_refs:
+    - Quantum-L9/.github/semantics
+    - product-topology.yaml
+    - repository-spec.yaml
+    - canonical World Model contracts
+    - canonical World Model schemas
+    - canonical World Model invariants
+    - canonical World Domain extension contract
+    - Quantum-L9/Cursor-Governance/WIP/World Model.md
+    - Quantum-L9/Cursor-Governance/WIP/Architecture .md
+    - Quantum-L9/l9-wip:extract/quantum-animation/Quantum Animation/01_quantum_animation_world_model_build_spec.yaml
+    - l9_agent_intelligence_loop_resume_v1.0.0/ARCHITECTURE.md
+    - l9_agent_intelligence_loop_resume_v1.0.0/shared/00_CONSTITUTION.md
+    - l9_agent_intelligence_loop_resume_v1.0.0/shared/04_SHARED_INVARIANTS.md
+    - l9_agent_intelligence_loop_resume_v1.0.0/shared/07_CONTRACT_LAW.yaml
+  source_revision: null
+  source_digest: null
+
+unknowns:
+  material:
+    - id: U-WORKFLOW-WM-001
+      item: exact admitted Workflow Calculus coordinate
+      reason: >
+        The workflow semantics are sufficiently defined for a candidate
+        WorkflowSpec, but the exact current canonical Workflow Calculus
+        coordinate has not been bound.
+      blocks:
+        - workflow_admission
+
+    - id: U-WORKFLOW-WM-002
+      item: exact current ProductTopology revision and digest
+      reason: >
+        Workflow execution requires exact binding to the admitted candidate
+        ProductTopology.
+      blocks:
+        - workflow_admission
+        - runtime_execution
+
+    - id: U-WORKFLOW-WM-003
+      item: exact current RepositorySpec revision and digest
+      reason: >
+        Runtime realization must bind the exact repository semantic contract.
+      blocks:
+        - workflow_admission
+        - runtime_execution
+
+    - id: U-WORKFLOW-WM-004
+      item: exact serialized schema for World Model capability request and result contracts
+      reason: >
+        Semantic operations are defined, but externally serialized field-level
+        schemas require explicit schema lock and golden vectors.
+      blocks:
+        - implementation
+        - runtime_admission
+
+    - id: U-WORKFLOW-WM-005
+      item: exact WorldStatePersistence serialized contract
+      reason: >
+        Atomic revisioned persistence semantics are defined but wire-level
+        provider-neutral fields remain to be canonically locked.
+      blocks:
+        - canonical_transition_implementation
+
+    - id: U-WORKFLOW-WM-006
+      item: exact atomic transition realization
+      reason: >
+        The workflow requires revision-guarded atomic event and revision commit
+        semantics, but the implementation mechanism remains provider-bound.
+      blocks:
+        - canonical_transition_implementation
+
+    - id: U-WORKFLOW-WM-007
+      item: exact first persistence provider
+      reason: >
+        No provider is intentionally selected by canonical workflow semantics.
+      blocks: []
+
+    - id: U-WORKFLOW-WM-008
+      item: exact first admitted World Domain
+      reason: >
+        Engineered System Model remains the leading domain candidate but domain
+        admission is separate from global workflow definition.
+      blocks:
+        - first_domain_runtime
+
+    - id: U-WORKFLOW-WM-009
+      item: exact World Domain evolution and historical migration contract
+      reason: >
+        Replay must preserve historical semantics and incompatible domain
+        evolution requires an explicit migration protocol.
+      blocks:
+        - incompatible_domain_upgrade
+
+    - id: U-WORKFLOW-WM-010
+      item: exact evidence-to-observation admission wire seam
+      reason: >
+        Evidence authority remains separate and the serialized handoff to
+        WorldObservation requires explicit contract lock.
+      blocks:
+        - evidence_bound_observation_admission
+
+    - id: U-WORKFLOW-WM-011
+      item: exact caller authorization contract coordinates
+      reason: >
+        Consequential world transitions require authorization, but exact
+        platform authorization contract coordinates remain to be bound.
+      blocks:
+        - canonical_mutation_runtime
+
+    - id: U-WORKFLOW-WM-012
+      item: exact canonical constellation transport contract coordinates
+      reason: >
+        Cross-node invocation must use canonical admitted transport, but the
+        exact current contract coordinates remain unresolved in this candidate.
+      blocks:
+        - constellation_runtime
+
+    - id: U-WORKFLOW-WM-013
+      item: exact projection profile registry and initial admitted profiles
+      reason: >
+        Projection is representation-neutral and individual profiles require
+        separate admission.
+      blocks:
+        - specific_projection_runtime
+
+    - id: U-WORKFLOW-WM-014
+      item: exact projection-provider adapter schemas
+      reason: >
+        Projection providers remain replaceable and their adapter schemas are
+        realization concerns.
+      blocks:
+        - provider_specific_projection_runtime
+
+    - id: U-WORKFLOW-WM-015
+      item: exact replay-verification cadence for production runtime
+      reason: >
+        Replay equivalence is mandatory as a conformance property; the
+        production schedule and trigger policy remain operational decisions.
+      blocks:
+        - production_readiness
+
+    - id: U-WORKFLOW-WM-016
+      item: exact snapshot creation policy
+      reason: >
+        Snapshots are performance accelerators rather than semantic authority;
+        cadence and retention strategy remain realization concerns.
+      blocks:
+        - production_capacity_planning
+
+    - id: U-WORKFLOW-WM-017
+      item: exact branch persistence policy
+      reason: >
+        Branch semantics are locked as isolated and noncanonical, while
+        ephemeral versus durable branch retention remains to be selected.
+      blocks:
+        - durable_branch_runtime
+
+    - id: U-WORKFLOW-WM-018
+      item: exact resource budget contract
+      reason: >
+        Query branch history diff and projection operations require explicit
+        bounds, but the canonical resource-budget schema remains to be locked.
+      blocks:
+        - production_runtime_admission
+
+    - id: U-WORKFLOW-WM-019
+      item: exact semantic compiler integration
+      reason: >
+        Semantic Compiler may compile schemas bindings projections or generated
+        artifacts, but it is not required for canonical runtime world reduction
+        and its workflow seam is intentionally deferred.
+      blocks: []
+
+    - id: U-WORKFLOW-WM-020
+      item: exact memory-publication workflow
+      reason: >
+        Governed publication of world context to the owning memory capability
+        is optional and must remain outside the canonical state-transition
+        dependency closure.
+      blocks: []
+
+  non_material:
+    - id: U-WORKFLOW-WM-N001
+      item: exact graph projection provider
+      reason: >
+        Graph is one optional representation and not part of canonical World
+        Model workflow semantics.
+
+    - id: U-WORKFLOW-WM-N002
+      item: exact visualization provider
+      reason: >
+        Visualization is a derived projection with zero canonical-state
+        authority.
+
+    - id: U-WORKFLOW-WM-N003
+      item: exact implementation language
+      reason: >
+        The workflow is semantic and provider-neutral.
+
+    - id: U-WORKFLOW-WM-N004
+      item: exact local development persistence provider
+      reason: >
+        Local provider selection does not affect canonical workflow semantics
+        when the persistence contract is satisfied.
+
+    - id: U-WORKFLOW-WM-N005
+      item: exact projection serialization format for every future profile
+      reason: >
+        Representation-specific serialization belongs to the applicable
+        projection profile.
+
+  policy:
+    material_unknowns_block_admission: true
+    unknowns_must_not_be_inferred: true
+    provider_unknowns_must_not_become_hidden_defaults: true
+    domain_unknowns_must_not_become_hidden_defaults: true
+    unresolved_authorization_fails_closed: true
+    unresolved_semantic_coordinates_fail_closed: true
+    optional_projection_unknowns_do_not_block_canonical_world_state_operations: true
+    optional_memory_publication_unknowns_do_not_block_canonical_world_state_operations: true
