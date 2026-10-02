@@ -1,0 +1,75 @@
+schema: l9.gar.architecture-audit/v1
+objective_ref: L9-STATE-REVIEW-01-DELTA
+target_ref: l9-state-remed01:44249b2e14711bab156033c95b049bf5e629c2f9e040f9eac1759a7747e2bad9
+authority_basis: []
+evidence_basis:
+  - 44249b2e14711bab156033c95b049bf5e629c2f9e040f9eac1759a7747e2bad9
+ownership_assessment:
+  - subject: State semantic ownership and provider boundaries
+    status: ALIGNED
+    basis_refs:
+      - src/l9_state/ports.py
+      - src/l9_state/service.py
+      - src/l9_state/adapters/mongodb.py
+    summary: REMED-01 preserves State semantic ownership, Gate transport ownership, and private provider realization.
+boundary_assessment:
+  - subject: Authorization boundary
+    status: ALIGNED
+    basis_refs:
+      - src/l9_state/ports.py:ScopeAuthorizationPort
+      - src/l9_state/service.py:_authorize
+      - src/l9_state/bindings/gate.py:_tenant_base_authorization_ref
+    summary: Protected actions and stored-receipt disclosure are reauthorized; delegated consumer access is explicit.
+  - subject: Gate mutation idempotency boundary
+    status: ALIGNED
+    basis_refs:
+      - src/l9_state/bindings/gate.py:STATE_MUTATION_ACTIONS
+      - src/l9_state/bindings/gate.py:_validate_gate_runtime_config
+    summary: Node startup fails closed unless Gate requires idempotency for every State mutation.
+invariant_assessment:
+  - subject: Journal retention recovery
+    status: ALIGNED
+    basis_refs:
+      - src/l9_state/service.py:events
+      - scripts/validate_remed01_static.py
+    summary: Brand-new consumers start immediately before the earliest retained event while stale positions require resync.
+  - subject: Canonical problem and retry semantics
+    status: ALIGNED
+    basis_refs:
+      - src/l9_state/service.py:_problem
+      - src/l9_state/bindings/gate.py:_parse_request
+      - contracts/ERRORS_AND_REASON_CODES.yaml
+    summary: Expected failures remain State-owned and retry classes are effect-aware.
+  - subject: Public schema/runtime parity
+    status: ALIGNED
+    basis_refs:
+      - src/l9_state/models.py
+      - contracts/schemas
+      - scripts/validate_remed01_static.py
+    summary: All 24 public schema required sets match runtime model requiredness.
+consequence_assessment:
+  - subject: Remediation regression surface
+    status: ALIGNED
+    basis_refs:
+      - build_state/REMED-01_STATIC_VALIDATION.txt
+      - scripts/validate_state03_static.py
+      - scripts/validate_state04_static.py
+    summary: Earlier journal/recovery and lifecycle invariants remain mechanically green after remediation.
+  - subject: Current actor/surface registry addition
+    status: ALIGNED
+    basis_refs:
+      - Quantum-L9/.github@43600db3:semantics/actor_registry.yaml
+      - Quantum-L9/.github@43600db3:semantics/surface_registry.yaml
+    summary: Additive identity authority does not invalidate REMED-01; canonical realization must bind the identity-resolution/assertion path later.
+audit_findings: []
+unresolved_unknowns:
+  - item: dependency-backed and live runtime validation
+    reason: Current container does not provide the full Gate/Mongo/runtime environment; this is the explicit next validation stage.
+    material: false
+  - item: external retention-policy decision interface
+    reason: Intentionally unresolved external authority; autonomous RetentionExecutor remains disabled.
+    material: false
+  - item: canonical actor/surface identity realization binding
+    reason: New upstream registries must be consumed during ProductTopology/runtime identity realization and conformance.
+    material: false
+audit_status: ALIGNED

@@ -1,0 +1,72 @@
+schema: l9.state.review.direct-evidence-basis/v1
+review: REVIEW-01
+target:
+  path: /mnt/data/l9-state-STATE-04-retention-lifecycle-checkpoint.zip
+  sha256: 97dd1300a4749487a7a32e648cc0fd27099223a92beb3336ac6e6efe59ce0755
+  unpacked_path: /mnt/data/state_review01/l9-state
+formal_evidence_assessment_receipt:
+  status: unavailable
+  reason: evidence-review-engine capability is not installed in this runtime; no evidence.assessment/v1
+    receipt is claimed.
+direct_artifact_evidence:
+  checkpoint_checksum_manifest: PASS
+  state04_static_validator: 153/153 PASS (useful structural evidence, not semantic
+    proof)
+  python_compileall: PASS
+  json_schema_meta_validation: 24/24 PASS
+  key_file_sha256:
+    src/l9_state/service.py: 14ab0d450db7c69618b8c6217e7089d81be58836b748d8cff2e7db639ef934d9
+    src/l9_state/bindings/gate.py: 706de017b476adffe54a0f7849033362743d615ff878b08de219ffd330c151e7
+    src/l9_state/models.py: 04e20739e2bd6e5b48951a8c8422b466c1e94ed5b4200e8eee9150039b2d1327
+    src/l9_state/ports.py: 1fa44725a2da67b6d034250cdc95557927b7543da23e0262e494d6ad31bc365a
+    src/l9_state/adapters/memory.py: 0f3c057eb0a2de8a963d7af207867cde16c9c5519a4c009d95d5d16a7c62dc2d
+    src/l9_state/adapters/mongodb.py: 8d1cf365fdb6e8276065b07ae8d32accfb807d61d04084375f2b2656f0380a63
+    src/l9_state/cursor.py: 2f839377ce7e73389b3e2fc59acca312486262a1fba8a94cfc23d0c4a172df94
+    src/l9_state/retention.py: 89721803fecf117931fa68b62165f6643f8111eeb3e186b981b62f1783290aaf
+    contracts/ERRORS_AND_REASON_CODES.yaml: fc32e9166b59ca461742a86349efa2fcbfe32b37a761bd7421f57a367b3a9421
+    invariants.yaml: 47079ce89cc801325ef6989cc34525a041244c37bce2e5ffdb1c64682fd73479
+    pyproject.toml: abb33bdb16552d472c30a7452461be6f801192664fdb325bdd67dfcb798b74c2
+    scripts/validate_state04_static.py: 410412363a1e47df26eb01ef37bde317a51160d871798faceda5ef9a32f52e00
+adversarial_checks:
+- id: E-001
+  result: CONFIRMED
+  summary: StateService._problem maps read infrastructure failures to same_operation;
+    read actions have no durable operation identity.
+- id: E-002
+  result: CONFIRMED
+  summary: state.events uses after_seq=0 for a new consumer and applies retention-gap
+    resync logic without distinguishing a brand-new consumer from a stale prior position.
+- id: E-003
+  result: CONFIRMED
+  summary: state.history raises StateNotFound on missing object instead of returning
+    StateProblem; Gate handler does not normalize expected domain exceptions.
+- id: E-004
+  result: CONFIRMED
+  summary: Gate handlers allow Pydantic/ValueError ingress failures to escape to Gate
+    generic error handling rather than canonical StateProblem(INVALID_REQUEST).
+- id: E-005
+  result: CONFIRMED
+  summary: No ScopeAuthorizationPort implementation/injection exists; exact operation
+    retry and state.operation.inspect do not perform current authorization checks.
+- id: E-006
+  result: CONFIRMED
+  summary: Gate binding sets authorization_ref to packet_id, which identifies transport
+    packet identity rather than an authorization decision/evidence.
+- id: E-007
+  result: CONFIRMED
+  summary: Runtime model required fields are weaker than public schemas for reason_codes
+    and page collections on seven public models.
+- id: E-008
+  result: CONFIRMED
+  summary: create_app delegates required_idempotency_actions entirely to external
+    NodeRuntimeConfig; handler-level identity equality is present as a second line
+    of defense.
+- id: E-009
+  result: CONFIRMED
+  summary: State-relevant .github canonical files are byte-identical by Git blob identity
+    between checkpoint revision 08912f3 and current revision 7d31438.
+evidence_limits:
+- No full dependency-backed pytest was rerun.
+- No live Mongo replica-set/failover/fault injection evidence.
+- No installed-package Gate round-trip evidence.
+- No formal EvidenceAssessment producer receipt in this runtime.

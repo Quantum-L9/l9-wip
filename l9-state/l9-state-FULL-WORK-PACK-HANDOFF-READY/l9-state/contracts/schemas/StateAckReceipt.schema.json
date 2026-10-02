@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:state:StateAckReceipt:1.0",
+  "title": "StateAckReceipt",
+  "description": "Authoritative consumer-ack receipt.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": "1.0"
+    },
+    "receipt_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "request_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "consumer_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "principal_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "status": {
+      "enum": [
+        "committed",
+        "conflict",
+        "refused"
+      ]
+    },
+    "committed_cursor": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reason_codes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+      },
+      "maxItems": 32
+    },
+    "authorization_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    }
+  },
+  "required": [
+    "contract_version",
+    "receipt_id",
+    "operation_id",
+    "request_digest",
+    "scope_ref",
+    "consumer_ref",
+    "principal_ref",
+    "authorization_ref",
+    "status",
+    "issued_at",
+    "reason_codes"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "committed"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "committed_cursor"
+        ]
+      }
+    }
+  ]
+}

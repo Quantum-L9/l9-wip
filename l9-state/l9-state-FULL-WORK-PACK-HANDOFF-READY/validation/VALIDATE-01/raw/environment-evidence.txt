@@ -1,0 +1,18 @@
+VALIDATE-01 environment evidence
+
+Python:
+Python 3.13.5
+
+Commands/modules:
+ruff=NOT_FOUND
+mypy=NOT_FOUND
+mongod=NOT_FOUND
+mongosh=NOT_FOUND
+docker=NOT_FOUND
+podman=NOT_FOUND
+pymongo_ambient=MISSING
+rfc8785_ambient=MISSING
+constellation_node_sdk_ambient=MISSING
+
+Network install attempt:
+uv pip install -e .[dev,server] -> BLOCKED: Could not resolve host github.com while fetching Gate_SDK@v1

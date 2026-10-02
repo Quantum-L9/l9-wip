@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:state:StateTransitionEvent:1.0",
+  "title": "StateTransitionEvent",
+  "description": "Canonical committed State event; safe metadata only.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": "1.0"
+    },
+    "event_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "journal_seq": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "event_kind": {
+      "enum": [
+        "created",
+        "transitioned",
+        "tombstoned",
+        "restored",
+        "erased"
+      ]
+    },
+    "state_ref": {
+      "$ref": "urn:l9:state:StateRef:1.0"
+    },
+    "prior_revision": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "transition_label": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "principal_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "committed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "causation_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    }
+  },
+  "required": [
+    "contract_version",
+    "event_id",
+    "journal_seq",
+    "event_kind",
+    "state_ref",
+    "prior_revision",
+    "operation_id",
+    "principal_ref",
+    "committed_at"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "event_kind": {
+            "enum": [
+              "transitioned",
+              "restored"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "transition_label"
+        ]
+      }
+    }
+  ]
+}

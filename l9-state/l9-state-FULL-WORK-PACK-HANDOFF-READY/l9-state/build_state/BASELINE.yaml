@@ -1,0 +1,39 @@
+schema: l9.state.build-baseline/v1
+mode: BUILD
+status: STAGING_AUTHORIZED
+publish: forbidden
+authority:
+  dev_pack: l9-state-final-dev-pack-v2.0.0
+  dev_pack_version: 2.0.0
+  source_pack_sha256: f1f7656a943678d18b4a9bbb03c95905444cdb3c723265640285da9203808e6f
+  implementation_contract: L9-STATE-STATE-01-v2.0.0
+target:
+  intended_repository: Quantum-L9/l9-state
+  remote_resolution: NOT_FOUND_AT_BASELINE
+  staging_target: local:/mnt/data/l9_state_build/work/l9-state
+  base_revision_kind: git_empty_tree
+  base_revision: 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+  node_birth_admission: unresolved_external_prerequisite
+gate_sdk:
+  distribution: constellation-node-sdk
+  package_version: 1.1.0
+  compatibility_ref: v1
+  observed_channel_object: e9f829f982110be13752da8f18c7a9692e8ed908
+  release_identity_source: Quantum-L9/Gate_SDK contracts/RELEASE_IDENTITY_LEDGER.json
+runtime:
+  python_observed: 3.13.5
+  required_python: '>=3.12'
+  package_network: unavailable
+  rfc8785_runtime_cache: absent
+constraints:
+  - no_publish
+  - no_sibling_repository_edits
+  - no_architecture_changes
+  - no_mongodb_in_state_01
+  - no_node_birth_claim
+active_unit: STATE-01_CORE_VERTICAL_SLICE
+
+subsequent_authorized_delta:
+  id: L9-STATE-STATE-02A-2026-09-27
+  authority: USER_APPROVED
+  note: supersedes the original no_architecture_changes constraint only for the F-003/F-004/A-001 operation-execution architecture delta

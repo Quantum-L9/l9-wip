@@ -1,0 +1,6 @@
+PASS: REVIEW-01 internal validation
+findings=7 high=3 medium=3 low=1
+remediation_coverage=7/7
+authority_compatibility=stale_coordinate_compatible_semantics
+audit_status=REOPEN_REQUIRED
+target_sha256=97dd1300a4749487a7a32e648cc0fd27099223a92beb3336ac6e6efe59ce0755

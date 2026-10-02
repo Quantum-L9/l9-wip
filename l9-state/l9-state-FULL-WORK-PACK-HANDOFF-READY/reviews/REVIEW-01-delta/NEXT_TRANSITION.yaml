@@ -1,0 +1,12 @@
+schema: l9.state.next-transition/v1
+from: REVIEW-01_DELTA
+status: authorized
+capability_id: validation.execute
+stage: VALIDATE-01
+objective: Prove the exact REMED-01 successor in a dependency-complete environment, including Gate round-trip, Mongo replica-set atomicity/failover, journal/cursor recovery, lifecycle/erase persistence, and static quality gates.
+constraints:
+  - no new State capabilities
+  - no architecture expansion
+  - no publish/merge/deploy
+  - preserve unresolved external retention-policy authority
+  - preserve current upstream semantic coordinates and record any further authority movement before acceptance

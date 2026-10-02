@@ -1,0 +1,24 @@
+schema: l9.state.handoff-readiness/v1
+status: READY_FOR_CURSOR_HANDOFF
+source_state: VALIDATE-F001_REMEDIATED_HANDOFF_READY
+known_code_failures: 0
+local_gates:
+  source_pytest: PASS_73
+  installed_wheel_pytest: PASS_73
+  signed_gate_source: PASS_13
+  signed_gate_wheel: PASS_13
+  validate_f001_static: PASS_19
+  mongo_handoff_static: PASS_20
+  remed01_static: PASS_43
+  state03_static: PASS_125
+  state04_static: PASS_153
+  compileall: PASS
+  public_schema_bytes_unchanged: true
+handoff:
+  target: Cursor
+  contract: handoff/CURSOR/CURSOR_HANDOFF_CONTRACT.yaml
+  live_mongo_validator: handoff/CURSOR/validate_mongo_live.py
+  validation_matrix: handoff/CURSOR/MONGO_VALIDATION_MATRIX.yaml
+  runner: handoff/CURSOR/run_remaining_validation.sh
+remaining_work_class: environment_dependent_validation
+publish: forbidden

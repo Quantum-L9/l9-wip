@@ -1,0 +1,23 @@
+L9 State REMED-01 static validation
+contract: L9-STATE-REMED-01-COMBINED-REVIEW
+date: 2026-10-01
+
+REMED-01: PASS=43 FAIL=0 BLOCKED=0
+STATE-03 post-remediation: PASS=125 FAIL=0 BLOCKED=0
+STATE-04 post-remediation: PASS=153 FAIL=0 BLOCKED=0
+JSON_PARSE PASS count=41
+YAML_PARSE PASS count=25
+TOML_PARSE PASS
+SCHEMA_METAVALIDATION PASS count=24
+PUBLIC_SCHEMA_BYTES_UNCHANGED PASS count=24 changed=[]
+HISTORICAL_BUILD_STATE_IMMUTABLE PASS checked=29 differences=[]
+PY_COMPILE PASS src tests scripts
+CACHE_HYGIENE PASS generated __pycache__ and pyc removed after compile proof
+
+External validation not executed in this container:
+- full dependency-backed pytest (rfc8785/pymongo/Gate_SDK unavailable)
+- ruff
+- mypy
+- installed-package parity
+- real Gate round trip
+- live Mongo replica-set/failover/fault injection

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:state:StateHistoryRequest:1.0",
+  "title": "StateHistoryRequest",
+  "description": "Read bounded canonical event history for one StateKey.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": "1.0"
+    },
+    "object_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "cursor": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "limit": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 200
+    }
+  },
+  "required": [
+    "contract_version",
+    "object_id",
+    "scope_ref",
+    "limit"
+  ]
+}

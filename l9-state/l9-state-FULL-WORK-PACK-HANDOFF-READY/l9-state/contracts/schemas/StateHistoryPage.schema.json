@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:state:StateHistoryPage:1.0",
+  "title": "StateHistoryPage",
+  "description": "Bounded object event history with explicit retention coverage.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": "1.0"
+    },
+    "object_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "urn:l9:state:StateTransitionEvent:1.0"
+      },
+      "maxItems": 200
+    },
+    "next_cursor": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "coverage": {
+      "enum": [
+        "complete",
+        "bounded",
+        "history_unavailable"
+      ]
+    },
+    "oldest_available_revision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "latest_revision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "observed_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "contract_version",
+    "object_id",
+    "scope_ref",
+    "events",
+    "coverage",
+    "oldest_available_revision",
+    "latest_revision",
+    "observed_at"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "coverage": {
+            "const": "bounded"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "next_cursor"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "coverage": {
+            "enum": [
+              "complete",
+              "history_unavailable"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "next_cursor": false
+        }
+      }
+    }
+  ]
+}

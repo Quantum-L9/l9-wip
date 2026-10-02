@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:state:StateProblem:1.0",
+  "title": "StateProblem",
+  "description": "Stable read/infrastructure failure payload; no provider exception leakage.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": "1.0"
+    },
+    "status": {
+      "const": "failed"
+    },
+    "code": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "retry_class": {
+      "enum": [
+        "no",
+        "same_operation",
+        "refresh_then_decide",
+        "cold_resync",
+        "later",
+        "inspect_then_same_operation"
+      ]
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "current_state_ref": {
+      "$ref": "urn:l9:state:StateRef:1.0"
+    },
+    "reason_codes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+      },
+      "maxItems": 32
+    }
+  },
+  "required": [
+    "contract_version",
+    "status",
+    "code",
+    "retry_class",
+    "reason_codes"
+  ]
+}

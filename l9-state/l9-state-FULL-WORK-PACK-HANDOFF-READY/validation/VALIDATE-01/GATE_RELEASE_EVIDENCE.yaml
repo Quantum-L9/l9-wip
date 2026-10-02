@@ -1,0 +1,14 @@
+schema: l9.state.gate-release-evidence/v1
+repository: Quantum-L9/Gate_SDK
+release_tag: v1.2.0
+release_commit: d3241de11a5a48f952a0cf5bc3ec7c051c472476
+release_workflow_run_id: 36771094272
+release_workflow_conclusion: success
+release_workflow_artifact:
+  id: 11123631770
+  name: release-dist-1.2.0
+wheel:
+  filename: constellation_node_sdk-1.2.0-py3-none-any.whl
+  observed_sha256: 543d95ba4270f64bf885770fd296340a59c762c21e4d73748dec8da0775a2107
+  github_release_digest: sha256:543d95ba4270f64bf885770fd296340a59c762c21e4d73748dec8da0775a2107
+  digest_match: true

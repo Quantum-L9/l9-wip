@@ -1,0 +1,68 @@
+schema: l9.state.mongo-validation-matrix/v1
+required_environment:
+  pymongo: 4.18.2
+  topology: transaction-capable replica set
+  minimum_members_for_failover_proof: 3
+core:
+  - id: MONGO-01
+    subject: indexes_and_uniqueness
+    proof: ensure_indexes plus exact required unique index names
+  - id: MONGO-02
+    subject: concurrent_CAS
+    proof: two transitions from one revision yield exactly one committed and one conflict
+  - id: MONGO-03
+    subject: competing_claims
+    proof: two claim acquisitions yield exactly one claimed and one conflict
+  - id: MONGO-04
+    subject: server_time_lease_authority
+    proof: claim issued/expires timestamps originate from Mongo $$NOW, not application clock
+  - id: MONGO-05
+    subject: hard_erase_active_fence
+    proof: retention executor with exact active claim_id/fence commits without claim-holder impersonation
+  - id: MONGO-06
+    subject: hard_erase_replay_and_scrub
+    proof: exact retry returns identical receipt and all retained payload bytes are null
+  - id: MONGO-07
+    subject: hard_erase_claimless_after_release
+    proof: inactive lineage permits claimless erase while preserving highest fence
+faults:
+  - id: MONGO-08
+    subject: transient_transaction_retry
+    inject: TransientTransactionError before ambiguous commit
+    require:
+      - whole transaction may retry only while ExecutionBudget permits
+      - at most one revision event claim effect and operation receipt are committed
+  - id: MONGO-09
+    subject: ambiguous_commit
+    inject: connection loss or UnknownTransactionCommitResult during commitTransaction
+    require:
+      - semantic callback is not replayed after commit may have occurred
+      - adapter performs OperationKey reconciliation only
+      - exact receipt is returned if committed
+      - otherwise OUTCOME_UNKNOWN is returned after reconciliation budget exhaustion
+  - id: MONGO-10
+    subject: primary_stepdown
+    inject: primary stepdown during a mutation on a three-member replica set
+    require:
+      - no duplicate semantic effect
+      - terminal receipt or explicit unknown outcome only
+  - id: MONGO-11
+    subject: restart_persistence
+    inject: restart State process and Mongo members after committed mutations
+    require:
+      - current projection revisions journal and OperationKey receipts remain authoritative
+      - exact retries return prior receipts
+  - id: MONGO-12
+    subject: journal_ack_race
+    inject: concurrent mutation event polling and monotonic consumer ack
+    require:
+      - no event beyond declared high-water leaks into a page
+      - older ack cannot regress consumer progress
+  - id: MONGO-13
+    subject: hard_erase_restart_replay
+    inject: restart after committed hard erase
+    require:
+      - payload remains scrubbed
+      - erased state remains terminal
+      - highest fence lineage remains
+      - exact hard-erase OperationKey replay returns identical private receipt

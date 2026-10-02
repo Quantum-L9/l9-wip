@@ -1,0 +1,11 @@
+schema: l9.state.next-transition/v1
+from_stage: VALIDATE-01
+status: authorized_after_user_continuation
+capability: implementation.execute
+contract_id: L9-STATE-VALIDATE-01-F001-HARD-ERASE-FENCE
+reason: Single confirmed release-blocking conformance defect requires bounded repair before live Mongo validation continues.
+constraints:
+  - no public API expansion
+  - no architecture redesign
+  - no retention-policy invention
+  - no publish

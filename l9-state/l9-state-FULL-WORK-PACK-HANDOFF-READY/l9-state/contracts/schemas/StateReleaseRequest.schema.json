@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:state:StateReleaseRequest:1.0",
+  "title": "StateReleaseRequest",
+  "description": "Release the exact current claim without resetting fence lineage.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": "1.0"
+    },
+    "claim_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "object_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "fencing_token": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    }
+  },
+  "required": [
+    "contract_version",
+    "claim_id",
+    "object_id",
+    "scope_ref",
+    "fencing_token",
+    "operation_id"
+  ]
+}

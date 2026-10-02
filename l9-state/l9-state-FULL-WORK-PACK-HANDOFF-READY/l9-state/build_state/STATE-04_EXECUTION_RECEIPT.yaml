@@ -1,0 +1,98 @@
+schema: l9.state.execution-receipt/v1
+unit: STATE-04_RETENTION_TOMBSTONE_RESTORE
+status: STATE_OWNED_MECHANICS_COMPLETE_EXTERNAL_RETENTION_POLICY_BINDING_UNRESOLVED
+date: 2026-10-01
+authority:
+  base: l9-state-final-dev-pack-v2.0.0
+  operation_execution_delta: L9-STATE-STATE-02A-2026-09-27
+  upstream_semantics:
+    repository: Quantum-L9/.github
+    frozen_revision: 08912f391c0a6672957f40cbd9b0db285f82ed86
+    binding_receipt: build_state/SEMANTIC_AUTHORITY_BINDING_STATE04.yaml
+implemented:
+  public_actions:
+    - state.tombstone
+    - state.restore
+  internal_mechanics:
+    - StateStorePort.hard_erase
+    - private HardEraseReceipt operation family
+    - revisioned tombstone preserving retained payload bytes
+    - retained prior-revision restore into a new active revision
+    - tombstone current-read suppression
+    - ordinary transition refusal from tombstoned or erased lifecycle
+    - terminal erased lifecycle
+    - retained revision payload scrubbing on hard erase
+    - erased identity tombstone preservation
+    - immutable object identity and object-ID non-reuse
+    - claim deactivation with highest fence lineage preservation
+    - canonical erased journal event
+    - durable private hard-erase OperationKey receipt and reconciliation
+    - operation inspection of private hard-erase receipt metadata
+  boundaries:
+    - hard erase is not a Gate action
+    - hard erase is not exposed by StateClient
+    - no RetentionExecutor is activated
+    - no retention schedule, period, legal hold, or deletion policy is invented by State
+    - hard-erase plan requires authorization_ref identifying external retention decision/evidence
+architecture_resolution:
+  private_hard_erase_receipt:
+    status: RESOLVED
+    decision: private State-owned internal receipt family; public StateReceipt schema remains unchanged
+  external_retention_policy_decision_interface:
+    status: UNRESOLVED
+    owner: external_retention_or_policy_authority
+    blocks:
+      - RetentionExecutor binding and activation
+      - autonomous policy-driven hard-erasure scheduling
+    does_not_block:
+      - public tombstone
+      - public restore
+      - internal hard-erasure mechanics
+      - payload scrubbing conformance
+      - erased identity representation
+validation:
+  static_wiring:
+    status: PASS
+    pass: 153
+    fail: 0
+    blocked: 0
+    evidence: build_state/STATE-04_STATIC_WIRING_RESULTS.json
+  public_schema_inventory:
+    status: PASS
+    count: 24
+    bytes_unchanged_from_state03: true
+  source_test_compile:
+    status: PASS
+  json_parse:
+    status: PASS
+    observed_count: 39
+  yaml_parse:
+    status: PASS
+    observed_count: 20
+  toml_parse:
+    status: PASS
+  detailed_evidence: build_state/STATE-04_STATIC_VALIDATION.txt
+external_validation_debt:
+  - full dependency-backed pytest
+  - ruff
+  - mypy
+  - installed-package parity
+  - real Gate round-trip for state.tombstone/state.restore
+  - live Mongo replica-set tombstone/restore/hard-erase transactions
+  - failover and ambiguous-commit fault injection across lifecycle mutations
+  - payload-scrub persistence verification against live Mongo storage
+  - restart/replay verification of private hard-erase OperationKey receipts
+  - external retention-policy decision interface binding
+assertions_not_made:
+  - RetentionExecutor_active
+  - autonomous_retention_execution_ready
+  - combined_review_acceptance
+  - product_admission
+  - runtime_admission
+  - merge_readiness
+  - release_readiness
+  - deployment_readiness
+  - publication
+review:
+  combined_state_01_through_state_04: PENDING_BY_USER_DIRECTION
+publish: false

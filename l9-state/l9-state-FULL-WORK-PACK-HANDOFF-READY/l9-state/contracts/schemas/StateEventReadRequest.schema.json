@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:state:StateEventReadRequest:1.0",
+  "title": "StateEventReadRequest",
+  "description": "Read scope journal using a State-issued provider-independent cursor.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": "1.0"
+    },
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "consumer_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "cursor": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "limit": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 200
+    }
+  },
+  "required": [
+    "contract_version",
+    "scope_ref",
+    "consumer_ref",
+    "limit"
+  ]
+}

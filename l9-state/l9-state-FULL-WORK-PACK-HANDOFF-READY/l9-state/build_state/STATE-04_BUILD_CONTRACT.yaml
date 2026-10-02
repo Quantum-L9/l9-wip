@@ -1,0 +1,52 @@
+schema: l9.state.build-contract/v1
+id: L9-STATE-STATE-04-v2.0.0
+status: STATE_OWNED_MECHANICS_COMPLETE_EXTERNAL_RETENTION_POLICY_BINDING_UNRESOLVED
+objective: >-
+  Close v1 State lifecycle mechanics: revisioned tombstone, retained restore,
+  internal hard-erasure mechanics, erased identity preservation, object-ID
+  non-reuse, and release hardening without inventing external retention policy.
+authority:
+  base: l9-state-final-dev-pack-v2.0.0
+  operation_execution_delta: L9-STATE-STATE-02A-2026-09-27
+  upstream_semantics: build_state/SEMANTIC_AUTHORITY_BINDING_STATE04.yaml
+in_scope:
+  - state.tombstone public action
+  - state.restore public action
+  - tombstone current-read suppression
+  - retained exact-revision reads
+  - restore from retained prior revision into a new active revision
+  - transition refusal from tombstoned/erased lifecycle
+  - erased terminal lifecycle
+  - internal StateStorePort.hard_erase
+  - private hard-erasure operation receipt family
+  - payload scrubbing across retained revisions
+  - fence-lineage preservation and claim deactivation on erase
+  - object-ID non-reuse after tombstone/erase
+  - Gate/client wiring for tombstone and restore only
+  - lifecycle conformance tests and static wiring checks
+out_of_scope:
+  - public hard-delete or hard-erase Gate action
+  - invention of retention periods, holds, schedules, or legal/business deletion policy
+  - activation of a RetentionExecutor before external decision-contract binding
+  - repository/node birth
+  - publish, merge, deployment, or release
+  - Change Streams correctness dependency
+acceptance_contract:
+  - tombstone increments revision exactly once and emits one canonical event plus immutable operation receipt
+  - ordinary current read does not return tombstoned state
+  - exact retained tombstoned/prior revision reads remain possible while payload exists
+  - restore requires current tombstoned lifecycle and a retained prior source revision
+  - restore creates a new active revision and never rewinds revision history
+  - ordinary transition refuses tombstoned or erased lifecycle
+  - hard erase increments revision exactly once, emits erased event, and stores a private immutable operation receipt
+  - hard erase scrubs retained payload bytes but preserves StateKey, revision metadata, event metadata, operation receipts, and highest fence
+  - hard erase deactivates any surviving claim while preserving fence lineage
+  - erased is terminal in v1 and cannot restore
+  - create cannot reuse an identity that has ever existed after tombstone/erase
+  - hard erase is not registered as a Gate action or exposed by StateClient
+  - external retention-policy decision ingress remains explicitly unbound rather than guessed
+validation_policy:
+  local_static_and_compile_checks: required
+  unavailable_dependency_backed_runtime_checks: external_validation_debt
+  unresolved_external_policy_binding: explicit_blocker_to_retention_executor_activation_only
+  no_fake_passes: true

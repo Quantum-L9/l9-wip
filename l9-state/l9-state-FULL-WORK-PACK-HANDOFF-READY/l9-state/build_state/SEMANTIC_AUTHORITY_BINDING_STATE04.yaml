@@ -1,0 +1,69 @@
+schema: l9.state.semantic-authority-binding/v2
+status: RESOLVED_WITH_ONE_EXTERNAL_DOMAIN_BINDING_UNRESOLVED
+resolved_at: 2026-10-01
+upstream:
+  repository: Quantum-L9/.github
+  revision: 08912f391c0a6672957f40cbd9b0db285f82ed86
+  authority_class: canonical
+  sources:
+    - id: l9.source/canonical-sources@1
+      path: semantics/canonical_sources.yaml
+      git_blob_sha: 67c8ea14431f298ce5613be09921acf7cd8bc092
+    - id: l9.source/authority-model@1
+      path: semantics/authority_model.yaml
+      git_blob_sha: d8d1de4b65c8c823a38835bf04f615b0808e5143
+    - id: l9.source/node-archetypes@1
+      path: semantics/node_archetypes.yaml
+      git_blob_sha: c1d0b422c3b7cc7ee9ce1b9cfc34de19ed992571
+    - id: l9.source/architecture-patterns@1
+      path: semantics/architecture_patterns.yaml
+      git_blob_sha: d88195710fac0fd099ea66cee9da549abf2d8e2b
+    - id: l9.source/product-topology-schema@1
+      path: semantics/product_topology.schema.yaml
+      git_blob_sha: 4fd2856bdf84c10a55a4be7e8519848c22c2bdbf
+    - id: l9.source/lifecycle@1
+      path: semantics/lifecycle.yaml
+      git_blob_sha: a40c06ce12133d0386487321fef60092e6a2596b
+resolved_law:
+  product_kind: node
+  archetype: l9.node-archetype/authoritative-state@1
+  semantic_owner: l9-state
+  required_boundaries:
+    - Gate-mediated remote invocation
+    - immutable revisioned authoritative state
+    - provider-neutral persistence
+    - provider does not become semantic owner
+  state04_effect:
+    - upstream global lifecycle law does not define State-specific tombstone/restore/erase semantics
+    - State-owned v2 contracts remain the authority for retention mechanics
+state_owned_authority:
+  base: l9-state-final-dev-pack-v2.0.0
+  files:
+    - ARCHITECTURE.md
+    - INVARIANTS.md
+    - contracts/STATE_MODEL.md
+    - contracts/RETENTION_TOMBSTONE_RESTORE.md
+    - contracts/ATOMIC_COMMIT.md
+    - contracts/PORTS_AND_ADAPTERS.yaml
+    - contracts/CONTRACT_CATALOG.md
+    - contracts/schemas/StateTombstoneRequest.schema.json
+    - contracts/schemas/StateRestoreRequest.schema.json
+unresolved:
+  - id: RETENTION_EXECUTION_POLICY_INTERFACE
+    owner: external_retention_or_policy_authority
+    status: UNRESOLVED
+    evidence: no retention-specific canonical decision contract is registered in the bound .github semantic closure
+    blocks:
+      - binding/activating a RetentionExecutor that interprets external retention decisions
+      - autonomous retention scheduling/policy execution
+    does_not_block:
+      - state.tombstone
+      - state.restore
+      - StateStorePort.hard_erase mechanics
+      - erased identity tombstone representation
+      - payload scrubbing conformance
+      - object-ID non-reuse enforcement
+rules:
+  - no external retention semantics may be invented by l9-state
+  - hard_erase remains internal and unreachable from Gate
+  - any future RetentionExecutor activation requires exact external decision-contract binding

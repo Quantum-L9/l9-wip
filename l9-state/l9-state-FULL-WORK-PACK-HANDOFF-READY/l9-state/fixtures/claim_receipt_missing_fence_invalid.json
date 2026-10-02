@@ -1,0 +1,17 @@
+{
+  "contract_version": "1.0",
+  "receipt_id": "claim.receipt.1",
+  "action": "state.claim",
+  "operation_id": "op.claim.1",
+  "request_digest": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+  "scope_ref": "subject.1",
+  "object_id": "object.1",
+  "principal_ref": "agent.alpha",
+  "status": "claimed",
+  "claim_id": "claim.1",
+  "holder_ref": "agent.alpha",
+  "expires_at": "2026-09-27T20:01:00Z",
+  "issued_at": "2026-09-27T20:00:00Z",
+  "reason_codes": [],
+  "authorization_ref": "gate:v1"
+}

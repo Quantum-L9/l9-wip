@@ -1,0 +1,35 @@
+schema: l9.state.remediation-authority-binding/v1
+contract_id: L9-STATE-REMED-01-COMBINED-REVIEW
+status: RESOLVED_CURRENT_COMPATIBLE
+resolved_at: 2026-10-01
+upstream_semantics:
+  repository: Quantum-L9/.github
+  revision: 7d31438a32bf1ce7783b1b896d359e6eb34063d0
+  prior_checkpoint_revision: 08912f391c0a6672957f40cbd9b0db285f82ed86
+  compatibility: state_relevant_canonical_bytes_identical
+  sources:
+    - {path: semantics/canonical_sources.yaml, git_blob_sha: 67c8ea14431f298ce5613be09921acf7cd8bc092}
+    - {path: semantics/authority_model.yaml, git_blob_sha: d8d1de4b65c8c823a38835bf04f615b0808e5143}
+    - {path: semantics/node_archetypes.yaml, git_blob_sha: c1d0b422c3b7cc7ee9ce1b9cfc34de19ed992571}
+    - {path: semantics/architecture_patterns.yaml, git_blob_sha: d88195710fac0fd099ea66cee9da549abf2d8e2b}
+    - {path: semantics/product_topology.schema.yaml, git_blob_sha: 4fd2856bdf84c10a55a4be7e8519848c22c2bdbf}
+    - {path: semantics/lifecycle.yaml, git_blob_sha: a40c06ce12133d0386487321fef60092e6a2596b}
+    - {path: semantics/contracts.yaml, git_blob_sha: 3b766a9e8546e7cf8d5224696e4f55d1c24e58d7}
+    - {path: semantics/receipt_catalog.yaml, git_blob_sha: 50c1d6728df60eebea0ff25d75cd03844e37e373}
+    - {path: semantics/error_taxonomy.yaml, git_blob_sha: f873d68c2f35200737e0dafa3ad727476d83a87a}
+gate_sdk:
+  repository: Quantum-L9/Gate_SDK
+  consumer_contract_ref: v1
+  distribution_name: constellation-node-sdk
+  observed_package_version: 1.2.0
+  observed_release_tag: v1.2.0
+  observed_release_commit: d3241de11a5a48f952a0cf5bc3ec7c051c472476
+  manifest_binding: git+https://github.com/Quantum-L9/Gate_SDK.git@v1
+  rule: moving_major_channel_is_contract_resolved_commit_is_evidence_only
+unresolved_external_authority:
+  - id: RETENTION_EXECUTION_POLICY_INTERFACE
+    status: UNRESOLVED_NONBLOCKING_FOR_STATE_MECHANICS
+    effect: RetentionExecutor and autonomous policy-driven hard erasure remain disabled
+historical_receipts:
+  mutation: forbidden
+  rule: STATE-01 through STATE-04 authority and execution receipts remain byte-history and are not rewritten

@@ -1,0 +1,45 @@
+schema: l9.state.semantic-authority-binding/v1
+status: REVISION_BOUND
+resolved_at_date: 2026-10-01
+source_repository: Quantum-L9/.github
+frozen_revision: 08912f391c0a6672957f40cbd9b0db285f82ed86
+resolution_mode: current
+canonical_registry:
+  source_id: l9.canonical-sources/global@1
+  path: semantics/canonical_sources.yaml
+  authority_owner: Quantum-L9/.github
+  authority_class: canonical
+relevant_sources:
+  - source_id: l9.source/authority-model@1
+    path: semantics/authority_model.yaml
+    authority_class: canonical
+  - source_id: l9.source/node-archetypes@1
+    path: semantics/node_archetypes.yaml
+    authority_class: canonical
+    relevant_coordinate: l9.node-archetype/authoritative-state@1
+  - source_id: l9.source/architecture-patterns@1
+    path: semantics/architecture_patterns.yaml
+    authority_class: canonical
+    relevant_coordinates:
+      - l9.pattern/semantic-core-provider-adapter@1
+      - l9.pattern/semantic-core-gate-adapter@1
+      - l9.pattern/immutable-revisioned-state@1
+      - l9.pattern/atomic-state-receipt-journal-outbox@1
+      - l9.pattern/provider-neutral-persistence@1
+observed_alignment:
+  product_id: l9.state
+  product_kind: node
+  archetype: authoritative_state
+  guarantees:
+    - durable_authoritative_revisioned_state
+    - consequential_state_transitions
+    - immutable_historical_state
+    - gate_mediated_interaction
+    - provider_does_not_own_state_semantics
+user_authorization:
+  github_semantic_foundation_is_settled_for_continued_state_build: true
+  l9_state_is_first_node: true
+  node_birth_is_not_a_build_blocker: true
+limits:
+  - this receipt does not claim l9-state product admission, runtime admission, publication, merge, or deployment
+  - product-specific State contracts remain owned by l9-state under the upstream authority model

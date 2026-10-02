@@ -1,0 +1,92 @@
+schema: l9.state.review.contract-matrix/v1
+review: REVIEW-01
+contracts:
+- contract: State semantic ownership / provider neutrality
+  status: ALIGNED
+  basis:
+  - STATE-DOMAIN-001
+  - STATE-PROVIDER-001
+  summary: State-specific meaning remains in core; Mongo syntax is isolated to adapter
+    modules.
+- contract: Gate-mediated transport
+  status: ALIGNED
+  basis:
+  - STATE-GATE-001
+  summary: StateClient delegates to GateClient and no direct peer HTTP was found.
+- contract: Atomic state/revision/event/receipt commit
+  status: ALIGNED
+  basis:
+  - STATE-ATOMIC-001
+  - STATE-OUTCOME-001
+  summary: Reference and Mongo stores couple mutation records and durable operation
+    outcome.
+- contract: Claims/fencing
+  status: ALIGNED
+  basis:
+  - STATE-FENCE-001
+  - STATE-CLAIM-001
+  summary: Fence lineage is persistent/monotonic; Mongo claim guard participates in
+    write contention.
+- contract: Execution budget / ambiguous commit
+  status: ALIGNED
+  basis:
+  - STATE-BUDGET-001
+  - STATE-BUDGET-002
+  - STATE-AMBIGUITY-001
+  summary: Explicit Mongo transaction control and reconciliation-only ambiguity path
+    match the approved architecture.
+- contract: Current authorization before protected access / old receipt disclosure
+  status: FINDING
+  basis:
+  - GAR-F-001
+  summary: Authorization port/decision evidence is not wired; packet identity is used
+    as authorization_ref.
+- contract: Canonical typed problem boundary
+  status: FINDING
+  basis:
+  - GAR-F-003
+  summary: Some expected failures escape as Gate-generic exceptions/failure packets.
+- contract: Journal no-position start semantics
+  status: FINDING
+  basis:
+  - GAR-F-002
+  summary: Brand-new consumer after pruning incorrectly receives resync_required.
+- contract: Retry safety semantics
+  status: FINDING
+  basis:
+  - GAR-F-004
+  - STATE-RETRY-001
+  summary: Read infrastructure errors inherit mutation same_operation guidance.
+- contract: Public schema/runtime model parity
+  status: FINDING
+  basis:
+  - GAR-F-005
+  summary: Seven required-field mismatches allow runtime acceptance of schema-invalid
+    shapes.
+- contract: Gate runtime idempotency configuration
+  status: FINDING
+  basis:
+  - GAR-F-006
+  summary: Handler check is present, but startup/runtime config does not prove Gate-level
+    requirement set.
+- contract: Cold resume capture/list/event catchup
+  status: ALIGNED
+  basis:
+  - STATE-CURSOR-001
+  - STATE-RECOVERY-001
+  summary: Captured high-water is preserved through pagination; live-list overlap
+    is intentionally closed by journal catchup.
+- contract: Lifecycle / tombstone / restore / erased non-reuse
+  status: ALIGNED
+  basis:
+  - STATE-LIFECYCLE-001
+  - STATE-RESTORE-001
+  - STATE-ERASE-001
+  summary: Lifecycle mechanics preserve revision continuity, retained restore, erased
+    terminal identity, and no object reuse.
+- contract: Retention policy ownership
+  status: ALIGNED_WITH_EXTERNAL_UNKNOWN
+  basis:
+  - STATE-RETENTION-002
+  summary: State mechanics do not invent retention policy; external policy-decision
+    ingress remains intentionally unbound.

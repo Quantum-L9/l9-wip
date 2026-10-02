@@ -1,0 +1,876 @@
+{
+  "checks": [
+    {
+      "check_id": "AST:src/l9_state/__init__.py",
+      "evidence": "parsed",
+      "status": "PASS"
+    },
+    {
+      "check_id": "AST:src/l9_state/adapters/__init__.py",
+      "evidence": "parsed",
+      "status": "PASS"
+    },
+    {
+      "check_id": "AST:src/l9_state/adapters/memory.py",
+      "evidence": "parsed",
+      "status": "PASS"
+    },
+    {
+      "check_id": "AST:src/l9_state/adapters/mongodb.py",
+      "evidence": "parsed",
+      "status": "PASS"
+    },
+    {
+      "check_id": "AST:src/l9_state/adapters/mongodb_contract.py",
+      "evidence": "parsed",
+      "status": "PASS"
+    },
+    {
+      "check_id": "AST:src/l9_state/bindings/__init__.py",
+      "evidence": "parsed",
+      "status": "PASS"
+    },
+    {
+      "check_id": "AST:src/l9_state/bindings/gate.py",
+      "evidence": "parsed",
+      "status": "PASS"
+    },
+    {
+      "check_id": "AST:src/l9_state/catalog.py",
+      "evidence": "parsed",
+      "status": "PASS"
+    },
+    {
+      "check_id": "AST:src/l9_state/client.py",
+      "evidence": "parsed",
+      "status": "PASS"
+    },
+    {
+      "check_id": "AST:src/l9_state/digests.py",
+      "evidence": "parsed",
+      "status": "PASS"
+    },
+    {
+      "check_id": "AST:src/l9_state/errors.py",
+      "evidence": "parsed",
+      "status": "PASS"
+    },
+    {
+      "check_id": "AST:src/l9_state/execution.py",
+      "evidence": "parsed",
+      "status": "PASS"
+    },
+    {
+      "check_id": "AST:src/l9_state/models.py",
+      "evidence": "parsed",
+      "status": "PASS"
+    },
+    {
+      "check_id": "AST:src/l9_state/outcomes.py",
+      "evidence": "parsed",
+      "status": "PASS"
+    },
+    {
+      "check_id": "AST:src/l9_state/ports.py",
+      "evidence": "parsed",
+      "status": "PASS"
+    },
+    {
+      "check_id": "AST:src/l9_state/service.py",
+      "evidence": "parsed",
+      "status": "PASS"
+    },
+    {
+      "check_id": "AST:tests/test_architecture.py",
+      "evidence": "parsed",
+      "status": "PASS"
+    },
+    {
+      "check_id": "AST:tests/test_claims.py",
+      "evidence": "parsed",
+      "status": "PASS"
+    },
+    {
+      "check_id": "AST:tests/test_digests.py",
+      "evidence": "parsed",
+      "status": "PASS"
+    },
+    {
+      "check_id": "AST:tests/test_execution_budget.py",
+      "evidence": "parsed",
+      "status": "PASS"
+    },
+    {
+      "check_id": "AST:tests/test_infrastructure_problems.py",
+      "evidence": "parsed",
+      "status": "PASS"
+    },
+    {
+      "check_id": "AST:tests/test_models.py",
+      "evidence": "parsed",
+      "status": "PASS"
+    },
+    {
+      "check_id": "AST:tests/test_mongodb_contract.py",
+      "evidence": "parsed",
+      "status": "PASS"
+    },
+    {
+      "check_id": "AST:tests/test_service.py",
+      "evidence": "parsed",
+      "status": "PASS"
+    },
+    {
+      "check_id": "SCHEMA:count",
+      "evidence": "count=24",
+      "status": "PASS"
+    },
+    {
+      "check_id": "JSON:StateAckReceipt.schema.json",
+      "evidence": "urn:l9:state:StateAckReceipt:1.0",
+      "status": "PASS"
+    },
+    {
+      "check_id": "JSON:StateAckRequest.schema.json",
+      "evidence": "urn:l9:state:StateAckRequest:1.0",
+      "status": "PASS"
+    },
+    {
+      "check_id": "JSON:StateClaimReceipt.schema.json",
+      "evidence": "urn:l9:state:StateClaimReceipt:1.0",
+      "status": "PASS"
+    },
+    {
+      "check_id": "JSON:StateClaimRequest.schema.json",
+      "evidence": "urn:l9:state:StateClaimRequest:1.0",
+      "status": "PASS"
+    },
+    {
+      "check_id": "JSON:StateCreateRequest.schema.json",
+      "evidence": "urn:l9:state:StateCreateRequest:1.0",
+      "status": "PASS"
+    },
+    {
+      "check_id": "JSON:StateEventPage.schema.json",
+      "evidence": "urn:l9:state:StateEventPage:1.0",
+      "status": "PASS"
+    },
+    {
+      "check_id": "JSON:StateEventReadRequest.schema.json",
+      "evidence": "urn:l9:state:StateEventReadRequest:1.0",
+      "status": "PASS"
+    },
+    {
+      "check_id": "JSON:StateHistoryPage.schema.json",
+      "evidence": "urn:l9:state:StateHistoryPage:1.0",
+      "status": "PASS"
+    },
+    {
+      "check_id": "JSON:StateHistoryRequest.schema.json",
+      "evidence": "urn:l9:state:StateHistoryRequest:1.0",
+      "status": "PASS"
+    },
+    {
+      "check_id": "JSON:StateListPage.schema.json",
+      "evidence": "urn:l9:state:StateListPage:1.0",
+      "status": "PASS"
+    },
+    {
+      "check_id": "JSON:StateListRequest.schema.json",
+      "evidence": "urn:l9:state:StateListRequest:1.0",
+      "status": "PASS"
+    },
+    {
+      "check_id": "JSON:StateOperationInspectRequest.schema.json",
+      "evidence": "urn:l9:state:StateOperationInspectRequest:1.0",
+      "status": "PASS"
+    },
+    {
+      "check_id": "JSON:StateOperationInspectResult.schema.json",
+      "evidence": "urn:l9:state:StateOperationInspectResult:1.0",
+      "status": "PASS"
+    },
+    {
+      "check_id": "JSON:StateProblem.schema.json",
+      "evidence": "urn:l9:state:StateProblem:1.0",
+      "status": "PASS"
+    },
+    {
+      "check_id": "JSON:StateReadRequest.schema.json",
+      "evidence": "urn:l9:state:StateReadRequest:1.0",
+      "status": "PASS"
+    },
+    {
+      "check_id": "JSON:StateReadResult.schema.json",
+      "evidence": "urn:l9:state:StateReadResult:1.0",
+      "status": "PASS"
+    },
+    {
+      "check_id": "JSON:StateReceipt.schema.json",
+      "evidence": "urn:l9:state:StateReceipt:1.0",
+      "status": "PASS"
+    },
+    {
+      "check_id": "JSON:StateRef.schema.json",
+      "evidence": "urn:l9:state:StateRef:1.0",
+      "status": "PASS"
+    },
+    {
+      "check_id": "JSON:StateReleaseRequest.schema.json",
+      "evidence": "urn:l9:state:StateReleaseRequest:1.0",
+      "status": "PASS"
+    },
+    {
+      "check_id": "JSON:StateRenewRequest.schema.json",
+      "evidence": "urn:l9:state:StateRenewRequest:1.0",
+      "status": "PASS"
+    },
+    {
+      "check_id": "JSON:StateRestoreRequest.schema.json",
+      "evidence": "urn:l9:state:StateRestoreRequest:1.0",
+      "status": "PASS"
+    },
+    {
+      "check_id": "JSON:StateTombstoneRequest.schema.json",
+      "evidence": "urn:l9:state:StateTombstoneRequest:1.0",
+      "status": "PASS"
+    },
+    {
+      "check_id": "JSON:StateTransitionEvent.schema.json",
+      "evidence": "urn:l9:state:StateTransitionEvent:1.0",
+      "status": "PASS"
+    },
+    {
+      "check_id": "JSON:StateTransitionRequest.schema.json",
+      "evidence": "urn:l9:state:StateTransitionRequest:1.0",
+      "status": "PASS"
+    },
+    {
+      "check_id": "BOUNDARY:no-pymongo",
+      "evidence": "pymongo",
+      "status": "PASS"
+    },
+    {
+      "check_id": "BOUNDARY:no-mongodb",
+      "evidence": "mongodb",
+      "status": "PASS"
+    },
+    {
+      "check_id": "BOUNDARY:no-bson",
+      "evidence": "bson",
+      "status": "PASS"
+    },
+    {
+      "check_id": "BOUNDARY:no-requests.post",
+      "evidence": "requests.post",
+      "status": "PASS"
+    },
+    {
+      "check_id": "BOUNDARY:no-httpx",
+      "evidence": "httpx",
+      "status": "PASS"
+    },
+    {
+      "check_id": "BOUNDARY:no-peer_url",
+      "evidence": "peer_url",
+      "status": "PASS"
+    },
+    {
+      "check_id": "PORT:InProcessStateStore.get_revision",
+      "evidence": {
+        "impl": [
+          "tenant_org_id",
+          "scope_ref",
+          "object_id",
+          "revision"
+        ],
+        "port": [
+          "tenant_org_id",
+          "scope_ref",
+          "object_id",
+          "revision"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "check_id": "PORT:InProcessStateStore.get_operation",
+      "evidence": {
+        "impl": [
+          "tenant_org_id",
+          "scope_ref",
+          "operation_id"
+        ],
+        "port": [
+          "tenant_org_id",
+          "scope_ref",
+          "operation_id"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "check_id": "PORT:InProcessStateStore.record_operation",
+      "evidence": {
+        "impl": [
+          "tenant_org_id",
+          "scope_ref",
+          "operation",
+          "budget"
+        ],
+        "port": [
+          "tenant_org_id",
+          "scope_ref",
+          "operation",
+          "budget"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "check_id": "PORT:InProcessStateStore.create",
+      "evidence": {
+        "impl": [
+          "revision",
+          "operation",
+          "event",
+          "budget"
+        ],
+        "port": [
+          "revision",
+          "operation",
+          "event",
+          "budget"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "check_id": "PORT:InProcessStateStore.transition",
+      "evidence": {
+        "impl": [
+          "revision",
+          "expected_revision",
+          "expected_state_digest",
+          "expected_schema_ref",
+          "expected_schema_digest",
+          "claim_id",
+          "fencing_token",
+          "holder_ref",
+          "operation",
+          "event",
+          "budget"
+        ],
+        "port": [
+          "revision",
+          "expected_revision",
+          "expected_state_digest",
+          "expected_schema_ref",
+          "expected_schema_digest",
+          "claim_id",
+          "fencing_token",
+          "holder_ref",
+          "operation",
+          "event",
+          "budget"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "check_id": "PORT:InProcessStateStore.claim",
+      "evidence": {
+        "impl": [
+          "tenant_org_id",
+          "request",
+          "request_digest",
+          "receipt_id",
+          "claim_id",
+          "principal_ref",
+          "authorization_ref",
+          "budget"
+        ],
+        "port": [
+          "tenant_org_id",
+          "request",
+          "request_digest",
+          "receipt_id",
+          "claim_id",
+          "principal_ref",
+          "authorization_ref",
+          "budget"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "check_id": "PORT:InProcessStateStore.renew",
+      "evidence": {
+        "impl": [
+          "tenant_org_id",
+          "request",
+          "request_digest",
+          "receipt_id",
+          "principal_ref",
+          "authorization_ref",
+          "budget"
+        ],
+        "port": [
+          "tenant_org_id",
+          "request",
+          "request_digest",
+          "receipt_id",
+          "principal_ref",
+          "authorization_ref",
+          "budget"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "check_id": "PORT:InProcessStateStore.release",
+      "evidence": {
+        "impl": [
+          "tenant_org_id",
+          "request",
+          "request_digest",
+          "receipt_id",
+          "principal_ref",
+          "authorization_ref",
+          "budget"
+        ],
+        "port": [
+          "tenant_org_id",
+          "request",
+          "request_digest",
+          "receipt_id",
+          "principal_ref",
+          "authorization_ref",
+          "budget"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "check_id": "PORT:MongoStateStore.get_revision",
+      "evidence": {
+        "impl": [
+          "tenant_org_id",
+          "scope_ref",
+          "object_id",
+          "revision"
+        ],
+        "port": [
+          "tenant_org_id",
+          "scope_ref",
+          "object_id",
+          "revision"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "check_id": "PORT:MongoStateStore.get_operation",
+      "evidence": {
+        "impl": [
+          "tenant_org_id",
+          "scope_ref",
+          "operation_id"
+        ],
+        "port": [
+          "tenant_org_id",
+          "scope_ref",
+          "operation_id"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "check_id": "PORT:MongoStateStore.record_operation",
+      "evidence": {
+        "impl": [
+          "tenant_org_id",
+          "scope_ref",
+          "operation",
+          "budget"
+        ],
+        "port": [
+          "tenant_org_id",
+          "scope_ref",
+          "operation",
+          "budget"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "check_id": "PORT:MongoStateStore.create",
+      "evidence": {
+        "impl": [
+          "revision",
+          "operation",
+          "event",
+          "budget"
+        ],
+        "port": [
+          "revision",
+          "operation",
+          "event",
+          "budget"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "check_id": "PORT:MongoStateStore.transition",
+      "evidence": {
+        "impl": [
+          "revision",
+          "expected_revision",
+          "expected_state_digest",
+          "expected_schema_ref",
+          "expected_schema_digest",
+          "claim_id",
+          "fencing_token",
+          "holder_ref",
+          "operation",
+          "event",
+          "budget"
+        ],
+        "port": [
+          "revision",
+          "expected_revision",
+          "expected_state_digest",
+          "expected_schema_ref",
+          "expected_schema_digest",
+          "claim_id",
+          "fencing_token",
+          "holder_ref",
+          "operation",
+          "event",
+          "budget"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "check_id": "PORT:MongoStateStore.claim",
+      "evidence": {
+        "impl": [
+          "tenant_org_id",
+          "request",
+          "request_digest",
+          "receipt_id",
+          "claim_id",
+          "principal_ref",
+          "authorization_ref",
+          "budget"
+        ],
+        "port": [
+          "tenant_org_id",
+          "request",
+          "request_digest",
+          "receipt_id",
+          "claim_id",
+          "principal_ref",
+          "authorization_ref",
+          "budget"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "check_id": "PORT:MongoStateStore.renew",
+      "evidence": {
+        "impl": [
+          "tenant_org_id",
+          "request",
+          "request_digest",
+          "receipt_id",
+          "principal_ref",
+          "authorization_ref",
+          "budget"
+        ],
+        "port": [
+          "tenant_org_id",
+          "request",
+          "request_digest",
+          "receipt_id",
+          "principal_ref",
+          "authorization_ref",
+          "budget"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "check_id": "PORT:MongoStateStore.release",
+      "evidence": {
+        "impl": [
+          "tenant_org_id",
+          "request",
+          "request_digest",
+          "receipt_id",
+          "principal_ref",
+          "authorization_ref",
+          "budget"
+        ],
+        "port": [
+          "tenant_org_id",
+          "request",
+          "request_digest",
+          "receipt_id",
+          "principal_ref",
+          "authorization_ref",
+          "budget"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "check_id": "GATE:state.create",
+      "evidence": "state.create",
+      "status": "PASS"
+    },
+    {
+      "check_id": "GATE:state.get",
+      "evidence": "state.get",
+      "status": "PASS"
+    },
+    {
+      "check_id": "GATE:state.transition",
+      "evidence": "state.transition",
+      "status": "PASS"
+    },
+    {
+      "check_id": "GATE:state.claim",
+      "evidence": "state.claim",
+      "status": "PASS"
+    },
+    {
+      "check_id": "GATE:state.renew",
+      "evidence": "state.renew",
+      "status": "PASS"
+    },
+    {
+      "check_id": "GATE:state.release",
+      "evidence": "state.release",
+      "status": "PASS"
+    },
+    {
+      "check_id": "GATE:state.operation.inspect",
+      "evidence": "state.operation.inspect",
+      "status": "PASS"
+    },
+    {
+      "check_id": "GATE:idempotency:state_create",
+      "evidence": "state_create",
+      "status": "PASS"
+    },
+    {
+      "check_id": "GATE:idempotency:state_transition",
+      "evidence": "state_transition",
+      "status": "PASS"
+    },
+    {
+      "check_id": "GATE:idempotency:state_claim",
+      "evidence": "state_claim",
+      "status": "PASS"
+    },
+    {
+      "check_id": "GATE:idempotency:state_renew",
+      "evidence": "state_renew",
+      "status": "PASS"
+    },
+    {
+      "check_id": "GATE:idempotency:state_release",
+      "evidence": "state_release",
+      "status": "PASS"
+    },
+    {
+      "check_id": "GATE:budget-authority",
+      "evidence": "TransportPacket timeout -> ExecutionBudget",
+      "status": "PASS"
+    },
+    {
+      "check_id": "MONGO:no-with-transaction",
+      "evidence": "explicit transaction state machine",
+      "status": "PASS"
+    },
+    {
+      "check_id": "MONGO:start_transaction",
+      "evidence": "start_transaction",
+      "status": "PASS"
+    },
+    {
+      "check_id": "MONGO:commit_transaction",
+      "evidence": "commit_transaction",
+      "status": "PASS"
+    },
+    {
+      "check_id": "MONGO:max_commit_time_ms",
+      "evidence": "max_commit_time_ms",
+      "status": "PASS"
+    },
+    {
+      "check_id": "MONGO:_reconcile_after_commit",
+      "evidence": "_reconcile_after_commit",
+      "status": "PASS"
+    },
+    {
+      "check_id": "MONGO:ExecutionBudget",
+      "evidence": "ExecutionBudget",
+      "status": "PASS"
+    },
+    {
+      "check_id": "MONGO:unknown-commit-reconcile",
+      "evidence": "ambiguous commit -> reconciliation",
+      "status": "PASS"
+    },
+    {
+      "check_id": "MONGO:transient-whole-retry",
+      "evidence": "definite transient transaction -> bounded whole retry",
+      "status": "PASS"
+    },
+    {
+      "check_id": "MONGO:logical-terminal-receipts",
+      "evidence": "logical negative inserted as operation receipt inside transaction",
+      "status": "PASS"
+    },
+    {
+      "check_id": "MONGO:lease-server-time",
+      "evidence": "Mongo server time",
+      "status": "PASS"
+    },
+    {
+      "check_id": "OUTCOME:memory-terminal-state",
+      "evidence": "reference store durable state negative",
+      "status": "PASS"
+    },
+    {
+      "check_id": "OUTCOME:memory-terminal-claim",
+      "evidence": "reference store durable claim negative",
+      "status": "PASS"
+    },
+    {
+      "check_id": "OUTCOME:catalog-refusal-durable",
+      "evidence": "catalog refusal -> durable receipt",
+      "status": "PASS"
+    },
+    {
+      "check_id": "OUTCOME:problem-not-stored",
+      "evidence": "StateProblem outside durable receipt family",
+      "status": "PASS"
+    },
+    {
+      "check_id": "OUTCOME:idempotency-collision-canonical-problem",
+      "evidence": "collision is canonical non-durable StateProblem",
+      "status": "PASS"
+    },
+    {
+      "check_id": "INVARIANT:STATE-BUDGET-001",
+      "evidence": "STATE-BUDGET-001",
+      "status": "PASS"
+    },
+    {
+      "check_id": "INVARIANT:STATE-BUDGET-002",
+      "evidence": "STATE-BUDGET-002",
+      "status": "PASS"
+    },
+    {
+      "check_id": "INVARIANT:STATE-OUTCOME-001",
+      "evidence": "STATE-OUTCOME-001",
+      "status": "PASS"
+    },
+    {
+      "check_id": "INVARIANT:STATE-OUTCOME-002",
+      "evidence": "STATE-OUTCOME-002",
+      "status": "PASS"
+    },
+    {
+      "check_id": "INVARIANT:STATE-OUTCOME-003",
+      "evidence": "STATE-OUTCOME-003",
+      "status": "PASS"
+    },
+    {
+      "check_id": "INVARIANT:STATE-AMBIGUITY-001",
+      "evidence": "STATE-AMBIGUITY-001",
+      "status": "PASS"
+    },
+    {
+      "check_id": "INVARIANT:STATE-PROBLEM-001",
+      "evidence": "STATE-PROBLEM-001",
+      "status": "PASS"
+    },
+    {
+      "check_id": "INVARIANT:STATE-RETRY-001",
+      "evidence": "STATE-RETRY-001",
+      "status": "PASS"
+    },
+    {
+      "check_id": "INVARIANT:STATE-RETRY-002",
+      "evidence": "STATE-RETRY-002",
+      "status": "PASS"
+    },
+    {
+      "check_id": "RETRY:schema-vocabulary",
+      "evidence": [
+        "cold_resync",
+        "inspect_then_same_operation",
+        "later",
+        "no",
+        "refresh_then_decide",
+        "same_operation"
+      ],
+      "status": "PASS"
+    },
+    {
+      "check_id": "RETRY:reason-doc-six-values",
+      "evidence": [
+        "cold_resync",
+        "inspect_then_same_operation",
+        "later",
+        "no",
+        "refresh_then_decide",
+        "same_operation"
+      ],
+      "status": "PASS"
+    },
+    {
+      "check_id": "RETRY:no-rogue:after_release_or_expiry",
+      "evidence": "after_release_or_expiry",
+      "status": "PASS"
+    },
+    {
+      "check_id": "RETRY:no-rogue:reacquire",
+      "evidence": "reacquire",
+      "status": "PASS"
+    },
+    {
+      "check_id": "RETRY:no-rogue:bounded_same_operation",
+      "evidence": "bounded_same_operation",
+      "status": "PASS"
+    },
+    {
+      "check_id": "RETRY:recovery-separated",
+      "evidence": "separate recovery guidance",
+      "status": "PASS"
+    },
+    {
+      "check_id": "DEPENDENCY:pymongo-not-base",
+      "evidence": "Mongo server extra only",
+      "status": "PASS"
+    },
+    {
+      "check_id": "DEPENDENCY:rfc8785-base",
+      "evidence": "canonical JCS runtime dependency",
+      "status": "PASS"
+    }
+  ],
+  "schema": "l9.state.static-wiring/v2a",
+  "summary": {
+    "failed": 0,
+    "passed": 116,
+    "total": 116
+  }
+}

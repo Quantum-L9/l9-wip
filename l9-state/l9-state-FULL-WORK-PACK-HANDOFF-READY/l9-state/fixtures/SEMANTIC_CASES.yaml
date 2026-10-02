@@ -1,0 +1,32 @@
+schema: l9.state.semantic-fixtures/v1
+cases:
+  - id: create_revision_zero
+    expect: committed_state_revision_0_and_event_prior_revision_null
+  - id: duplicate_exact_operation
+    expect: original_receipt_returned_without_new_revision
+  - id: operation_collision
+    expect: IDEMPOTENCY_COLLISION_no_effect
+  - id: concurrent_revision_writers
+    expect: exactly_one_commit
+  - id: active_claim_requires_fence
+    expect: claimless_or_stale_fence_write_refused
+  - id: lease_reassignment
+    expect: new_fence_gt_old_fence
+  - id: list_then_events_cold_resume
+    expect: no_required_second_directory_store
+  - id: expired_event_cursor
+    expect: CURSOR_RESYNC_REQUIRED
+  - id: tombstone_restore
+    expect: restore_creates_new_revision_never_rewinds
+  - id: erased_object_recreate
+    expect: OBJECT_ID_REUSE_FORBIDDEN
+  - id: terminal_conflict_is_sticky
+    expect: exact_OperationKey_retry_returns_original_conflict_even_after_world_changes
+  - id: terminal_refusal_is_sticky
+    expect: exact_OperationKey_retry_returns_original_refused_receipt
+  - id: changed_world_retry
+    expect: new_attempt_after_terminal_receipt_requires_new_operation_id
+  - id: precommit_deadline
+    expect: DEADLINE_EXCEEDED_same_operation_and_no_durable_receipt
+  - id: ambiguous_commit
+    expect: reconciliation_only_then_exact_receipt_or_OUTCOME_UNKNOWN

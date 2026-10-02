@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:state:StateListRequest:1.0",
+  "title": "StateListRequest",
+  "description": "Enumerate current StateRefs for cold resume.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": "1.0"
+    },
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "schema_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "minItems": 1,
+      "maxItems": 20
+    },
+    "lifecycle": {
+      "enum": [
+        "active",
+        "tombstoned",
+        "erased"
+      ]
+    },
+    "cursor": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "limit": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 200
+    },
+    "consumer_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    }
+  },
+  "required": [
+    "contract_version",
+    "scope_ref",
+    "consumer_ref",
+    "schema_refs",
+    "lifecycle",
+    "limit"
+  ]
+}

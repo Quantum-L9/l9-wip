@@ -1,0 +1,9 @@
+........................................................................ [ 98%]
+.                                                                        [100%]
+=============================== warnings summary ===============================
+tests/test_architecture.py::test_gate_runtime_config_validation_fails_closed_when_mutation_idempotency_is_missing
+  /opt/pyvenv/lib/python3.13/site-packages/pythonjsonlogger/jsonlogger.py:11: DeprecationWarning: pythonjsonlogger.jsonlogger has been moved to pythonjsonlogger.json
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+73 passed, 1 warning in 0.38s

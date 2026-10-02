@@ -1,0 +1,58 @@
+schema: l9.state.resume/v5
+mode: BUILD
+publish: forbidden
+active_authority:
+  base: l9-state-final-dev-pack-v2.0.0
+  operation_execution_delta: L9-STATE-STATE-02A-2026-09-27
+  upstream_semantics:
+    repository: Quantum-L9/.github
+    revision: 7d31438a32bf1ce7783b1b896d359e6eb34063d0
+    binding_receipt: build_state/REMED-01_AUTHORITY_BINDING.yaml
+  Gate_SDK:
+    consumer_contract: v1
+    observed_release: 1.2.0
+    observed_release_commit: d3241de11a5a48f952a0cf5bc3ec7c051c472476
+current_unit: REMED-01_COMBINED_REVIEW
+current_state: IMPLEMENTATION_COMPLETE_PENDING_DELTA_REVIEW_AND_EXTERNAL_VALIDATION
+review_state:
+  REVIEW-01: REOPEN_REQUIRED_REMEDIATION_IMPLEMENTED
+  REMED-01: PENDING_DELTA_REVIEW
+finding_closure: build_state/REMED-01_FINDING_CLOSURE.yaml
+user_direction:
+  - implement only REVIEW-01 findings
+  - preserve approved State architecture
+  - unavailable environment gates do not block bounded implementation
+  - no publish
+unresolved_authority:
+  - id: RETENTION_EXECUTION_POLICY_INTERFACE
+    owner: external_retention_or_policy_authority
+    effect: RetentionExecutor and autonomous policy-driven hard erasure remain disabled
+validation_debt:
+  receipt: build_state/ENVIRONMENT_GATE_CLOSURE.yaml
+  retry_in_current_runtime: false
+  remed01_external_checks:
+    - full dependency-backed pytest
+    - ruff
+    - mypy
+    - installed-package parity
+    - real Gate_SDK round trip and startup configuration execution
+    - live Mongo replica-set/failover/ambiguity testing
+    - live journal/cursor/retention/restart testing
+    - live lifecycle hard-erase persistence/replay
+current_evidence:
+  build_contract: build_state/REMED-01_BUILD_CONTRACT.yaml
+  authority_binding: build_state/REMED-01_AUTHORITY_BINDING.yaml
+  finding_closure: build_state/REMED-01_FINDING_CLOSURE.yaml
+  execution_receipt: build_state/REMED-01_EXECUTION_RECEIPT.yaml
+  static_wiring: build_state/REMED-01_STATIC_WIRING_RESULTS.json
+  static_validation: build_state/REMED-01_STATIC_VALIDATION.txt
+next_actions:
+  - perform REVIEW-01 delta review against exact REMED-01 successor
+  - only after delta review convergence proceed to VALIDATE-01
+forbidden_next:
+  - expand State capability family
+  - invent external retention policy semantics
+  - reinterpret external validation debt as PASS
+  - begin ProductTopology/ProductManifest before remediation delta review
+  - publish or merge
+  - claim admission or deployment

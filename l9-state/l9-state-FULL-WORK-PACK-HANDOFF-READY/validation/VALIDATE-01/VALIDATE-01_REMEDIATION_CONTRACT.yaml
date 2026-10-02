@@ -1,0 +1,40 @@
+schema: l9.state.validation-remediation-contract/v1
+contract_id: L9-STATE-VALIDATE-01-F001-HARD-ERASE-FENCE
+mode: BUILD
+objective: >-
+  Repair the single confirmed VALIDATE-01 hard-erasure claim/fence defect without changing
+  public State semantics, Gate actions, retention-policy ownership, or unrelated lifecycle behavior.
+in_scope:
+  - StateStorePort hard_erase internal claim-guard semantics
+  - InProcessStateStore hard_erase guard
+  - MongoStateStore hard_erase guard
+  - Mongo private claim guard helper if required
+  - hard-erasure conformance tests for active exact fence, stale fence, inactive claim, and parity
+  - validator updates narrowly necessary to prove the repaired seam
+required_semantics:
+  - external retention decision remains the authority for hard erasure
+  - retention executor principal remains receipt authorship and is not rewritten as claim holder
+  - active claim requires exact current claim_id and fencing_token
+  - active hard erase does not require retention executor principal to equal claim holder
+  - stale or superseded fence cannot authorize hard erase
+  - claimless hard erase is allowed only when claim lineage is inactive or expired
+  - successful erase preserves highest fence lineage and atomically deactivates active claim
+  - memory and Mongo implementations must be semantically identical
+out_of_scope:
+  - public schema changes
+  - new Gate actions
+  - public hard-erase client API
+  - retention duration or eligibility policy
+  - external RetentionExecutor activation
+  - journal redesign
+  - claim acquisition/renew/release redesign
+  - ProductTopology or admission work
+  - publish merge deploy
+acceptance:
+  - failing lifecycle test passes
+  - full source pytest passes with released Gate_SDK artifact
+  - full installed-wheel pytest passes with released Gate_SDK artifact
+  - hard-erase stale-fence negative test passes
+  - hard-erase active-exact-fence test passes in reference store
+  - Mongo source/conformance proof reflects the same guard semantics
+  - STATE-03 and STATE-04 static validators remain green

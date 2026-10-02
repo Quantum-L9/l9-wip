@@ -1,0 +1,24 @@
+{
+  "contract_version": "1.0",
+  "receipt_id": "receipt.1",
+  "action": "state.transition",
+  "operation_id": "op.transition.1",
+  "request_digest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "scope_ref": "subject.1",
+  "principal_ref": "agent.alpha",
+  "authorization_ref": "gate:v1",
+  "status": "committed",
+  "state_ref": {
+    "contract_version": "1.0",
+    "object_id": "object.1",
+    "scope_ref": "subject.1",
+    "revision": 1,
+    "state_digest": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "schema_ref": "urn:example:state:1",
+    "schema_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "lifecycle": "active"
+  },
+  "event_ref": "event.1",
+  "issued_at": "2026-09-27T20:00:00Z",
+  "reason_codes": []
+}

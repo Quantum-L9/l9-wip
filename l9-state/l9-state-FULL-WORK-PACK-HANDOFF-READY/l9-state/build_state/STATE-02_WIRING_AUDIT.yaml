@@ -1,0 +1,81 @@
+schema: l9.state.wiring-audit/v2a
+contract_id: L9-STATE-STATE-02-v2.0.0+operation-execution-delta
+authority:
+  base: l9-state-final-dev-pack-v2.0.0
+  delta: L9-STATE-STATE-02A-2026-09-27
+audit_mode: implementation_wiring_and_contract_static
+review_mode: COMBINED_REVIEW_PENDING_BY_USER_DIRECTION
+overall_status: PASS_WITH_EXTERNAL_RUNTIME_VALIDATION_DEBT
+publish: forbidden
+static_evidence:
+  checks: 116
+  passed: 116
+  failed: 0
+  source: build_state/STATE-02_STATIC_WIRING_RESULTS.json
+verified_wiring:
+  Gate_budget_authority:
+    status: PASS
+    path: TransportPacket.header.timeout_ms -> ExecutionBudget -> CallerContext -> StateStorePort -> MongoStateStore
+  provider_budget_boundary:
+    status: PASS
+    laws:
+      - State may shrink but not extend Gate budget
+      - with_transaction is absent
+      - max_commit_time_ms is bounded by remaining mutation budget
+      - TransientTransactionError may retry whole transaction only while mutation budget remains
+      - commit timeout or UnknownTransactionCommitResult enters reconciliation-only mode
+  durable_terminal_outcomes:
+    status: PASS
+    laws:
+      - committed conflict and refused are terminal OperationKey receipts
+      - state-dependent logical negatives are inserted in the same transaction that observes them
+      - exact retry returns stored receipt
+      - changed-world retry requires a new operation_id
+      - IDEMPOTENCY_COLLISION remains non-durable because the key is already owned
+  StateProblem_boundary:
+    status: PASS
+    law: StateProblem is not a StoredOperation receipt family
+  retry_taxonomy:
+    status: PASS
+    public_values:
+      - "no"
+      - same_operation
+      - refresh_then_decide
+      - cold_resync
+      - later
+      - inspect_then_same_operation
+    recovery_guidance: separate_terminal_receipt_recovery_section
+  lease_time_authority:
+    status: PASS
+    law: MongoDB $$NOW remains lease authority; ExecutionBudget monotonic clock is request-budget-only
+  StorePort_signature_parity:
+    status: PASS
+    implementations:
+      - InProcessStateStore
+      - MongoStateStore
+  Gate_actions:
+    status: PASS
+    count: 7
+  Gate_mutation_idempotency_binding:
+    status: PASS
+    law: packet.header.idempotency_key_equals_request.operation_id
+  provider_boundary:
+    status: PASS
+  Change_Streams:
+    status: NOT_USED
+resolved_findings:
+  - {id: F-003, status: RESOLVED, resolution: Gate-bound ExecutionBudget plus explicit budgeted transaction/reconciliation state machine}
+  - {id: F-004, status: RESOLVED, resolution: durable terminal conflict/refused receipts under admitted OperationKey}
+  - {id: A-001, status: RESOLVED, resolution: six-value StateProblem retry safety vocabulary with separate terminal recovery guidance}
+external_validation_debt:
+  - full_pytest_suite
+  - ruff
+  - mypy
+  - Gate_SDK_real_round_trip
+  - installed_package_base_server_parity
+  - uv_lock_resolution
+  - live_Mongo_replica_set_transactions
+  - Mongo_restart_failover
+  - Mongo_commit_ambiguity_fault_injection
+  - Mongo_server_time_clock_skew
+truth_rule: no_blocked_or_unexecuted_gate_is_represented_as_PASS

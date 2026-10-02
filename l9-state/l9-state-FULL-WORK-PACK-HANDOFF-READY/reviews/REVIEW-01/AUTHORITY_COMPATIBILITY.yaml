@@ -1,0 +1,56 @@
+schema: l9.state.review.authority-compatibility/v1
+review: REVIEW-01
+checkpoint_authority_revision: 08912f391c0a6672957f40cbd9b0db285f82ed86
+current_authority_revision: 7d31438a32bf1ce7783b1b896d359e6eb34063d0
+classification: stale_coordinate_compatible_semantics
+state_relevant_sources:
+- source_id: l9.source/canonical-sources@1
+  path: semantics/canonical_sources.yaml
+  checkpoint_git_blob_sha: 67c8ea14431f298ce5613be09921acf7cd8bc092
+  current_git_blob_sha: 67c8ea14431f298ce5613be09921acf7cd8bc092
+  byte_identity: identical
+- source_id: l9.source/authority-model@1
+  path: semantics/authority_model.yaml
+  checkpoint_git_blob_sha: d8d1de4b65c8c823a38835bf04f615b0808e5143
+  current_git_blob_sha: d8d1de4b65c8c823a38835bf04f615b0808e5143
+  byte_identity: identical
+- source_id: l9.source/node-archetypes@1
+  path: semantics/node_archetypes.yaml
+  checkpoint_git_blob_sha: c1d0b422c3b7cc7ee9ce1b9cfc34de19ed992571
+  current_git_blob_sha: c1d0b422c3b7cc7ee9ce1b9cfc34de19ed992571
+  byte_identity: identical
+- source_id: l9.source/architecture-patterns@1
+  path: semantics/architecture_patterns.yaml
+  checkpoint_git_blob_sha: d88195710fac0fd099ea66cee9da549abf2d8e2b
+  current_git_blob_sha: d88195710fac0fd099ea66cee9da549abf2d8e2b
+  byte_identity: identical
+- source_id: l9.source/product-topology-schema@1
+  path: semantics/product_topology.schema.yaml
+  checkpoint_git_blob_sha: 4fd2856bdf84c10a55a4be7e8519848c22c2bdbf
+  current_git_blob_sha: 4fd2856bdf84c10a55a4be7e8519848c22c2bdbf
+  byte_identity: identical
+- source_id: l9.source/lifecycle@1
+  path: semantics/lifecycle.yaml
+  checkpoint_git_blob_sha: a40c06ce12133d0386487321fef60092e6a2596b
+  current_git_blob_sha: a40c06ce12133d0386487321fef60092e6a2596b
+  byte_identity: identical
+- source_id: l9.source/contracts@1
+  path: semantics/contracts.yaml
+  checkpoint_git_blob_sha: 3b766a9e8546e7cf8d5224696e4f55d1c24e58d7
+  current_git_blob_sha: 3b766a9e8546e7cf8d5224696e4f55d1c24e58d7
+  byte_identity: identical
+- source_id: l9.source/receipt-catalog@1
+  path: semantics/receipt_catalog.yaml
+  checkpoint_git_blob_sha: 50c1d6728df60eebea0ff25d75cd03844e37e373
+  current_git_blob_sha: 50c1d6728df60eebea0ff25d75cd03844e37e373
+  byte_identity: identical
+- source_id: l9.source/error-taxonomy@1
+  path: semantics/error_taxonomy.yaml
+  checkpoint_git_blob_sha: f873d68c2f35200737e0dafa3ad727476d83a87a
+  current_git_blob_sha: f873d68c2f35200737e0dafa3ad727476d83a87a
+  byte_identity: identical
+conclusion: The checkpoint authority coordinate is stale, but the State-relevant canonical
+  source bytes are unchanged at the current .github revision. No State semantic invalidation
+  is introduced by the intervening compilation-stage parity commits.
+required_followup: Rebind successor checkpoint metadata to current .github revision
+  while preserving historical checkpoint receipts unchanged.

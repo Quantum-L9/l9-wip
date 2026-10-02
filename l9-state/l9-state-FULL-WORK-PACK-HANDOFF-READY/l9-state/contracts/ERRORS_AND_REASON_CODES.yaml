@@ -1,0 +1,128 @@
+schema: l9.state.reason-codes/v2
+status_classes:
+  terminal_operation_receipt:
+    - committed
+    - conflict
+    - refused
+  problem:
+    - failed
+
+problem_retry_classes:
+  - "no"
+  - same_operation
+  - refresh_then_decide
+  - cold_resync
+  - later
+  - inspect_then_same_operation
+
+problem_codes:
+  INVALID_REQUEST: {retry_class: "no"}
+  SCOPE_FORBIDDEN: {retry_class: "no"}
+  IDEMPOTENCY_COLLISION: {retry_class: "no"}
+  CURSOR_INVALID: {retry_class: "no"}
+  CURSOR_SCOPE_MISMATCH: {retry_class: "no"}
+  CURSOR_CONSUMER_MISMATCH: {retry_class: "no"}
+  CURSOR_RESYNC_REQUIRED: {retry_class: cold_resync}
+  ACK_REGRESSION: {retry_class: "no"}
+  OBJECT_NOT_FOUND: {retry_class: "no"}
+
+infrastructure_retry_by_effect:
+  STORAGE_UNAVAILABLE:
+    read: later
+    mutation_definite_precommit: same_operation
+  DEADLINE_EXCEEDED:
+    read: later
+    mutation_definite_precommit: same_operation
+  OUTCOME_UNKNOWN:
+    read: later
+    mutation_ambiguous: inspect_then_same_operation
+
+terminal_receipt_recovery:
+  SCHEMA_NOT_ADMITTED:
+    terminal_status: refused
+    guidance: correct_contract_or_payload
+    next_operation_id: required
+  SCHEMA_DIGEST_MISMATCH:
+    terminal_status: refused
+    guidance: correct_schema_binding
+    next_operation_id: required
+  SCHEMA_BINDING_IMMUTABLE:
+    terminal_status: refused
+    guidance: use_bound_schema_or_new_object_identity
+    next_operation_id: required
+  RETENTION_POLICY_NOT_ADMITTED:
+    terminal_status: refused
+    guidance: correct_retention_contract
+    next_operation_id: required
+  OBJECT_ALREADY_EXISTS:
+    terminal_status: conflict
+    guidance: inspect_existing_object
+    next_operation_id: required_if_attempting_changed_semantics
+  OBJECT_ID_REUSE_FORBIDDEN:
+    terminal_status: refused
+    guidance: choose_new_object_identity
+    next_operation_id: required
+  OBJECT_NOT_FOUND:
+    terminal_status: conflict
+    guidance: refresh_state
+    next_operation_id: required_if_retrying
+  OBJECT_TOMBSTONED:
+    terminal_status: refused
+    guidance: use_restore_contract_if_admitted
+    next_operation_id: required
+  OBJECT_ERASED:
+    terminal_status: refused
+    guidance: terminal_object_identity
+    next_operation_id: required_for_any_other_object
+  REVISION_CONFLICT:
+    terminal_status: conflict
+    guidance: refresh_then_decide
+    next_operation_id: required_if_retrying
+  STATE_DIGEST_CONFLICT:
+    terminal_status: conflict
+    guidance: refresh_then_decide
+    next_operation_id: required_if_retrying
+  CLAIM_ACTIVE:
+    terminal_status: conflict
+    guidance: wait_for_release_or_expiry_then_attempt_again
+    next_operation_id: required
+  CLAIM_NOT_FOUND:
+    terminal_status: conflict
+    guidance: inspect_or_acquire_current_claim
+    next_operation_id: required_if_retrying
+  CLAIM_EXPIRED:
+    terminal_status: conflict
+    guidance: acquire_fresh_claim
+    next_operation_id: required
+  CLAIM_STALE_FENCE:
+    terminal_status: conflict
+    guidance: acquire_fresh_claim
+    next_operation_id: required
+  CLAIM_HOLDER_MISMATCH:
+    terminal_status: refused
+    guidance: use_authorized_holder_or_acquire_new_claim_when_allowed
+    next_operation_id: required
+  CLAIM_REQUIRED:
+    terminal_status: conflict
+    guidance: acquire_current_claim
+    next_operation_id: required
+  RESTORE_SOURCE_UNAVAILABLE:
+    terminal_status: refused
+    guidance: choose_retained_restore_source_if_available
+    next_operation_id: required
+
+special_cases:
+  IDEMPOTENCY_COLLISION:
+    durable_receipt: false
+    rationale: "The OperationKey is already owned by different action/request semantics, so a second receipt cannot be persisted under that identity."
+    retry_class: "no"
+    guidance: use_new_operation_id_for_changed_semantics
+
+laws:
+  - StateProblem_retry_class_describes_retry_safety_only
+  - infrastructure_retry_class_is_effect_aware
+  - terminal_receipt_recovery_is_not_a_StateProblem_retry_class
+  - terminal_operation_receipts_are_sticky
+  - changed_world_retry_after_terminal_receipt_requires_new_operation_id
+  - DEADLINE_EXCEEDED_means_commit_was_not_attempted_or_was_known_not_committed
+  - OUTCOME_UNKNOWN_means_commit_may_have_occurred_and_requires_operation_inspection

@@ -1,0 +1,42 @@
+schema: l9.state.validate-f001-results/v1
+finding: VALIDATE-F-001
+status: REMEDIATED_LOCAL_VALIDATION_PASS
+source_pytest:
+  status: PASS
+  passed: 73
+  failed: 0
+installed_wheel_pytest:
+  status: PASS
+  passed: 73
+  failed: 0
+signed_gate_roundtrip:
+  source: {status: PASS, actions: 13}
+  installed_wheel: {status: PASS, actions: 13}
+static:
+  validate_f001: {status: PASS, checks: 19}
+  mongo_handoff: {status: PASS, checks: 20}
+  remed01: {status: PASS, checks: 43}
+  state03: {status: PASS, checks: 125}
+  state04: {status: PASS, checks: 153}
+compileall: PASS
+public_schema_bytes:
+  changed: false
+wheel:
+  filename: l9_state-0.1.0-py3-none-any.whl
+  sha256: 25d2bd7e0bffaeddd95ba4952001188a643cce879c3c82648a630219e20a951b
+historical_pre_fix_wheel:
+  sha256: 040b93478098a14f86ce67ded83e431b5d44cab84fbe7c8ee7d8ace794660ca8
+known_code_failures: 0
+remaining_environment_gates:
+  - ruff
+  - mypy
+  - live Mongo replica-set transactions
+  - Mongo transient transaction injection
+  - Mongo ambiguous commit reconciliation injection
+  - primary failover
+  - restart persistence/replay
+  - journal/ack live race
+  - hard-erase restart/replay
+retention_policy_authority:
+  status: unresolved_external_interface
+  effect: autonomous RetentionExecutor remains disabled
