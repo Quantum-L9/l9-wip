@@ -1,0 +1,64 @@
+schema: l9.state.execution-receipt/v1
+unit: REMED-01_COMBINED_REVIEW
+contract_id: L9-STATE-REMED-01-COMBINED-REVIEW
+status: IMPLEMENTATION_COMPLETE_PENDING_DELTA_REVIEW_AND_EXTERNAL_VALIDATION
+date: 2026-10-01
+baseline:
+  checkpoint: STATE-04_RETENTION_TOMBSTONE_RESTORE
+  checkpoint_sha256: 97dd1300a4749487a7a32e648cc0fd27099223a92beb3336ac6e6efe59ce0755
+review:
+  source: REVIEW-01
+  disposition: REOPEN_REQUIRED
+  findings_in_scope: [GAR-F-001, GAR-F-002, GAR-F-003, GAR-F-004, GAR-F-005, GAR-F-006, GAR-F-007]
+authority:
+  binding: build_state/REMED-01_AUTHORITY_BINDING.yaml
+  upstream_semantics_revision: 7d31438a32bf1ce7783b1b896d359e6eb34063d0
+  Gate_SDK_contract: v1
+  Gate_SDK_observed_release: 1.2.0
+implemented:
+  - explicit tenant-base authorization evidence plus optional ScopeAuthorizationPort
+  - current authorization before protected actions, exact retry disclosure, and operation inspection
+  - delegated consumer authorization through ScopeAuthorizationPort
+  - brand-new consumer retention start distinct from stale prior-position resync
+  - canonical StateProblem translation for malformed ingress and missing history
+  - effect-aware infrastructure retry classification
+  - all 24 public-schema required sets matched by runtime model requiredness
+  - fail-closed Gate runtime mutation-idempotency startup validation
+  - successor current authority/dependency provenance without historical receipt mutation
+scope_guards:
+  new_public_actions: false
+  public_schema_changes: false
+  provider_boundary_changes: false
+  retention_policy_invention: false
+  ProductTopology_or_manifest_work: false
+  publish_merge_deploy: false
+validation:
+  remed_static:
+    status: PASS
+    expected_checks: 43
+    evidence: build_state/REMED-01_STATIC_WIRING_RESULTS.json
+  prior_stage_static:
+    state03: PASS
+    state04: PASS
+  compileall: PASS
+  public_schema_meta_validation: PASS
+  runtime_schema_requiredness_parity: PASS
+external_validation_debt:
+  - full dependency-backed pytest
+  - ruff
+  - mypy
+  - installed-package parity
+  - real Gate_SDK round trip and startup configuration execution
+  - live Mongo replica-set and failover/ambiguous-commit fault injection
+  - live journal/cursor/retention/restart behavior
+  - live lifecycle hard-erase persistence/replay
+  - external retention-policy decision interface binding
+assertions_not_made:
+  - REVIEW-01_findings_architecturally_verified_closed
+  - merge_readiness
+  - release_readiness
+  - product_admission
+  - runtime_admission
+  - publication
+next_gate: REVIEW-01_DELTA_REVIEW
+publish: false

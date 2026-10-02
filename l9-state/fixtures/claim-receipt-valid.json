@@ -1,0 +1,14 @@
+{
+  "receipt_id": "claim.receipt.1",
+  "operation_id": "claim.op.1",
+  "request_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "scope_ref": "scope.1",
+  "object_id": "object.1",
+  "status": "claimed",
+  "issued_at": "2026-09-25T20:00:00Z",
+  "reason_codes": [],
+  "claim_id": "claim.1",
+  "fencing_token": 3,
+  "holder_ref": "principal.1",
+  "expires_at": "2026-09-25T20:01:00Z"
+}

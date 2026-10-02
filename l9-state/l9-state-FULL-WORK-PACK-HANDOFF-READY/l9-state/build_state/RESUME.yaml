@@ -1,0 +1,50 @@
+schema: l9.state.resume/v6
+mode: VALIDATE
+publish: forbidden
+active_authority:
+  base: l9-state-final-dev-pack-v2.0.0
+  operation_execution_delta: L9-STATE-STATE-02A-2026-09-27
+  upstream_semantics:
+    repository: Quantum-L9/.github
+    revision: 43600db3ee43f17fd30d2df589ff6bc0eb8b19d2
+    binding_receipt: build_state/HANDOFF_AUTHORITY_BINDING.yaml
+  Gate_SDK:
+    consumer_contract: v1
+    observed_release: 1.2.0
+    observed_v1_commit: 7ec6cdf5e26c837057ca35b7324a88de4d499ea3
+current_unit: VALIDATE-F001_HARD_ERASE_FENCE
+current_state: LOCAL_VALIDATION_COMPLETE_HANDOFF_READY
+review_state:
+  REVIEW-01: ALIGNED_AFTER_REMEDIATION
+  REMED-01: ACCEPTED
+  VALIDATE-F001: PASS_LOCAL
+known_code_failures: 0
+unresolved_authority:
+  - id: RETENTION_EXECUTION_POLICY_INTERFACE
+    owner: external_retention_or_policy_authority
+    effect: RetentionExecutor and autonomous policy-driven hard erasure remain disabled
+remaining_validation:
+  - ruff
+  - mypy
+  - live Mongo replica-set transaction proof
+  - Mongo transient/ambiguous-commit/failover fault injection
+  - restart persistence/replay proof
+  - live journal/ack race proof
+  - live hard-erase restart/replay proof
+current_evidence:
+  execution_receipt: build_state/VALIDATE-F001_EXECUTION_RECEIPT.yaml
+  authority_binding: build_state/HANDOFF_AUTHORITY_BINDING.yaml
+  cursor_contract: ../handoff/CURSOR/CURSOR_HANDOFF_CONTRACT.yaml
+next_transition:
+  capability: implementation.execute
+  target: Cursor
+  objective: close remaining environment-dependent validation gates only
+  status: authorized
+  contract: handoff/CURSOR/CURSOR_HANDOFF_CONTRACT.yaml
+forbidden_next:
+  - expand State capability family
+  - change public schemas without new architecture authority
+  - invent external retention policy semantics
+  - change Gate_SDK or sibling repositories
+  - begin ProductTopology/ProductManifest before validation closure
+  - publish merge deploy or claim admission

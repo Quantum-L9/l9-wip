@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:state:StateEventPage:1.0",
+  "title": "StateEventPage",
+  "description": "Bounded canonical journal page.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": "1.0"
+    },
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "consumer_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "urn:l9:state:StateTransitionEvent:1.0"
+      },
+      "maxItems": 200
+    },
+    "next_cursor": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "coverage": {
+      "enum": [
+        "complete",
+        "bounded",
+        "resync_required"
+      ]
+    },
+    "retained_from_seq": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "high_water_seq": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "observed_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "contract_version",
+    "scope_ref",
+    "consumer_ref",
+    "events",
+    "coverage",
+    "high_water_seq",
+    "observed_at"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "coverage": {
+            "enum": [
+              "complete",
+              "bounded"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "next_cursor"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "coverage": {
+            "const": "resync_required"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "retained_from_seq"
+        ],
+        "properties": {
+          "events": {
+            "maxItems": 0
+          },
+          "next_cursor": false
+        }
+      }
+    }
+  ]
+}

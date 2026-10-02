@@ -1,0 +1,113 @@
+schema: l9.authority-resolution/v1
+concern: Current L9 semantic authority applicable to combined l9-state STATE-01 through
+  STATE-04 architecture review
+time_basis: current
+authority_root:
+  owner: Quantum-L9/.github
+  repository: Quantum-L9/.github
+  revision: 7d31438a32bf1ce7783b1b896d359e6eb34063d0
+  reference_requested: null
+authoritative_sources:
+- source_id: l9.source/canonical-sources@1
+  artifact_id: null
+  path: semantics/canonical_sources.yaml
+  owner: Quantum-L9/.github
+  scope: L9 global semantics relevant to State realization
+  authority_class: canonical
+  revision: 7d31438a32bf1ce7783b1b896d359e6eb34063d0
+  sha256: null
+  admission_state: canonical
+- source_id: l9.source/authority-model@1
+  artifact_id: null
+  path: semantics/authority_model.yaml
+  owner: Quantum-L9/.github
+  scope: L9 global semantics relevant to State realization
+  authority_class: canonical
+  revision: 7d31438a32bf1ce7783b1b896d359e6eb34063d0
+  sha256: null
+  admission_state: canonical
+- source_id: l9.source/node-archetypes@1
+  artifact_id: null
+  path: semantics/node_archetypes.yaml
+  owner: Quantum-L9/.github
+  scope: L9 global semantics relevant to State realization
+  authority_class: canonical
+  revision: 7d31438a32bf1ce7783b1b896d359e6eb34063d0
+  sha256: null
+  admission_state: canonical
+- source_id: l9.source/architecture-patterns@1
+  artifact_id: null
+  path: semantics/architecture_patterns.yaml
+  owner: Quantum-L9/.github
+  scope: L9 global semantics relevant to State realization
+  authority_class: canonical
+  revision: 7d31438a32bf1ce7783b1b896d359e6eb34063d0
+  sha256: null
+  admission_state: canonical
+- source_id: l9.source/product-topology-schema@1
+  artifact_id: null
+  path: semantics/product_topology.schema.yaml
+  owner: Quantum-L9/.github
+  scope: L9 global semantics relevant to State realization
+  authority_class: canonical
+  revision: 7d31438a32bf1ce7783b1b896d359e6eb34063d0
+  sha256: null
+  admission_state: canonical
+- source_id: l9.source/lifecycle@1
+  artifact_id: null
+  path: semantics/lifecycle.yaml
+  owner: Quantum-L9/.github
+  scope: L9 global semantics relevant to State realization
+  authority_class: canonical
+  revision: 7d31438a32bf1ce7783b1b896d359e6eb34063d0
+  sha256: null
+  admission_state: canonical
+- source_id: l9.source/contracts@1
+  artifact_id: null
+  path: semantics/contracts.yaml
+  owner: Quantum-L9/.github
+  scope: L9 global semantics relevant to State realization
+  authority_class: canonical
+  revision: 7d31438a32bf1ce7783b1b896d359e6eb34063d0
+  sha256: null
+  admission_state: canonical
+- source_id: l9.source/receipt-catalog@1
+  artifact_id: null
+  path: semantics/receipt_catalog.yaml
+  owner: Quantum-L9/.github
+  scope: L9 global semantics relevant to State realization
+  authority_class: canonical
+  revision: 7d31438a32bf1ce7783b1b896d359e6eb34063d0
+  sha256: null
+  admission_state: canonical
+- source_id: l9.source/error-taxonomy@1
+  artifact_id: null
+  path: semantics/error_taxonomy.yaml
+  owner: Quantum-L9/.github
+  scope: L9 global semantics relevant to State realization
+  authority_class: canonical
+  revision: 7d31438a32bf1ce7783b1b896d359e6eb34063d0
+  sha256: null
+  admission_state: canonical
+dependency_closure:
+- from: l9-state review target
+  to: l9.source/node-archetypes@1
+  basis: State is reviewed as Node / authoritative-state archetype.
+- from: l9-state review target
+  to: l9.source/architecture-patterns@1
+  basis: Provider isolation, Gate adapter, revisioned state, and persistence patterns
+    constrain realization.
+- from: l9-state review target
+  to: l9.source/authority-model@1
+  basis: Identity, authority, authorization, and receipt evidence must remain distinct.
+- from: l9-state review target
+  to: l9.source/lifecycle@1
+  basis: Lifecycle and authority classes constrain admission/currentness but do not
+    redefine State-owned lifecycle semantics.
+unresolved: []
+resolution_status: resolved
+target_binding:
+  identity: local-checkpoint:l9-state-STATE-04-retention-lifecycle
+  revision: null
+  sha256: 97dd1300a4749487a7a32e648cc0fd27099223a92beb3336ac6e6efe59ce0755
+  scope_fingerprint: edfee65d05c894d7766b01276895d7ea993700d8aa0526de109bdfc4c08faf26

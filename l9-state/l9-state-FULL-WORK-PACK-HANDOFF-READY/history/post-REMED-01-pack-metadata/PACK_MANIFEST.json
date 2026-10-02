@@ -1,0 +1,32 @@
+{
+  "campaign": "L9 State",
+  "claims": {
+    "admission": false,
+    "deployment": false,
+    "merge": false,
+    "publish": false
+  },
+  "current_successor_tree": "l9-state/",
+  "delta_review_files": 7,
+  "file_count_excluding_pack_checksum": 144,
+  "files_by_top_level_area": {
+    "WORK_PACK_README.md": 1,
+    "inputs": 1,
+    "l9-state": 121,
+    "reviews": 21
+  },
+  "next_stage": "VALIDATE-01",
+  "public_schema_count": 24,
+  "review_01_files": 14,
+  "schema": "l9.state.full-work-pack/v1",
+  "source_authority": {
+    "delta_review_observed_github_revision": "43600db3ee43f17fd30d2df589ff6bc0eb8b19d2",
+    "dev_pack": "inputs/l9-state-final-dev-pack-v2.0.0.zip",
+    "gate_sdk_channel": "v1",
+    "gate_sdk_observed_release": "v1.2.0",
+    "gate_sdk_release_commit": "d3241de11a5a48f952a0cf5bc3ec7c051c472476",
+    "implementation_binding_github_revision": "7d31438a32bf1ce7783b1b896d359e6eb34063d0"
+  },
+  "status": "POST_REMED_01_DELTA_REVIEW_ALIGNED",
+  "test_file_count": 11
+}

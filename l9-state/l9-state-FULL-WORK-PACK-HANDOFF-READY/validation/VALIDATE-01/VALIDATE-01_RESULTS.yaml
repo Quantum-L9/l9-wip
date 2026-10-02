@@ -1,0 +1,60 @@
+schema: l9.state.validate-01-results/v1
+stage: VALIDATE-01
+target:
+  artifact: l9-state-FULL-WORK-PACK-post-REMED-01.zip
+  sha256: 4fd2563ea67afe81c0cfc135725b2e70995a62365e3f8d437c8c959aa05a484e
+status: FINDING_REMEDIATION_REQUIRED
+runtime:
+  python: 3.13.5
+  requirement: ">=3.12"
+state_wheel:
+  filename: l9_state-0.1.0-py3-none-any.whl
+  sha256: 040b93478098a14f86ce67ded83e431b5d44cab84fbe7c8ee7d8ace794660ca8
+  build: PASS
+  installed_root_import: PASS
+gate_sdk:
+  version: 1.2.0
+  release_tag: v1.2.0
+  release_commit: d3241de11a5a48f952a0cf5bc3ec7c051c472476
+  release_workflow_run_id: 36771094272
+  release_workflow_artifact_id: 11123631770
+  wheel_sha256: 543d95ba4270f64bf885770fd296340a59c762c21e4d73748dec8da0775a2107
+  github_release_asset_digest: sha256:543d95ba4270f64bf885770fd296340a59c762c21e4d73748dec8da0775a2107
+  artifact_digest_match: PASS
+checks:
+  pytest_source_with_released_gate:
+    pass: 68
+    fail: 1
+    status: FAIL
+  pytest_installed_state_wheel_with_released_gate:
+    pass: 68
+    fail: 1
+    status: FAIL
+  signed_gate_roundtrip_installed_wheel:
+    registered_actions: 13
+    successful_actions: 13
+    signed_response_verification: PASS
+    status: PASS
+  remed01_static: {pass: 43, fail: 0, status: PASS}
+  state03_static: {pass: 125, fail: 0, status: PASS}
+  state04_static: {pass: 153, fail: 0, status: PASS}
+  public_schema_metavalidation: {pass: 24, fail: 0, status: PASS}
+  repository_sha256_manifest: PASS
+  compileall: PASS
+  structured_artifacts:
+    json: 42
+    yaml_yml: 25
+    toml: 1
+    status: PASS
+findings:
+  - VALIDATE-F-001
+blocked:
+  - ruff
+  - mypy
+  - pymongo_driver_execution
+  - live_mongodb_replica_set
+  - mongodb_primary_failover_restart
+  - mongodb_commit_ambiguity_fault_injection
+  - mongodb_server_time_claim_validation
+  - live_hard_erase_mongodb_replay
+  - external_retention_policy_decision_interface

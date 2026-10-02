@@ -1,0 +1,36 @@
+schema: l9.state.architecture-delta/v1
+id: L9-STATE-STATE-02A-2026-09-27
+authority: USER_APPROVED
+base_authority: l9-state-final-dev-pack-v2.0.0
+scope: operation_execution_contract_only
+resolves:
+  - F-003_GATE_DEADLINE_NOT_PROPAGATED_TO_MONGO_RECONCILIATION_BUDGET
+  - F-004_LOGICAL_CONFLICT_REFUSED_RESULTS_NOT_WIRED_TO_PUBLIC_RECEIPT_SURFACE
+  - A-001_REASON_CODE_RETRY_VOCABULARY_EXCEEDS_STATEPROBLEM_SCHEMA
+decisions:
+  - Gate timeout_ms is the sole trusted request-budget authority; State may shrink but not extend it.
+  - Provider transaction and reconciliation retries are explicit and bounded by ExecutionBudget.
+  - Once commit may have occurred, semantic execution stops and only OperationKey reconciliation is allowed.
+  - Admitted conflict and refused mutation outcomes are immutable terminal OperationKey receipts.
+  - Exact terminal OperationKey retries are sticky; changed-world attempts require a new operation_id.
+  - StateProblem is not persisted as an authoritative operation receipt.
+  - StateProblem retry_class keeps the six-value public schema vocabulary and is separate from workflow recovery guidance.
+public_schema_change: none
+new_invariants:
+  - STATE-BUDGET-001
+  - STATE-BUDGET-002
+  - STATE-OUTCOME-001
+  - STATE-OUTCOME-002
+  - STATE-OUTCOME-003
+  - STATE-AMBIGUITY-001
+  - STATE-PROBLEM-001
+  - STATE-RETRY-001
+  - STATE-RETRY-002
+implementation_artifacts:
+  - INVARIANTS.md
+  - invariants.yaml
+  - contracts/ERRORS_AND_REASON_CODES.yaml
+  - docs/OPERATION_EXECUTION_CONTRACT.md
+  - docs/adr/ADR-011-operation-execution-budget.md
+  - docs/adr/ADR-012-durable-terminal-operation-outcomes.md
+  - docs/adr/ADR-013-retry-safety-vs-recovery-guidance.md

@@ -1,0 +1,14 @@
+state.create response committed None []
+state.get response None None None
+state.claim response claimed None []
+state.renew response renewed None []
+state.transition response committed None []
+state.release response released None []
+state.list response None None None
+state.events response None None None
+state.ack response committed None []
+state.history response None None None
+state.operation.inspect response found None None
+state.tombstone response committed None []
+state.restore response committed None []
+ACTIONS 13 ['state.ack', 'state.claim', 'state.create', 'state.events', 'state.get', 'state.history', 'state.list', 'state.operation.inspect', 'state.release', 'state.renew', 'state.restore', 'state.tombstone', 'state.transition']

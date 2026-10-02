@@ -1,0 +1,74 @@
+{
+  "schema": "l9.state.review.manifest/v1",
+  "review": "REVIEW-01",
+  "created_at": "2026-10-02T00:07:45.013665+00:00",
+  "target_sha256": "97dd1300a4749487a7a32e648cc0fd27099223a92beb3336ac6e6efe59ce0755",
+  "audit_status": "REOPEN_REQUIRED",
+  "finding_counts": {
+    "high": 3,
+    "medium": 3,
+    "low": 1
+  },
+  "files": [
+    {
+      "path": "ARCHITECTURE_AUDIT.yaml",
+      "sha256": "55c177f9a77ec632b224f38786dda04f5a56dedcfb4de4d3b2f15371c3abe396",
+      "bytes": 14308
+    },
+    {
+      "path": "AUTHORITY_COMPATIBILITY.yaml",
+      "sha256": "5d989da34ff15f1b46bbb42c7a360e15e5776adb9d82b58b74ca63ea321ddf01",
+      "bytes": 2852
+    },
+    {
+      "path": "AUTHORITY_RESOLUTION.yaml",
+      "sha256": "c52e8c297bd425fb324342e98861ad7f5a482a90f46f1b811e9c28687a8c47f7",
+      "bytes": 4161
+    },
+    {
+      "path": "CONTRACT_MATRIX.yaml",
+      "sha256": "09485beebaf0bf3379937e6678f5da8e9e8efa2cedbe3cab5bb52ce9ab856225",
+      "bytes": 3071
+    },
+    {
+      "path": "DIRECT_EVIDENCE_BASIS.yaml",
+      "sha256": "4d601482a3d71326403c1b49419aa1ef11cff35a04a2df43c44936847db008c5",
+      "bytes": 3856
+    },
+    {
+      "path": "FINDINGS.yaml",
+      "sha256": "61bfb641725f9366ea970bc1c16f1acb285ae4108b4d92c11c0ee6ba85cd3b57",
+      "bytes": 9779
+    },
+    {
+      "path": "INVARIANT_MATRIX.yaml",
+      "sha256": "7e80d93b1301cd37bf4a31f6a38792c5f3e39fd776cacaaad6eba630e1276df3",
+      "bytes": 5829
+    },
+    {
+      "path": "MECHANICAL_EVIDENCE.txt",
+      "sha256": "7e5323cac8ff5aad7c16fe8573f9b51674c9248067fafdfa4fbd7fa8bac4025a",
+      "bytes": 24221
+    },
+    {
+      "path": "REMEDIATION_CONTRACT.yaml",
+      "sha256": "0e8ca1d30de8af6f282d27cc119f0b6973381e0c89869f34e90d88ab8a0b9670",
+      "bytes": 4634
+    },
+    {
+      "path": "REVIEW-01_EXECUTIVE.md",
+      "sha256": "e5d0640d8e7f5615bf85961be58be08ed8f4d4c34945c02dcd086234d874df43",
+      "bytes": 3733
+    },
+    {
+      "path": "REVIEW_VALIDATION.txt",
+      "sha256": "239f57089cdf72fe083218bb9807045370275219a61b4488da381190588c6338",
+      "bytes": 264
+    },
+    {
+      "path": "VALIDATION_DEBT.yaml",
+      "sha256": "13d8e77aa193040707b8c53ac15d47d5a51f2feb6660bf26d76678135c3428c8",
+      "bytes": 1529
+    }
+  ]
+}

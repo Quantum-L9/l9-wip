@@ -1,0 +1,91 @@
+schema: l9.state.environment-gate-closure/v2
+contract_id: L9-STATE-STATE-02-v2.0.0
+authority: l9-state-final-dev-pack-v2.0.0
+runtime_scope: current_chat_container
+disposition: EXTERNAL_VALIDATION_DEBT_NONBLOCKING_FOR_STAGING_BUILD
+policy:
+  local_environment_chasing: forbidden_by_user_direction
+  implementation_blocking: false
+  combined_review_blocking: false
+  release_blocking: true
+  merge_readiness_blocking: true
+  publish: forbidden
+  claim_unexecuted_as_pass: forbidden
+current_audit_evidence:
+  operation_execution_architecture_delta:
+    status: PASS_STATIC_IMPLEMENTATION
+    evidence: build_state/STATE-02A_ARCHITECTURE_DELTA.yaml
+  compileall:
+    status: PASS
+    scope: src_and_tests_after_operation_execution_delta
+  public_json_schema_meta_validation:
+    status: PASS
+    count: 24
+  runtime_model_fixture_contract_checks:
+    status: PASS
+    method: direct_models_module_execution_without_project_dependency_install
+    covers:
+      - valid_create_fixture
+      - valid_state_receipt_fixture
+      - valid_claim_receipt_fixture
+      - invalid_missing_event_receipt
+      - invalid_missing_claim_fence_receipt
+      - missing_contract_version_rejected
+      - explicit_null_for_nonnullable_optional_rejected
+  architecture_dependency_guard:
+    status: PASS
+    evidence: pytest_tests_test_architecture_py_7_passed
+  static_wiring_audit:
+    status: PASS
+    count: 116
+    evidence: build_state/STATE-02_STATIC_WIRING_RESULTS.json
+  provider_boundary_scan:
+    status: PASS
+    evidence: Mongo_provider_syntax_absent_from_non_adapter_core
+  direct_peer_transport_scan:
+    status: PASS
+    evidence: no_httpx_requests_aiohttp_peer_url_or_manual_TransportPacket_construction_in_State_source
+blocked_or_external_gates:
+  full_pytest_suite:
+    status: BLOCKED_CURRENT_RUNTIME
+    reason: current_container_does_not_have_the_project_runtime_dependency_set_including_rfc8785_and_pymongo
+    retry_in_current_runtime: false
+  ruff:
+    status: EXTERNAL_VALIDATION_REQUIRED
+    reason: admitted_repository_toolchain_not_established_in_this_container
+  mypy:
+    status: EXTERNAL_VALIDATION_REQUIRED
+    reason: admitted_repository_toolchain_not_established_in_this_container
+  Gate_SDK_real_round_trip:
+    status: EXTERNAL_VALIDATION_REQUIRED
+    reason: installed_canonical_Gate_runtime_and_signed_round_trip_environment_not_established_here
+  installed_package_base_server_parity:
+    status: EXTERNAL_VALIDATION_REQUIRED
+    reason: static_manifest_boundary_is_proven_but_isolated_installed_artifact_behavior_is_not
+  uv_lock_resolution:
+    status: EXTERNAL_VALIDATION_REQUIRED
+    reason: canonical_dependency_resolution_and_lockfile_not_generated_in_an_admitted_repository_environment
+  Mongo_live_replica_set:
+    status: EXTERNAL_VALIDATION_REQUIRED
+    reason: no_transaction_capable_Mongo_replica_set_is_bound_to_this_runtime
+  Mongo_restart_failover:
+    status: EXTERNAL_VALIDATION_REQUIRED
+    reason: requires_live_replica_set_fault_environment
+  Mongo_commit_ambiguity_fault_injection:
+    status: EXTERNAL_VALIDATION_REQUIRED
+    reason: requires_controlled_live_Mongo_driver_network_failure_injection
+  Mongo_server_time_clock_skew:
+    status: EXTERNAL_VALIDATION_REQUIRED
+    reason: requires_live_server_clock_authority_validation
+historical_prior_checkpoint_evidence:
+  STATE-01_pytest_claim:
+    value: 10_passed
+    treatment: historical_receipt_only_not_reexecuted_after_STATE-02_audit_repairs
+  STATE-02_prior_pytest_claim:
+    value: 24_passed
+    treatment: not_accepted_as_current_audit_evidence
+constraints:
+  - do_not_reinterpret_BLOCKED_or_EXTERNAL_VALIDATION_REQUIRED_as_PASS
+  - do_not_keep_retrying_unavailable_environment_gates_in_this_runtime
+  - do_not_publish_from_this_runtime
+  - rerun_external_gates_in_admitted_repository_CI_and_live_Mongo_environment_before_release_or_merge_readiness

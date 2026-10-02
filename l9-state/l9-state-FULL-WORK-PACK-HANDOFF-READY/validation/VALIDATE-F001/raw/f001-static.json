@@ -1,0 +1,102 @@
+{
+  "schema": "l9.state.validate-f001-static/v1",
+  "pass": 19,
+  "fail": 0,
+  "checks": [
+    {
+      "id": "F001-NO-HOLDER-StateStorePort",
+      "status": "PASS",
+      "detail": "hard_erase args=['self', 'revision', 'expected_revision', 'expected_state_digest', 'expected_retention_policy_ref', 'expected_retention_policy_digest', 'claim_id', 'fencing_token', 'operation', 'event', 'budget']"
+    },
+    {
+      "id": "F001-FENCE-StateStorePort",
+      "status": "PASS",
+      "detail": "claim/fence retained"
+    },
+    {
+      "id": "F001-NO-HOLDER-InProcessStateStore",
+      "status": "PASS",
+      "detail": "hard_erase args=['self', 'revision', 'expected_revision', 'expected_state_digest', 'expected_retention_policy_ref', 'expected_retention_policy_digest', 'claim_id', 'fencing_token', 'operation', 'event', 'budget']"
+    },
+    {
+      "id": "F001-FENCE-InProcessStateStore",
+      "status": "PASS",
+      "detail": "claim/fence retained"
+    },
+    {
+      "id": "F001-NO-HOLDER-MongoStateStore",
+      "status": "PASS",
+      "detail": "hard_erase args=['self', 'revision', 'expected_revision', 'expected_state_digest', 'expected_retention_policy_ref', 'expected_retention_policy_digest', 'claim_id', 'fencing_token', 'operation', 'event', 'budget']"
+    },
+    {
+      "id": "F001-FENCE-MongoStateStore",
+      "status": "PASS",
+      "detail": "claim/fence retained"
+    },
+    {
+      "id": "F001-PLAN-NO-HOLDER",
+      "status": "PASS",
+      "detail": "erase plan separates executor principal from claim holder"
+    },
+    {
+      "id": "F001-MEMORY-DEDICATED-GUARD",
+      "status": "PASS",
+      "detail": "memory uses retention-specific claim guard"
+    },
+    {
+      "id": "F001-MEMORY-NO-HOLDER-CHECK",
+      "status": "PASS",
+      "detail": "hard-erase guard does not compare holder"
+    },
+    {
+      "id": "F001-MONGO-FENCE-FILTER",
+      "status": "PASS",
+      "detail": "Mongo erase filter binds claim/fence only"
+    },
+    {
+      "id": "F001-MONGO-DEDICATED-GUARD",
+      "status": "PASS",
+      "detail": "Mongo hard erase uses dedicated guard"
+    },
+    {
+      "id": "F001-MONGO-NO-HOLDER-CLASSIFY",
+      "status": "PASS",
+      "detail": "Mongo failure classification suppresses holder ownership check"
+    },
+    {
+      "id": "F001-EXACT-FENCE-TEST",
+      "status": "PASS",
+      "detail": "exact fence with different retention principal covered"
+    },
+    {
+      "id": "F001-STALE-FENCE-TEST",
+      "status": "PASS",
+      "detail": "stale fence negative covered"
+    },
+    {
+      "id": "F001-CLAIMLESS-ACTIVE-TEST",
+      "status": "PASS",
+      "detail": "active claim requires fence"
+    },
+    {
+      "id": "F001-CLAIMLESS-RELEASED-TEST",
+      "status": "PASS",
+      "detail": "inactive lineage permits claimless erase"
+    },
+    {
+      "id": "F001-REPLAY-TEST",
+      "status": "PASS",
+      "detail": "exact hard-erase OperationKey replay covered"
+    },
+    {
+      "id": "F001-RECEIPT-PROVENANCE",
+      "status": "PASS",
+      "detail": "executor and external authorization remain on receipt"
+    },
+    {
+      "id": "F001-PUBLIC-STILL-PRIVATE",
+      "status": "PASS",
+      "detail": "hard erase remains private"
+    }
+  ]
+}

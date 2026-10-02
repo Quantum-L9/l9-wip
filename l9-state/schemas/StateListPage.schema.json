@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-state:StateListPage:0.1",
+  "title": "StateListPage",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "states": {
+      "type": "array",
+      "items": {
+        "$ref": "urn:l9:devpack:l9-state:StateRef:0.1"
+      },
+      "minItems": 0,
+      "maxItems": 200
+    },
+    "next_cursor": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "coverage": {
+      "enum": [
+        "complete",
+        "bounded",
+        "resync_required"
+      ]
+    },
+    "snapshot_coordinate": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "receipt_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    }
+  },
+  "required": [
+    "scope_ref",
+    "states",
+    "coverage",
+    "snapshot_coordinate",
+    "receipt_ref"
+  ]
+}

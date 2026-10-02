@@ -1,0 +1,99 @@
+schema: l9.state.execution-receipt/v2a
+contract_id: L9-STATE-STATE-02-v2.0.0+operation-execution-delta
+mode: BUILD
+status: IMPLEMENTATION_COMPLETE_STATIC_VALIDATION_PASS_COMBINED_REVIEW_PENDING
+authority:
+  base: l9-state-final-dev-pack-v2.0.0
+  delta: L9-STATE-STATE-02A-2026-09-27
+  delta_authority: USER_APPROVED
+review_status: PENDING_COMBINED_STATE_01_STATE_02_REVIEW_BY_USER_DIRECTION
+publish: forbidden
+target:
+  kind: authorized_local_staging
+  intended_repository: Quantum-L9/l9-state
+  node_birth_admission: unresolved_external_prerequisite
+implemented:
+  STATE-01:
+    - state.create
+    - state.get
+    - state.transition
+    - state.operation.inspect
+    - RFC8785_JCS_SHA256_digests
+    - immutable_schema_binding
+    - configured_ContractCatalogPort
+    - in_process_conformance_StateStorePort
+    - Gate_handlers_and_typed_StateClient
+  STATE-02:
+    - PyMongo_AsyncMongoClient_StateStorePort_adapter
+    - seven_private_Mongo_collections
+    - required_unique_indexes
+    - snapshot_read_concern
+    - majority_write_concern
+    - primary_read_preference
+    - immutable_revision_storage
+    - atomic_current_projection_revision_event_operation_receipt_commit
+    - scope_local_journal_sequence_allocation
+    - persistent_claim_lineage
+    - state.claim
+    - state.renew
+    - state.release
+    - monotonic_fencing
+    - server_authoritative_lease_time_via_Mongo_DOLLAR_DOLLAR_NOW
+    - claim_lineage_write_guard_on_state_transition
+  STATE-02A:
+    - Gate_timeout_to_provider_neutral_ExecutionBudget
+    - injectable_private_budget_policy
+    - explicit_budgeted_Mongo_transaction_state_machine
+    - PyMongo_with_transaction_forbidden
+    - bounded_whole_transaction_retry_for_TransientTransactionError
+    - reconciliation_only_after_commit_timeout_or_UnknownTransactionCommitResult
+    - exact_OperationKey_reconciliation_within_remaining_budget
+    - durable_conflict_and_refused_StateReceipt_outcomes
+    - durable_conflict_and_refused_StateClaimReceipt_outcomes
+    - sticky_terminal_OperationKey_semantics
+    - catalog_refusals_recorded_as_durable_terminal_receipts
+    - StateProblem_excluded_from_durable_receipt_family
+    - IDEMPOTENCY_COLLISION_canonical_non_durable_StateProblem
+    - retry_taxonomy_reconciled_to_public_StateProblem_schema
+    - nine_new_locked_invariants
+  earlier_audit_repairs:
+    - Mongo_driver_removed_from_base_runtime_dependencies_and_moved_to_server_extra
+    - runtime_models_aligned_to_public_schema_contract_version_collection_bounds_and_nonnullable_optional_semantics
+resolved_architecture_findings:
+  F-003: RESOLVED_IN_IMPLEMENTATION
+  F-004: RESOLVED_IN_IMPLEMENTATION
+  A-001: RESOLVED_IN_CONTRACT_AND_IMPLEMENTATION
+runtime_dependencies:
+  base:
+    - constellation-node-sdk @ git+https://github.com/Quantum-L9/Gate_SDK.git@v1
+    - pydantic>=2.9.0
+    - rfc8785==0.1.4
+  server_extra:
+    - pymongo==4.18.2
+  target_python: ">=3.12"
+current_validation:
+  compileall_src_and_tests: PASS
+  static_wiring_and_contract_audit: "PASS 116 checks"
+  public_json_schema_document_inventory: "PASS 24 schemas parsed"
+  provider_boundary_scan: PASS
+  direct_peer_transport_scan: PASS
+  invariant_presence_and_retry_taxonomy_static_checks: PASS
+  full_pytest_suite: BLOCKED_CURRENT_RUNTIME
+  ruff: EXTERNAL_VALIDATION_REQUIRED
+  mypy: EXTERNAL_VALIDATION_REQUIRED
+  Gate_SDK_real_round_trip: EXTERNAL_VALIDATION_REQUIRED
+  installed_package_base_server_parity: EXTERNAL_VALIDATION_REQUIRED
+  uv_lock_resolution: EXTERNAL_VALIDATION_REQUIRED
+  mongo_live_replica_set: EXTERNAL_VALIDATION_REQUIRED
+  mongo_restart_failover: EXTERNAL_VALIDATION_REQUIRED
+  mongo_commit_ambiguity_fault_injection: EXTERNAL_VALIDATION_REQUIRED
+  mongo_server_time_clock_skew: EXTERNAL_VALIDATION_REQUIRED
+notes:
+  - No live MongoDB success is claimed by this checkpoint.
+  - No full-suite pytest PASS is claimed by this checkpoint.
+  - No unavailable validation gate is represented as PASS.
+  - MongoDB provider syntax is confined to src/l9_state/adapters/.
+  - Lease authority remains MongoDB $$NOW; ExecutionBudget is request-budget authority only.
+  - Change Streams are not used.
+  - Combined review remains pending by user direction.
+  - No STATE-03 work is included.

@@ -1,0 +1,20 @@
+schema: l9.state.handoff-authority-binding/v1
+bound_at: 2026-10-01
+semantic_authority:
+  repository: Quantum-L9/.github
+  revision: 43600db3ee43f17fd30d2df589ff6bc0eb8b19d2
+  status: current_at_handoff
+  compatibility_note: >-
+    The successor adds canonical ActorIdentity and SurfaceIdentity registries without
+    rewriting State domain semantics. Runtime identity assertion consumption remains a
+    later ProductTopology/conformance obligation and is not introduced by this validation repair.
+Gate_SDK:
+  consumer_contract: v1
+  observed_release: v1.2.0
+  v1_ref_commit: 7ec6cdf5e26c837057ca35b7324a88de4d499ea3
+  release_tag_commit: 7ec6cdf5e26c837057ca35b7324a88de4d499ea3
+  release_wheel_sha256: 543d95ba4270f64bf885770fd296340a59c762c21e4d73748dec8da0775a2107
+  state_validation_used_released_artifact: true
+invalidation:
+  - semantic_authority_revision_changes
+  - Gate_SDK_v1_ref_changes

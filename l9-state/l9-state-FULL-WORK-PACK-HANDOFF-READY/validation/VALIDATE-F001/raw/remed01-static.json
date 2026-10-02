@@ -1,0 +1,226 @@
+{
+  "schema": "l9.state.remed01-static-validation/v1",
+  "contract_id": "L9-STATE-REMED-01-COMBINED-REVIEW",
+  "authority_revision_expected": "7d31438a32bf1ce7783b1b896d359e6eb34063d0",
+  "gate_release_observed": "1.2.0",
+  "gate_release_commit_observed": "d3241de11a5a48f952a0cf5bc3ec7c051c472476",
+  "pass": 43,
+  "fail": 0,
+  "checks": [
+    {
+      "id": "F001-AUTH-PORT",
+      "status": "PASS",
+      "detail": "ScopeAuthorizationPort exists"
+    },
+    {
+      "id": "F001-AUTH-INJECT",
+      "status": "PASS",
+      "detail": "StateService accepts authorization port"
+    },
+    {
+      "id": "F001-AUTH-CALL",
+      "status": "PASS",
+      "detail": "scope authorization is invoked"
+    },
+    {
+      "id": "F001-RETRY-GATED",
+      "status": "PASS",
+      "detail": "mutation authorizes before exact retry lookup"
+    },
+    {
+      "id": "F001-INSPECT-GATED",
+      "status": "PASS",
+      "detail": "operation inspection authorizes before receipt lookup"
+    },
+    {
+      "id": "F001-CONSUMER-GATED",
+      "status": "PASS",
+      "detail": "consumer identity is authorization input"
+    },
+    {
+      "id": "F001-AUTH-EVIDENCE",
+      "status": "PASS",
+      "detail": "authorization ref is policy/evidence-derived, not packet id"
+    },
+    {
+      "id": "F002-PRIOR-POSITION",
+      "status": "PASS",
+      "detail": "events distinguishes prior position"
+    },
+    {
+      "id": "F002-NEW-CONSUMER",
+      "status": "PASS",
+      "detail": "brand-new consumer starts immediately before earliest retained event"
+    },
+    {
+      "id": "F002-STALE-RESYNC",
+      "status": "PASS",
+      "detail": "stale prior position still forces resync"
+    },
+    {
+      "id": "F003-HISTORY-PROBLEM",
+      "status": "PASS",
+      "detail": "missing history returns canonical OBJECT_NOT_FOUND problem"
+    },
+    {
+      "id": "F003-INGRESS-PARSE",
+      "status": "PASS",
+      "detail": "malformed domain payload becomes INVALID_REQUEST"
+    },
+    {
+      "id": "F003-IDEMPOTENCY-PROBLEM",
+      "status": "PASS",
+      "detail": "transport idempotency mismatch becomes INVALID_REQUEST"
+    },
+    {
+      "id": "F004-READ-LATER",
+      "status": "PASS",
+      "detail": "read infrastructure failures retry later"
+    },
+    {
+      "id": "F004-AMBIGUOUS-INSPECT",
+      "status": "PASS",
+      "detail": "ambiguous mutation requires inspection"
+    },
+    {
+      "id": "F004-PRECOMMIT-SAME",
+      "status": "PASS",
+      "detail": "definite mutation infrastructure failure reuses same operation"
+    },
+    {
+      "id": "F004-DOC",
+      "status": "PASS",
+      "detail": "retry taxonomy documentation is effect-aware"
+    },
+    {
+      "id": "F005-REQUIREDNESS-PARITY",
+      "status": "PASS",
+      "detail": "compared=24; failures=[]"
+    },
+    {
+      "id": "F005-SCHEMA-META",
+      "status": "PASS",
+      "detail": "24 Draft 2020-12 schemas; failures=[]"
+    },
+    {
+      "id": "F005-REQUIRED-StateReceipt-reason_codes",
+      "status": "PASS",
+      "detail": "StateReceipt.reason_codes required"
+    },
+    {
+      "id": "F005-REQUIRED-StateClaimReceipt-reason_codes",
+      "status": "PASS",
+      "detail": "StateClaimReceipt.reason_codes required"
+    },
+    {
+      "id": "F005-REQUIRED-StateAckReceipt-reason_codes",
+      "status": "PASS",
+      "detail": "StateAckReceipt.reason_codes required"
+    },
+    {
+      "id": "F005-REQUIRED-StateProblem-reason_codes",
+      "status": "PASS",
+      "detail": "StateProblem.reason_codes required"
+    },
+    {
+      "id": "F005-REQUIRED-StateListPage-states",
+      "status": "PASS",
+      "detail": "StateListPage.states required"
+    },
+    {
+      "id": "F005-REQUIRED-StateEventPage-events",
+      "status": "PASS",
+      "detail": "StateEventPage.events required"
+    },
+    {
+      "id": "F005-REQUIRED-StateHistoryPage-events",
+      "status": "PASS",
+      "detail": "StateHistoryPage.events required"
+    },
+    {
+      "id": "F006-MUTATION-SET",
+      "status": "PASS",
+      "detail": "actions=['state.ack', 'state.claim', 'state.create', 'state.release', 'state.renew', 'state.restore', 'state.tombstone', 'state.transition']"
+    },
+    {
+      "id": "F006-ACTIONS-REGISTERED",
+      "status": "PASS",
+      "detail": "all mutations are registered Gate actions"
+    },
+    {
+      "id": "F006-STARTUP-FAIL-CLOSED",
+      "status": "PASS",
+      "detail": "runtime config validates mutation idempotency before app creation"
+    },
+    {
+      "id": "F007-MOVING-V1",
+      "status": "PASS",
+      "detail": "manifest keeps Gate moving-major v1 contract"
+    },
+    {
+      "id": "F007-CURRENT-GITHUB",
+      "status": "PASS",
+      "detail": "successor binds current .github authority revision"
+    },
+    {
+      "id": "F007-CURRENT-GATE-RELEASE",
+      "status": "PASS",
+      "detail": "successor records current Gate v1 release evidence"
+    },
+    {
+      "id": "F007-HISTORICAL-RULE",
+      "status": "PASS",
+      "detail": "successor declares historical receipt immutability"
+    },
+    {
+      "id": "NO-NEW-ACTIONS",
+      "status": "PASS",
+      "detail": "public Gate actions=13"
+    },
+    {
+      "id": "NO-HARD-ERASE-CLIENT",
+      "status": "PASS",
+      "detail": "private erase remains absent from public client"
+    },
+    {
+      "id": "NO-MONGO-CORE",
+      "status": "PASS",
+      "detail": "provider syntax remains outside core/binding"
+    },
+    {
+      "id": "CONTRACT-GAR-F-001",
+      "status": "PASS",
+      "detail": "GAR-F-001 represented in remediation contract"
+    },
+    {
+      "id": "CONTRACT-GAR-F-002",
+      "status": "PASS",
+      "detail": "GAR-F-002 represented in remediation contract"
+    },
+    {
+      "id": "CONTRACT-GAR-F-003",
+      "status": "PASS",
+      "detail": "GAR-F-003 represented in remediation contract"
+    },
+    {
+      "id": "CONTRACT-GAR-F-004",
+      "status": "PASS",
+      "detail": "GAR-F-004 represented in remediation contract"
+    },
+    {
+      "id": "CONTRACT-GAR-F-005",
+      "status": "PASS",
+      "detail": "GAR-F-005 represented in remediation contract"
+    },
+    {
+      "id": "CONTRACT-GAR-F-006",
+      "status": "PASS",
+      "detail": "GAR-F-006 represented in remediation contract"
+    },
+    {
+      "id": "CONTRACT-GAR-F-007",
+      "status": "PASS",
+      "detail": "GAR-F-007 represented in remediation contract"
+    }
+  ]
+}

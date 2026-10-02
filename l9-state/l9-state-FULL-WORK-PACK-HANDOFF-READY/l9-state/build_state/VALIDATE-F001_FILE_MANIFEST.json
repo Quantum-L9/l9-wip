@@ -1,0 +1,83 @@
+{
+  "schema": "l9.state.file-manifest/v1",
+  "unit": "VALIDATE-F001_HARD_ERASE_FENCE",
+  "baseline": "l9-state-FULL-WORK-PACK-VALIDATE-01",
+  "changed_file_count": 15,
+  "files": [
+    {
+      "path": "README.md",
+      "status": "modified",
+      "sha256": "5a57ea26b8ca1fbdf4360a60864e233eb572811d9cf0c1cf2c0c96e117d82437"
+    },
+    {
+      "path": "build_state/HANDOFF_AUTHORITY_BINDING.yaml",
+      "status": "added",
+      "sha256": "c55dd7f6772d94c4b7a31a3205174342c0dc5ccee851a39e18b00354db0c71e6"
+    },
+    {
+      "path": "build_state/RESUME.yaml",
+      "status": "modified",
+      "sha256": "fdac2ce8301f4bf0ae9abbeea82485c059892b9535dd4adf50d595d5b2bdad3e"
+    },
+    {
+      "path": "build_state/VALIDATE-F001_EXECUTION_RECEIPT.yaml",
+      "status": "added",
+      "sha256": "f1e00291cd1bd770a933c4af09e829cef8ab56a185a610a3a90311ec901881e1"
+    },
+    {
+      "path": "build_state/history/RESUME.VALIDATE-01.yaml",
+      "status": "added",
+      "sha256": "1b3431bc895c3989931934a70933f2f6fe9210eedea53415dcc233c0378183ce"
+    },
+    {
+      "path": "docs/RETENTION_LIFECYCLE.md",
+      "status": "modified",
+      "sha256": "520a357f065372f5957a6260f1c6ada2dab2e91f7e4cf9f92f4f5c401ee96015"
+    },
+    {
+      "path": "scripts/validate_f001_static.py",
+      "status": "added",
+      "sha256": "99ea77122d15dfdd32c2f157829cd87c8fdb4b7123a9b76219de832fa81e7cc9"
+    },
+    {
+      "path": "scripts/validate_mongo_handoff_static.py",
+      "status": "added",
+      "sha256": "1ba264494118b8e8055c75fcad6796e4ac3ec727b00af646538729c9fd3691c3"
+    },
+    {
+      "path": "src/l9_state/adapters/memory.py",
+      "status": "modified",
+      "sha256": "d96b12e5bb8068fdf8f765bc3c03398b1085a9b10bb6a0e355beebe773dfedd9"
+    },
+    {
+      "path": "src/l9_state/adapters/mongodb.py",
+      "status": "modified",
+      "sha256": "52695e04079c5ab5aa96a66183cc70172645a091e5be7918be23ffc1cc9cfa51"
+    },
+    {
+      "path": "src/l9_state/adapters/mongodb_contract.py",
+      "status": "modified",
+      "sha256": "b0695cdd7e8b8b58f25fca71d270d04412e54383ad4c841edcc3cbd53f4b8fe7"
+    },
+    {
+      "path": "src/l9_state/ports.py",
+      "status": "modified",
+      "sha256": "d83c31eb8370c04075d9ccc1665e55e18f750cfb6db63e702edb6241b412226c"
+    },
+    {
+      "path": "src/l9_state/retention.py",
+      "status": "modified",
+      "sha256": "44fae632ff83733bdd5401f4004952ebee808575545db5d96ed93bea028bf98e"
+    },
+    {
+      "path": "tests/test_lifecycle.py",
+      "status": "modified",
+      "sha256": "ea5d4252888db76781f1eaee472a6ea377219d8413dea0988a7f0a155b65679d"
+    },
+    {
+      "path": "tests/test_mongodb_contract.py",
+      "status": "modified",
+      "sha256": "509b7ba3b3549e29ccc3ce91d908637c1e2e0771f05df2add5cee2722b0b82bc"
+    }
+  ]
+}

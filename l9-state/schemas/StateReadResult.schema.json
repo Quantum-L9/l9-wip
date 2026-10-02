@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:devpack:l9-state:StateReadResult:0.1",
+  "title": "StateReadResult",
+  "description": "PROPOSED_IMPLEMENTATION v0.1. Payload/semantic specimen; not a second transport envelope. ",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "state_ref": {
+      "$ref": "urn:l9:devpack:l9-state:StateRef:0.1"
+    },
+    "payload": {
+      "type": "object",
+      "maxProperties": 100
+    },
+    "schema_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "lifecycle": {
+      "enum": [
+        "active",
+        "tombstoned",
+        "erasure_pending",
+        "erased"
+      ]
+    },
+    "recorded_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "read_receipt_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    }
+  },
+  "required": [
+    "state_ref",
+    "payload",
+    "schema_digest",
+    "lifecycle",
+    "recorded_at",
+    "read_receipt_ref"
+  ]
+}

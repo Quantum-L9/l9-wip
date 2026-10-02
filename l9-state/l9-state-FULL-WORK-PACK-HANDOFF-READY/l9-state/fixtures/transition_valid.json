@@ -1,0 +1,15 @@
+{
+  "contract_version": "1.0",
+  "object_id": "object.1",
+  "scope_ref": "subject.1",
+  "expected_revision": 0,
+  "expected_state_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "expected_schema_ref": "urn:example:state:1",
+  "expected_schema_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "payload": {
+    "phase": "running",
+    "value": 2
+  },
+  "transition_label": "advance",
+  "operation_id": "op.transition.1"
+}

@@ -1,0 +1,182 @@
+schema: l9.state.review.invariant-matrix/v1
+review: REVIEW-01
+invariants:
+- id: STATE-ATOMIC-001
+  class: atomicity
+  status: ALIGNED
+  finding_refs: []
+  assertion: State mutation commits projection, immutable revision, event, and receipt
+    atomically.
+- id: STATE-DOMAIN-001
+  class: authority
+  status: ALIGNED
+  finding_refs: []
+  assertion: State core contains no domain-specific WorkItem/agent/business branches.
+- id: STATE-FENCE-001
+  class: concurrency
+  status: ALIGNED
+  finding_refs: []
+  assertion: Fence lineage is monotonic and stale claims never authorize mutation.
+- id: STATE-IDEMP-001
+  class: idempotency
+  status: ALIGNED
+  finding_refs: []
+  assertion: One scoped operation ID binds exactly one action and canonical request
+    digest.
+- id: STATE-REV-001
+  class: revision
+  status: ALIGNED
+  finding_refs: []
+  assertion: Revision starts at 0 and increments exactly once per state mutation;
+    object identity is never reused.
+- id: STATE-SCHEMA-001
+  class: schema
+  status: ALIGNED
+  finding_refs: []
+  assertion: v1 schema binding is immutable per object and schema meaning remains
+    external.
+- id: STATE-PROVIDER-001
+  class: provider
+  status: ALIGNED
+  finding_refs: []
+  assertion: Public/domain contracts contain no storage-provider syntax or identifiers.
+- id: STATE-JOURNAL-001
+  class: events
+  status: ALIGNED
+  finding_refs: []
+  assertion: The canonical journal is the sole authoritative mutation-event/outbox
+    source.
+- id: STATE-CURSOR-001
+  class: recovery
+  status: ALIGNED
+  finding_refs:
+  - Cursor integrity is aligned; GAR-F-002 concerns no-position retention semantics
+    rather than cursor encoding.
+  assertion: Public cursors are State-issued and provider-independent.
+- id: STATE-CLAIM-001
+  class: authority
+  status: ALIGNED
+  finding_refs: []
+  assertion: Claims coordinate writers but do not grant business authority.
+- id: STATE-TENANT-001
+  class: security
+  status: ALIGNED
+  finding_refs: []
+  assertion: Trusted tenant identity is transport-derived and present in every persistence
+    key.
+- id: STATE-READ-001
+  class: persistence
+  status: ALIGNED
+  finding_refs: []
+  assertion: Read observations do not create durable mutation receipts.
+- id: STATE-RETENTION-001
+  class: retention
+  status: ALIGNED
+  finding_refs: []
+  assertion: TTL cleanup is never semantic authority for leases, operations, tombstones,
+    or erasure.
+- id: STATE-RECOVERY-001
+  class: recovery
+  status: ALIGNED
+  finding_refs: []
+  assertion: Ambiguous mutation completion is reconciled by operation receipt before
+    retry.
+- id: STATE-EVENT-001
+  class: ordering
+  status: ALIGNED
+  finding_refs: []
+  assertion: Journal order is total within scope only.
+- id: STATE-GATE-001
+  class: transport
+  status: ALIGNED
+  finding_refs: []
+  assertion: All inter-node traffic is Gate-mediated.
+- id: STATE-BIRTH-001
+  class: ownership
+  status: ALIGNED
+  finding_refs: []
+  assertion: l9-state never owns repository/node birth machinery.
+- id: STATE-EVENT-OPT-001
+  class: leverage
+  status: ALIGNED
+  finding_refs: []
+  assertion: Push/change-stream execution is deferred until it proves leverage; correctness
+    uses durable journal polling.
+- id: STATE-BUDGET-001
+  class: deadline
+  status: ALIGNED
+  finding_refs: []
+  assertion: Gate timeout is the sole request-budget authority; State may shrink but
+    never extend it.
+- id: STATE-BUDGET-002
+  class: deadline
+  status: ALIGNED
+  finding_refs: []
+  assertion: Provider retries, transaction retries, commit attempts, and reconciliation
+    never outlive ExecutionBudget.
+- id: STATE-OUTCOME-001
+  class: idempotency
+  status: ALIGNED
+  finding_refs: []
+  assertion: An admitted OperationKey has at most one durable terminal receipt.
+- id: STATE-OUTCOME-002
+  class: outcome
+  status: ALIGNED
+  finding_refs: []
+  assertion: Committed, conflict, and refused are terminal receipt states; expected
+    mutation outcomes are data.
+- id: STATE-OUTCOME-003
+  class: idempotency
+  status: ALIGNED
+  finding_refs: []
+  assertion: A terminal OperationKey is never re-evaluated; changed-world retry requires
+    a new operation_id.
+- id: STATE-AMBIGUITY-001
+  class: recovery
+  status: ALIGNED
+  finding_refs: []
+  assertion: Once commit may have occurred, semantic execution stops and only authoritative
+    reconciliation is allowed.
+- id: STATE-PROBLEM-001
+  class: outcome
+  status: ALIGNED
+  finding_refs: []
+  assertion: StateProblem is never persisted as an authoritative operation receipt.
+- id: STATE-RETRY-001
+  class: recovery
+  status: FINDING
+  finding_refs:
+  - GAR-F-004
+  assertion: retry_class describes retry safety, not workflow recovery.
+- id: STATE-RETRY-002
+  class: recovery
+  status: ALIGNED
+  finding_refs: []
+  assertion: Recovery after a terminal receipt is reason-code guidance and uses a
+    new operation identity.
+- id: STATE-LIFECYCLE-001
+  class: lifecycle
+  status: ALIGNED
+  finding_refs: []
+  assertion: v1 lifecycle is active -> tombstoned -> active by retained restore; erased
+    is terminal.
+- id: STATE-RESTORE-001
+  class: lifecycle
+  status: ALIGNED
+  finding_refs: []
+  assertion: Restore requires a retained prior revision of the same tombstoned object
+    and always creates a new active revision.
+- id: STATE-ERASE-001
+  class: retention
+  status: ALIGNED
+  finding_refs: []
+  assertion: Hard erase scrubs retained payload bytes while preserving object identity,
+    revision continuity, fence lineage, journal metadata, and operation replay safety.
+- id: STATE-RETENTION-002
+  class: authority
+  status: ALIGNED_WITH_UNKNOWN
+  finding_refs:
+  - External retention-policy decision interface remains unresolved and RetentionExecutor
+    disabled.
+  assertion: State executes hard-erasure mechanics only from externally authorized
+    retention decisions and never invents retention policy.

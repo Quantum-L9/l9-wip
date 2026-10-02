@@ -1,0 +1,39 @@
+schema: l9.state.review.validation-debt/v1
+review: REVIEW-01
+release_readiness: NOT_CLAIMED
+items:
+- id: VD-001
+  status: external
+  item: Full dependency-backed pytest under clean Python >=3.12 environment.
+- id: VD-002
+  status: external
+  item: ruff and strict mypy on admitted toolchain versions.
+- id: VD-003
+  status: external
+  item: Generated dependency lock / installed-package parity, including current Gate
+    v1 resolved object.
+- id: VD-004
+  status: external
+  item: Real Gate_SDK v1.2.x TransportPacket round trips, StateProblem normalization,
+    deadline and idempotency propagation.
+- id: VD-005
+  status: external
+  item: Live Mongo replica-set transactions, simultaneous writers/claims, primary
+    failover, transient transaction retry and ambiguous commit injection.
+- id: VD-006
+  status: external
+  item: Restart/replay tests for operation receipts, consumer checkpoints, cursor
+    secret persistence/rotation, hard-erase receipts and fence lineage.
+- id: VD-007
+  status: external
+  item: Retention-gap tests against actual retained Mongo data and live lifecycle
+    restore/erase persistence.
+- id: VD-008
+  status: authority_dependency
+  item: Bind externally owned retention-policy decision interface before RetentionExecutor/autonomous
+    hard-erasure activation.
+- id: VD-009
+  status: review_process
+  item: Formal evidence.assessment/v1 receipt unavailable because evidence-review-engine
+    is not installed in this runtime; REVIEW-01 uses direct revision-bound artifact
+    evidence instead.

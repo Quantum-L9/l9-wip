@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l9:state:StateListPage:1.0",
+  "title": "StateListPage",
+  "description": "Current StateRef page carrying the cold-resume event cursor captured at enumeration start.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": "1.0"
+    },
+    "scope_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "states": {
+      "type": "array",
+      "items": {
+        "$ref": "urn:l9:state:StateRef:1.0"
+      },
+      "maxItems": 200
+    },
+    "next_cursor": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "coverage": {
+      "enum": [
+        "complete",
+        "bounded"
+      ]
+    },
+    "resume_event_cursor": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "observed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "consumer_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    }
+  },
+  "required": [
+    "contract_version",
+    "scope_ref",
+    "consumer_ref",
+    "states",
+    "coverage",
+    "resume_event_cursor",
+    "observed_at"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "coverage": {
+            "const": "bounded"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "next_cursor"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "coverage": {
+            "const": "complete"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "next_cursor": false
+        }
+      }
+    }
+  ]
+}

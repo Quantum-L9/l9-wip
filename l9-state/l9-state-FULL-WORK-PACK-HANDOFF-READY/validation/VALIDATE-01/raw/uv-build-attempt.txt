@@ -1,0 +1,21 @@
+Building source distribution...
+Traceback (most recent call last):
+  File "<string>", line 8, in <module>
+    import setuptools.build_meta as backend
+ModuleNotFoundError: No module named 'setuptools'
+  × Failed to build
+  │ `/mnt/data/validate01/l9-state-FULL-WORK-PACK-post-REMED-01/l9-state`
+  ├─▶ The build backend returned an error
+  ╰─▶ Call to `setuptools.build_meta.build_sdist` failed (exit status: 1)
+
+      hint: This error likely indicates that `l9-state@0.1.0` depends
+      on `setuptools`, but doesn't declare it as a build dependency. If
+      `l9-state` is a first-party package, consider adding `setuptools`
+      to its `build-system.requires`. Otherwise, either add it to your
+      `pyproject.toml` under:
+
+      [tool.uv.extra-build-dependencies]
+      l9-state = ["setuptools"]
+
+      or `uv pip install setuptools` into the environment and re-run with
+      `--no-build-isolation`.

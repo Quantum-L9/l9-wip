@@ -1,0 +1,42 @@
+schema: l9.state.execution-receipt/v1
+contract_id: L9-STATE-STATE-01-v2.0.0
+mode: BUILD
+status: IMPLEMENTATION_COMPLETE_EXTERNAL_VALIDATION_DEFERRED
+authority: l9-state-final-dev-pack-v2.0.0
+publish: forbidden
+target:
+  kind: authorized_local_staging
+  intended_repository: Quantum-L9/l9-state
+  node_birth_admission: unresolved_external_prerequisite
+implemented:
+  - public_contract_schemas_copied_from_dev_pack
+  - pydantic_models_first_slice
+  - RFC8785_JCS_SHA256_digest_layer
+  - StateStorePort
+  - ContractCatalogPort
+  - StateService_create_get_transition_operation_inspect
+  - in_process_conformance_store
+  - configured_in_process_contract_catalog
+  - Gate_SDK_handler_binding_four_actions
+  - StateClient_GateClient_execute_only
+  - architecture_guards
+runtime_dependencies:
+  - constellation-node-sdk @ git+https://github.com/Quantum-L9/Gate_SDK.git@v1
+  - pydantic>=2.9.0
+  - rfc8785==0.1.4
+validation:
+  pytest: "PASS 10 passed"
+  public_json_schema_meta_validation: PASS
+  compileall: PASS
+  architecture_guards: PASS
+  ruff: EXTERNAL_VALIDATION_REQUIRED
+  mypy: EXTERNAL_VALIDATION_REQUIRED
+  Gate_SDK_real_round_trip: EXTERNAL_VALIDATION_REQUIRED
+  installed_package_boundary: EXTERNAL_VALIDATION_REQUIRED
+environment_gate_closure: build_state/ENVIRONMENT_GATE_CLOSURE.yaml
+notes:
+  - The four unavailable environment gates are explicitly deferred, not passed.
+  - No further attempts to emulate the admitted CI/toolchain are authorized in this runtime.
+  - rfc8785 remains a canonical runtime dependency in pyproject.toml and is not vendored.
+  - No MongoDB/PyMongo/BSON implementation exists in STATE-01.
+  - This receipt does not claim born-node status, release readiness, merge readiness, or publication.

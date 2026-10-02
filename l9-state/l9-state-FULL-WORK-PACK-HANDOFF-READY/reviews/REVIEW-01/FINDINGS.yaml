@@ -1,0 +1,166 @@
+schema: l9.state.review.findings/v1
+review: REVIEW-01
+status: REOPEN_REQUIRED
+findings:
+- id: GAR-F-001
+  title: Authorization and receipt-evidence boundary is not implemented
+  severity: high
+  confidence: confirmed
+  classification: boundary
+  root_cause: The architecture declares tenant isolation plus optional ScopeAuthorizationPort
+    and mandatory current reauthorization, but StateService has no authorization port/decision
+    seam and Gate binding substitutes packet identity for authorization evidence.
+  evidence:
+  - Dev Pack API_CONTRACT.md:21-30 requires current reauthorization before revealing
+    stored receipts.
+  - Dev Pack SECURITY.md:18-30 requires current authorization checks and treats delegation/current
+    policy as authorization context.
+  - Dev Pack PORTS_AND_ADAPTERS.yaml:41-55 declares ScopeAuthorizationPort.
+  - src/l9_state/service.py:60-66 has only store/catalog/cursor dependencies; no authorization
+    port.
+  - src/l9_state/service.py:164-177 returns an exact stored operation based on tenant/scope/op
+    identity without current authorization.
+  - src/l9_state/service.py:976-1000 exposes operation inspection without a scope
+    authorization decision.
+  - src/l9_state/bindings/gate.py:29-39 sets authorization_ref to gate:<packet_id>.
+  - .github current authority states identity assertion does not grant authorization.
+  architectural_effect: A current actor in the same tenant can reach State resources
+    and exact stored receipts without a separately evidenced resource authorization
+    decision. Receipts claim an authorization_ref that is actually a transport packet
+    identifier. This weakens the security boundary and receipt provenance.
+  required_resolution: Implement the locked authorization seam. Make tenant-wide base
+    authorization explicit and evidenced, add optional ScopeAuthorizationPort for
+    stricter/delegated scope policy, reauthorize before all protected reads and exact
+    stored-receipt disclosure, and forbid packet_id alone from masquerading as authorization
+    evidence.
+- id: GAR-F-002
+  title: Brand-new journal consumers are incorrectly forced to cold resync after retention
+    pruning
+  severity: high
+  confidence: confirmed
+  classification: invariant
+  root_cause: state.events uses journal origin (0) as the no-ack position but applies
+    the stale-position retention-gap rule without remembering whether a prior consumer
+    position actually existed.
+  evidence:
+  - Dev Pack EVENT_JOURNAL_AND_CURSORS.md:35-40 says no cursor/no ack starts at earliest
+    retained event; only a requested position older than retention requires resync.
+  - src/l9_state/service.py:750-758 sets after_seq=0 when no durable checkpoint exists.
+  - src/l9_state/service.py:782-792 returns resync_required whenever after_seq < retained_from_seq-1.
+  - tests/test_journal.py covers stale issued cursor retention but has no new-consumer-after-pruning
+    case.
+  architectural_effect: A newly admitted consumer joining after normal event retention
+    cannot start from the earliest retained journal as contracted. It is pushed into
+    unnecessary full enumeration, creating avoidable recovery load and violating the
+    public recovery protocol.
+  required_resolution: Track whether the request has a prior position (cursor or durable
+    ack). Apply retention-gap resync only to prior positions. For a brand-new consumer,
+    return the earliest retained page and an ackable cursor. Add an explicit regression
+    test.
+- id: GAR-F-003
+  title: Expected State failures can escape the canonical StateProblem boundary
+  severity: high
+  confidence: confirmed
+  classification: boundary
+  root_cause: Expected service and ingress validation failures are not normalized
+    at one State-owned boundary before Gate runtime handling.
+  evidence:
+  - src/l9_state/service.py:932-933 raises StateNotFound for missing history instead
+    of returning StateProblem.
+  - src/l9_state/bindings/gate.py handlers directly call model_validate and _require_operation_identity;
+    ValidationError/ValueError are not translated to StateProblem.
+  - StateClient read methods interpret payload status=failed as StateProblem.
+  - Gate runtime generic failure packets use Gate error shape rather than StateProblem
+    fields.
+  architectural_effect: Malformed requests and a valid missing-history case can cross
+    the node boundary as Gate-generic failures or client exceptions instead of stable
+    State error contracts. This breaks typed clients, reason-code stability, and failure-domain
+    ownership.
+  required_resolution: Add one canonical State ingress/problem translation boundary.
+    Map expected validation/idempotency/not-found conditions to StateProblem with
+    stable codes, keep unexpected defects as Gate/runtime failures, and add end-to-end
+    handler/client contract tests.
+- id: GAR-F-004
+  title: Infrastructure retry classification is action-agnostic
+  severity: medium
+  confidence: confirmed
+  classification: invariant
+  root_cause: StateService._problem encodes mutation retry semantics globally and
+    is reused by read paths.
+  evidence:
+  - src/l9_state/service.py:72-89 maps non-ambiguous infrastructure failure to retry_class=same_operation.
+  - The mapper is used by state.get/list/events/history/operation.inspect.
+  - Reads have no durable operation receipt identity under API_CONTRACT.md:32-34.
+  - ADR-013 separates retry safety from workflow recovery; user-approved STATE-02A
+    architecture specified temporary read failures as later.
+  architectural_effect: Read clients can be told to perform a same-operation retry
+    even though no mutation OperationKey exists. The public retry vocabulary remains
+    valid, but the emitted semantics are contextually wrong.
+  required_resolution: 'Make infrastructure problem mapping action/effect aware: read
+    unavailability/deadline -> later; definitely-not-committed mutation -> same_operation;
+    ambiguous mutation -> inspect_then_same_operation. Update reason-code documentation
+    and regression tests.'
+- id: GAR-F-005
+  title: Runtime model requiredness is weaker than the public JSON contracts
+  severity: medium
+  confidence: confirmed
+  classification: invariant
+  root_cause: Seven schema-required collection/reason fields have Pydantic defaults,
+    so runtime parsing accepts payloads the public schemas reject.
+  evidence:
+  - StateReceipt.reason_codes, StateClaimReceipt.reason_codes, StateAckReceipt.reason_codes,
+    StateProblem.reason_codes default to empty tuple.
+  - StateListPage.states, StateEventPage.events, StateHistoryPage.events default to
+    empty tuple.
+  - All seven fields are required in their corresponding public schemas.
+  - Current static validator compares STATE-04 request field names but does not enforce
+    required-field parity for all public models.
+  architectural_effect: Internal/provider/client parsing can silently admit contract
+    shapes that are invalid on the public wire. That weakens the claim that model
+    and schema validation are deterministic mirrors.
+  required_resolution: Remove runtime defaults from schema-required fields while still
+    allowing explicit empty tuples, and add a generated parity test over all 24 schemas
+    covering required fields at minimum.
+- id: GAR-F-006
+  title: Gate runtime idempotency precondition is not repository-bound
+  severity: medium
+  confidence: confirmed
+  classification: boundary
+  root_cause: The node relies on deployment NodeRuntimeConfig to populate require_idempotency_for_actions;
+    create_app does not validate the mutating action set against the State contract.
+  evidence:
+  - Dev Pack GATE_BINDING.md:11-17 requires configuring Gate runtime idempotency for
+    every mutation.
+  - src/l9_state/bindings/gate.py create_app calls create_node_app without config
+    validation.
+  - Handler-level _require_operation_identity does enforce equality and therefore
+    preserves semantic safety as a second line of defense.
+  - Current Gate_SDK v1 runtime supports require_idempotency_for_actions in NodeRuntimeConfig.
+  architectural_effect: A misconfigured deployment can miss Gate-runtime preflight
+    enforcement and discover the error only inside State handlers. Core idempotency
+    remains protected, but the locked integration contract is not fail-closed at runtime
+    configuration.
+  required_resolution: Validate at startup that the Gate runtime requires idempotency
+    for the complete State mutation action set, while retaining the handler equality
+    check as defense in depth.
+- id: GAR-F-007
+  title: Checkpoint provenance coordinates are stale but semantically compatible
+  severity: low
+  confidence: confirmed
+  classification: consequence
+  root_cause: Implementation continued while upstream compatible channels advanced,
+    but historical checkpoint metadata was intentionally not rewritten.
+  evidence:
+  - invariants.yaml / README / build metadata bind .github@08912f391c0a6672957f40cbd9b0db285f82ed86.
+  - Current .github is 7d31438a32bf1ce7783b1b896d359e6eb34063d0.
+  - Nine State-relevant canonical files have identical Git blob identities at both
+    revisions.
+  - build_state/BASELINE.yaml records Gate_SDK package_version 1.1.0 while current
+    v1 compatibility channel ledger reports package_version 1.2.0; pyproject correctly
+    consumes moving v1 channel.
+  architectural_effect: No observed State semantic drift, but successor receipts that
+    continue to cite stale coordinates would weaken currentness/provenance and confuse
+    later ProductManifest/conformance work.
+  required_resolution: Preserve historical checkpoint receipts unchanged, but bind
+    the remediation successor to current .github and current resolved Gate v1 execution
+    evidence/lock coordinates.

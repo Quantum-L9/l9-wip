@@ -1,0 +1,88 @@
+schema: l9.state.execution-receipt/v1
+unit: STATE-03_JOURNAL_COLD_RESUME
+status: IMPLEMENTATION_COMPLETE_STATIC_VALIDATION_PASS_EXTERNAL_RUNTIME_VALIDATION_DEFERRED
+date: 2026-10-01
+authority:
+  base: l9-state-final-dev-pack-v2.0.0
+  operation_execution_delta: L9-STATE-STATE-02A-2026-09-27
+  upstream_semantics:
+    repository: Quantum-L9/.github
+    frozen_revision: 08912f391c0a6672957f40cbd9b0db285f82ed86
+    binding_receipt: build_state/SEMANTIC_AUTHORITY_BINDING_STATE03.yaml
+implemented:
+  actions:
+    - state.list
+    - state.events
+    - state.ack
+    - state.history
+  mechanics:
+    - first-list-page scope journal high-water capture
+    - seek-based current-StateRef pagination
+    - State-issued HMAC-authenticated provider-independent cursors
+    - compact fixed-width cursor bindings preserving the public 512-character bound
+    - tenant/scope/consumer/purpose/filter cursor isolation
+    - consumer checkpoint resume when state.events omits an explicit cursor
+    - successful event pages always issue an ackable cursor including empty/final pages
+    - retention-gap resync_required semantics
+    - monotonic consumer checkpoints
+    - atomic state.ack checkpoint plus immutable operation receipt
+    - exact state.ack replay before old-cursor revalidation
+    - bounded object event history with explicit history_unavailable semantics
+    - Mongo event reads capped to captured journal high-water
+    - Mongo history reads capped to observed latest revision
+    - explicitly authorized delegated consumer support in the provider-neutral service boundary
+    - pull-journal correctness without Change Streams
+cursor_runtime:
+  provider_tokens_public: false
+  raw_tenant_scope_consumer_identity_in_token: false
+  hmac_sha256: true
+  minimum_key_bytes: 32
+  public_max_chars: 512
+  deterministic_worst_case_checked_chars: 500
+  production_key_requirement: stable_across_active_runtime_instances_and_supported_cursor_lifetime
+consumer_authority:
+  default_gate_binding: principal_only
+  delegated_consumers: require_explicit_authorized_consumer_ref_from_a_trusted_authorization_binding
+  identity_on_behalf_of_alone_grants_authorization: false
+validation:
+  static_wiring:
+    status: PASS
+    pass: 113
+    fail: 0
+    blocked: 0
+    evidence: build_state/STATE-03_STATIC_WIRING_RESULTS.json
+  public_schema_meta_validation:
+    status: PASS
+    count: 24
+  source_test_compile:
+    status: PASS
+  json_parse:
+    status: PASS
+    observed_count: 37
+  yaml_parse:
+    status: PASS
+    observed_count: 16
+  toml_parse:
+    status: PASS
+  detailed_evidence: build_state/STATE-03_STATIC_VALIDATION.txt
+external_validation_debt:
+  - full dependency-backed pytest
+  - ruff
+  - mypy
+  - installed-package parity
+  - real Gate round-trip for all STATE-03 actions
+  - live Mongo replica-set journal and ack transactions
+  - live failover and commit-ambiguity fault injection for state.ack
+  - live retention-gap tests
+  - production cursor-key restart and rotation tests
+assertions_not_made:
+  - product_admission
+  - runtime_admission
+  - merge_readiness
+  - release_readiness
+  - deployment_readiness
+  - publication
+  - external_validation_pass
+review:
+  combined_state_01_through_state_03: PENDING_BY_USER_DIRECTION
+publish: false

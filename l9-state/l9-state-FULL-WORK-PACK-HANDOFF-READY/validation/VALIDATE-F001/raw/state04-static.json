@@ -1,0 +1,775 @@
+{
+  "schema": "l9.state.static-wiring-results/v1",
+  "unit": "STATE-04_RETENTION_LIFECYCLE_MECHANICS",
+  "authority_revision": "08912f391c0a6672957f40cbd9b0db285f82ed86",
+  "pass": 153,
+  "fail": 0,
+  "blocked": 0,
+  "checks": [
+    {
+      "id": "MODEL-SCHEMA-StateTombstoneRequest",
+      "status": "PASS",
+      "detail": "runtime fields match StateTombstoneRequest.schema.json: ['claim_id', 'contract_version', 'expected_revision', 'expected_state_digest', 'fencing_token', 'object_id', 'operation_id', 'reason_code', 'scope_ref']"
+    },
+    {
+      "id": "MODEL-SCHEMA-StateRestoreRequest",
+      "status": "PASS",
+      "detail": "runtime fields match StateRestoreRequest.schema.json: ['claim_id', 'contract_version', 'expected_revision', 'expected_state_digest', 'fencing_token', 'object_id', 'operation_id', 'scope_ref', 'source_revision', 'transition_label']"
+    },
+    {
+      "id": "SCHEMA-JSON-PARSE",
+      "status": "PASS",
+      "detail": "parsed 24 public schemas"
+    },
+    {
+      "id": "SCHEMA-METAVALIDATION",
+      "status": "PASS",
+      "detail": "Draft 2020-12 meta-validation passed for 24 schemas"
+    },
+    {
+      "id": "PORT-MEMORY-get_revision",
+      "status": "PASS",
+      "detail": "InProcessStateStore implements port method"
+    },
+    {
+      "id": "PORT-MONGO-get_revision",
+      "status": "PASS",
+      "detail": "MongoStateStore implements port method"
+    },
+    {
+      "id": "PORT-MEMORY-SIG-get_revision",
+      "status": "PASS",
+      "detail": "signature args ['self', 'tenant_org_id', 'scope_ref', 'object_id', 'revision']"
+    },
+    {
+      "id": "PORT-MONGO-SIG-get_revision",
+      "status": "PASS",
+      "detail": "signature args ['self', 'tenant_org_id', 'scope_ref', 'object_id', 'revision']"
+    },
+    {
+      "id": "PORT-MEMORY-get_operation",
+      "status": "PASS",
+      "detail": "InProcessStateStore implements port method"
+    },
+    {
+      "id": "PORT-MONGO-get_operation",
+      "status": "PASS",
+      "detail": "MongoStateStore implements port method"
+    },
+    {
+      "id": "PORT-MEMORY-SIG-get_operation",
+      "status": "PASS",
+      "detail": "signature args ['self', 'tenant_org_id', 'scope_ref', 'operation_id']"
+    },
+    {
+      "id": "PORT-MONGO-SIG-get_operation",
+      "status": "PASS",
+      "detail": "signature args ['self', 'tenant_org_id', 'scope_ref', 'operation_id']"
+    },
+    {
+      "id": "PORT-MEMORY-record_operation",
+      "status": "PASS",
+      "detail": "InProcessStateStore implements port method"
+    },
+    {
+      "id": "PORT-MONGO-record_operation",
+      "status": "PASS",
+      "detail": "MongoStateStore implements port method"
+    },
+    {
+      "id": "PORT-MEMORY-SIG-record_operation",
+      "status": "PASS",
+      "detail": "signature args ['self', 'tenant_org_id', 'scope_ref', 'operation', 'budget']"
+    },
+    {
+      "id": "PORT-MONGO-SIG-record_operation",
+      "status": "PASS",
+      "detail": "signature args ['self', 'tenant_org_id', 'scope_ref', 'operation', 'budget']"
+    },
+    {
+      "id": "PORT-MEMORY-create",
+      "status": "PASS",
+      "detail": "InProcessStateStore implements port method"
+    },
+    {
+      "id": "PORT-MONGO-create",
+      "status": "PASS",
+      "detail": "MongoStateStore implements port method"
+    },
+    {
+      "id": "PORT-MEMORY-SIG-create",
+      "status": "PASS",
+      "detail": "signature args ['self', 'revision', 'operation', 'event', 'budget']"
+    },
+    {
+      "id": "PORT-MONGO-SIG-create",
+      "status": "PASS",
+      "detail": "signature args ['self', 'revision', 'operation', 'event', 'budget']"
+    },
+    {
+      "id": "PORT-MEMORY-transition",
+      "status": "PASS",
+      "detail": "InProcessStateStore implements port method"
+    },
+    {
+      "id": "PORT-MONGO-transition",
+      "status": "PASS",
+      "detail": "MongoStateStore implements port method"
+    },
+    {
+      "id": "PORT-MEMORY-SIG-transition",
+      "status": "PASS",
+      "detail": "signature args ['self', 'revision', 'expected_revision', 'expected_state_digest', 'expected_schema_ref', 'expected_schema_digest', 'claim_id', 'fencing_token', 'holder_ref', 'operation', 'event', 'budget']"
+    },
+    {
+      "id": "PORT-MONGO-SIG-transition",
+      "status": "PASS",
+      "detail": "signature args ['self', 'revision', 'expected_revision', 'expected_state_digest', 'expected_schema_ref', 'expected_schema_digest', 'claim_id', 'fencing_token', 'holder_ref', 'operation', 'event', 'budget']"
+    },
+    {
+      "id": "PORT-MEMORY-tombstone",
+      "status": "PASS",
+      "detail": "InProcessStateStore implements port method"
+    },
+    {
+      "id": "PORT-MONGO-tombstone",
+      "status": "PASS",
+      "detail": "MongoStateStore implements port method"
+    },
+    {
+      "id": "PORT-MEMORY-SIG-tombstone",
+      "status": "PASS",
+      "detail": "signature args ['self', 'tenant_org_id', 'request', 'request_digest', 'receipt_id', 'event_id', 'principal_ref', 'authorization_ref', 'causation_ref', 'budget']"
+    },
+    {
+      "id": "PORT-MONGO-SIG-tombstone",
+      "status": "PASS",
+      "detail": "signature args ['self', 'tenant_org_id', 'request', 'request_digest', 'receipt_id', 'event_id', 'principal_ref', 'authorization_ref', 'causation_ref', 'budget']"
+    },
+    {
+      "id": "PORT-MEMORY-restore",
+      "status": "PASS",
+      "detail": "InProcessStateStore implements port method"
+    },
+    {
+      "id": "PORT-MONGO-restore",
+      "status": "PASS",
+      "detail": "MongoStateStore implements port method"
+    },
+    {
+      "id": "PORT-MEMORY-SIG-restore",
+      "status": "PASS",
+      "detail": "signature args ['self', 'tenant_org_id', 'request', 'request_digest', 'receipt_id', 'event_id', 'principal_ref', 'authorization_ref', 'causation_ref', 'budget']"
+    },
+    {
+      "id": "PORT-MONGO-SIG-restore",
+      "status": "PASS",
+      "detail": "signature args ['self', 'tenant_org_id', 'request', 'request_digest', 'receipt_id', 'event_id', 'principal_ref', 'authorization_ref', 'causation_ref', 'budget']"
+    },
+    {
+      "id": "PORT-MEMORY-hard_erase",
+      "status": "PASS",
+      "detail": "InProcessStateStore implements port method"
+    },
+    {
+      "id": "PORT-MONGO-hard_erase",
+      "status": "PASS",
+      "detail": "MongoStateStore implements port method"
+    },
+    {
+      "id": "PORT-MEMORY-SIG-hard_erase",
+      "status": "PASS",
+      "detail": "signature args ['self', 'revision', 'expected_revision', 'expected_state_digest', 'expected_retention_policy_ref', 'expected_retention_policy_digest', 'claim_id', 'fencing_token', 'operation', 'event', 'budget']"
+    },
+    {
+      "id": "PORT-MONGO-SIG-hard_erase",
+      "status": "PASS",
+      "detail": "signature args ['self', 'revision', 'expected_revision', 'expected_state_digest', 'expected_retention_policy_ref', 'expected_retention_policy_digest', 'claim_id', 'fencing_token', 'operation', 'event', 'budget']"
+    },
+    {
+      "id": "PORT-MEMORY-claim",
+      "status": "PASS",
+      "detail": "InProcessStateStore implements port method"
+    },
+    {
+      "id": "PORT-MONGO-claim",
+      "status": "PASS",
+      "detail": "MongoStateStore implements port method"
+    },
+    {
+      "id": "PORT-MEMORY-SIG-claim",
+      "status": "PASS",
+      "detail": "signature args ['self', 'tenant_org_id', 'request', 'request_digest', 'receipt_id', 'claim_id', 'principal_ref', 'authorization_ref', 'budget']"
+    },
+    {
+      "id": "PORT-MONGO-SIG-claim",
+      "status": "PASS",
+      "detail": "signature args ['self', 'tenant_org_id', 'request', 'request_digest', 'receipt_id', 'claim_id', 'principal_ref', 'authorization_ref', 'budget']"
+    },
+    {
+      "id": "PORT-MEMORY-renew",
+      "status": "PASS",
+      "detail": "InProcessStateStore implements port method"
+    },
+    {
+      "id": "PORT-MONGO-renew",
+      "status": "PASS",
+      "detail": "MongoStateStore implements port method"
+    },
+    {
+      "id": "PORT-MEMORY-SIG-renew",
+      "status": "PASS",
+      "detail": "signature args ['self', 'tenant_org_id', 'request', 'request_digest', 'receipt_id', 'principal_ref', 'authorization_ref', 'budget']"
+    },
+    {
+      "id": "PORT-MONGO-SIG-renew",
+      "status": "PASS",
+      "detail": "signature args ['self', 'tenant_org_id', 'request', 'request_digest', 'receipt_id', 'principal_ref', 'authorization_ref', 'budget']"
+    },
+    {
+      "id": "PORT-MEMORY-release",
+      "status": "PASS",
+      "detail": "InProcessStateStore implements port method"
+    },
+    {
+      "id": "PORT-MONGO-release",
+      "status": "PASS",
+      "detail": "MongoStateStore implements port method"
+    },
+    {
+      "id": "PORT-MEMORY-SIG-release",
+      "status": "PASS",
+      "detail": "signature args ['self', 'tenant_org_id', 'request', 'request_digest', 'receipt_id', 'principal_ref', 'authorization_ref', 'budget']"
+    },
+    {
+      "id": "PORT-MONGO-SIG-release",
+      "status": "PASS",
+      "detail": "signature args ['self', 'tenant_org_id', 'request', 'request_digest', 'receipt_id', 'principal_ref', 'authorization_ref', 'budget']"
+    },
+    {
+      "id": "PORT-MEMORY-current_journal_seq",
+      "status": "PASS",
+      "detail": "InProcessStateStore implements port method"
+    },
+    {
+      "id": "PORT-MONGO-current_journal_seq",
+      "status": "PASS",
+      "detail": "MongoStateStore implements port method"
+    },
+    {
+      "id": "PORT-MEMORY-SIG-current_journal_seq",
+      "status": "PASS",
+      "detail": "signature args ['self', 'tenant_org_id', 'scope_ref']"
+    },
+    {
+      "id": "PORT-MONGO-SIG-current_journal_seq",
+      "status": "PASS",
+      "detail": "signature args ['self', 'tenant_org_id', 'scope_ref']"
+    },
+    {
+      "id": "PORT-MEMORY-list_state_refs",
+      "status": "PASS",
+      "detail": "InProcessStateStore implements port method"
+    },
+    {
+      "id": "PORT-MONGO-list_state_refs",
+      "status": "PASS",
+      "detail": "MongoStateStore implements port method"
+    },
+    {
+      "id": "PORT-MEMORY-SIG-list_state_refs",
+      "status": "PASS",
+      "detail": "signature args ['self', 'tenant_org_id', 'scope_ref', 'schema_refs', 'lifecycle', 'after_object_id', 'limit']"
+    },
+    {
+      "id": "PORT-MONGO-SIG-list_state_refs",
+      "status": "PASS",
+      "detail": "signature args ['self', 'tenant_org_id', 'scope_ref', 'schema_refs', 'lifecycle', 'after_object_id', 'limit']"
+    },
+    {
+      "id": "PORT-MEMORY-read_events",
+      "status": "PASS",
+      "detail": "InProcessStateStore implements port method"
+    },
+    {
+      "id": "PORT-MONGO-read_events",
+      "status": "PASS",
+      "detail": "MongoStateStore implements port method"
+    },
+    {
+      "id": "PORT-MEMORY-SIG-read_events",
+      "status": "PASS",
+      "detail": "signature args ['self', 'tenant_org_id', 'scope_ref', 'after_seq', 'limit']"
+    },
+    {
+      "id": "PORT-MONGO-SIG-read_events",
+      "status": "PASS",
+      "detail": "signature args ['self', 'tenant_org_id', 'scope_ref', 'after_seq', 'limit']"
+    },
+    {
+      "id": "PORT-MEMORY-get_consumer_cursor",
+      "status": "PASS",
+      "detail": "InProcessStateStore implements port method"
+    },
+    {
+      "id": "PORT-MONGO-get_consumer_cursor",
+      "status": "PASS",
+      "detail": "MongoStateStore implements port method"
+    },
+    {
+      "id": "PORT-MEMORY-SIG-get_consumer_cursor",
+      "status": "PASS",
+      "detail": "signature args ['self', 'tenant_org_id', 'scope_ref', 'consumer_ref']"
+    },
+    {
+      "id": "PORT-MONGO-SIG-get_consumer_cursor",
+      "status": "PASS",
+      "detail": "signature args ['self', 'tenant_org_id', 'scope_ref', 'consumer_ref']"
+    },
+    {
+      "id": "PORT-MEMORY-acknowledge",
+      "status": "PASS",
+      "detail": "InProcessStateStore implements port method"
+    },
+    {
+      "id": "PORT-MONGO-acknowledge",
+      "status": "PASS",
+      "detail": "MongoStateStore implements port method"
+    },
+    {
+      "id": "PORT-MEMORY-SIG-acknowledge",
+      "status": "PASS",
+      "detail": "signature args ['self', 'tenant_org_id', 'scope_ref', 'consumer_ref', 'cursor_seq', 'committed_cursor', 'operation', 'budget']"
+    },
+    {
+      "id": "PORT-MONGO-SIG-acknowledge",
+      "status": "PASS",
+      "detail": "signature args ['self', 'tenant_org_id', 'scope_ref', 'consumer_ref', 'cursor_seq', 'committed_cursor', 'operation', 'budget']"
+    },
+    {
+      "id": "PORT-MEMORY-read_history",
+      "status": "PASS",
+      "detail": "InProcessStateStore implements port method"
+    },
+    {
+      "id": "PORT-MONGO-read_history",
+      "status": "PASS",
+      "detail": "MongoStateStore implements port method"
+    },
+    {
+      "id": "PORT-MEMORY-SIG-read_history",
+      "status": "PASS",
+      "detail": "signature args ['self', 'tenant_org_id', 'scope_ref', 'object_id', 'after_revision', 'limit']"
+    },
+    {
+      "id": "PORT-MONGO-SIG-read_history",
+      "status": "PASS",
+      "detail": "signature args ['self', 'tenant_org_id', 'scope_ref', 'object_id', 'after_revision', 'limit']"
+    },
+    {
+      "id": "PORT-STATE04-tombstone",
+      "status": "PASS",
+      "detail": "STATE-04 port operation exists"
+    },
+    {
+      "id": "PORT-STATE04-restore",
+      "status": "PASS",
+      "detail": "STATE-04 port operation exists"
+    },
+    {
+      "id": "PORT-STATE04-hard_erase",
+      "status": "PASS",
+      "detail": "STATE-04 port operation exists"
+    },
+    {
+      "id": "GATE-state.create",
+      "status": "PASS",
+      "detail": "registered Gate action"
+    },
+    {
+      "id": "CLIENT-state.create",
+      "status": "PASS",
+      "detail": "StateClient.create exists"
+    },
+    {
+      "id": "GATE-state.get",
+      "status": "PASS",
+      "detail": "registered Gate action"
+    },
+    {
+      "id": "CLIENT-state.get",
+      "status": "PASS",
+      "detail": "StateClient.get exists"
+    },
+    {
+      "id": "GATE-state.transition",
+      "status": "PASS",
+      "detail": "registered Gate action"
+    },
+    {
+      "id": "CLIENT-state.transition",
+      "status": "PASS",
+      "detail": "StateClient.transition exists"
+    },
+    {
+      "id": "GATE-state.tombstone",
+      "status": "PASS",
+      "detail": "registered Gate action"
+    },
+    {
+      "id": "CLIENT-state.tombstone",
+      "status": "PASS",
+      "detail": "StateClient.tombstone exists"
+    },
+    {
+      "id": "GATE-state.restore",
+      "status": "PASS",
+      "detail": "registered Gate action"
+    },
+    {
+      "id": "CLIENT-state.restore",
+      "status": "PASS",
+      "detail": "StateClient.restore exists"
+    },
+    {
+      "id": "GATE-state.claim",
+      "status": "PASS",
+      "detail": "registered Gate action"
+    },
+    {
+      "id": "CLIENT-state.claim",
+      "status": "PASS",
+      "detail": "StateClient.claim exists"
+    },
+    {
+      "id": "GATE-state.renew",
+      "status": "PASS",
+      "detail": "registered Gate action"
+    },
+    {
+      "id": "CLIENT-state.renew",
+      "status": "PASS",
+      "detail": "StateClient.renew exists"
+    },
+    {
+      "id": "GATE-state.release",
+      "status": "PASS",
+      "detail": "registered Gate action"
+    },
+    {
+      "id": "CLIENT-state.release",
+      "status": "PASS",
+      "detail": "StateClient.release exists"
+    },
+    {
+      "id": "GATE-state.list",
+      "status": "PASS",
+      "detail": "registered Gate action"
+    },
+    {
+      "id": "CLIENT-state.list",
+      "status": "PASS",
+      "detail": "StateClient.list_states exists"
+    },
+    {
+      "id": "GATE-state.events",
+      "status": "PASS",
+      "detail": "registered Gate action"
+    },
+    {
+      "id": "CLIENT-state.events",
+      "status": "PASS",
+      "detail": "StateClient.events exists"
+    },
+    {
+      "id": "GATE-state.ack",
+      "status": "PASS",
+      "detail": "registered Gate action"
+    },
+    {
+      "id": "CLIENT-state.ack",
+      "status": "PASS",
+      "detail": "StateClient.acknowledge exists"
+    },
+    {
+      "id": "GATE-state.history",
+      "status": "PASS",
+      "detail": "registered Gate action"
+    },
+    {
+      "id": "CLIENT-state.history",
+      "status": "PASS",
+      "detail": "StateClient.history exists"
+    },
+    {
+      "id": "GATE-state.operation.inspect",
+      "status": "PASS",
+      "detail": "registered Gate action"
+    },
+    {
+      "id": "CLIENT-state.operation.inspect",
+      "status": "PASS",
+      "detail": "StateClient.inspect_operation exists"
+    },
+    {
+      "id": "GATE-IDEMPOTENCY-state.tombstone",
+      "status": "PASS",
+      "detail": "mutation binds operation_id to Gate idempotency key through shared ingress parser"
+    },
+    {
+      "id": "GATE-IDEMPOTENCY-state.restore",
+      "status": "PASS",
+      "detail": "mutation binds operation_id to Gate idempotency key through shared ingress parser"
+    },
+    {
+      "id": "HARD-ERASE-NO-GATE",
+      "status": "PASS",
+      "detail": "hard erase has no Gate handler"
+    },
+    {
+      "id": "HARD-ERASE-NO-CLIENT",
+      "status": "PASS",
+      "detail": "hard erase has no public StateClient method"
+    },
+    {
+      "id": "PUBLIC-EXPORT-STATE04",
+      "status": "PASS",
+      "detail": "STATE-04 public request models are exported from package root"
+    },
+    {
+      "id": "TOMBSTONE-REVISION-INCREMENT",
+      "status": "PASS",
+      "detail": "tombstone emits revision+1"
+    },
+    {
+      "id": "TOMBSTONE-RETAINS-PAYLOAD",
+      "status": "PASS",
+      "detail": "tombstone retains payload bytes while lifecycle changes"
+    },
+    {
+      "id": "RESTORE-REVISION-INCREMENT",
+      "status": "PASS",
+      "detail": "restore emits new revision rather than rewind"
+    },
+    {
+      "id": "RESTORE-SOURCE-PAYLOAD",
+      "status": "PASS",
+      "detail": "restore copies explicitly retained source payload"
+    },
+    {
+      "id": "RESTORE-EVENT-LABEL",
+      "status": "PASS",
+      "detail": "restore event records transition label"
+    },
+    {
+      "id": "EVENT-RESTORE-LABEL-LAW",
+      "status": "PASS",
+      "detail": "runtime model enforces restored transition label"
+    },
+    {
+      "id": "MEMORY-TOMBSTONED-TRANSITION-REFUSED",
+      "status": "PASS",
+      "detail": "ordinary transition cannot mutate tombstoned state"
+    },
+    {
+      "id": "MEMORY-ERASED-TERMINAL",
+      "status": "PASS",
+      "detail": "erased lifecycle is refused"
+    },
+    {
+      "id": "MEMORY-REUSE-FORBIDDEN",
+      "status": "PASS",
+      "detail": "previous object identity cannot be recreated"
+    },
+    {
+      "id": "MEMORY-RESTORE-SOURCE-PRIOR",
+      "status": "PASS",
+      "detail": "restore requires retained prior revision"
+    },
+    {
+      "id": "MEMORY-RETENTION-BINDING",
+      "status": "PASS",
+      "detail": "hard erase validates immutable retention binding"
+    },
+    {
+      "id": "MONGO-TOMBSTONED-TRANSITION-REFUSED",
+      "status": "PASS",
+      "detail": "ordinary transition cannot mutate tombstoned state"
+    },
+    {
+      "id": "MONGO-ERASED-TERMINAL",
+      "status": "PASS",
+      "detail": "erased lifecycle is refused"
+    },
+    {
+      "id": "MONGO-REUSE-FORBIDDEN",
+      "status": "PASS",
+      "detail": "previous object identity cannot be recreated"
+    },
+    {
+      "id": "MONGO-RESTORE-SOURCE-PRIOR",
+      "status": "PASS",
+      "detail": "restore requires retained prior revision"
+    },
+    {
+      "id": "MONGO-RETENTION-BINDING",
+      "status": "PASS",
+      "detail": "hard erase validates immutable retention binding"
+    },
+    {
+      "id": "CURRENT-TOMBSTONE-READ-BLOCKED",
+      "status": "PASS",
+      "detail": "ordinary current read hides tombstoned state"
+    },
+    {
+      "id": "ERASED-READ-NO-PAYLOAD",
+      "status": "PASS",
+      "detail": "erased/scrubbed revisions return no payload"
+    },
+    {
+      "id": "HARD-ERASE-PRIVATE-RECEIPT",
+      "status": "PASS",
+      "detail": "private receipt family exists"
+    },
+    {
+      "id": "HARD-ERASE-PRIVATE-SCHEMA-REF",
+      "status": "PASS",
+      "detail": "private receipt schema ref is explicit"
+    },
+    {
+      "id": "HARD-ERASE-OP-INSPECT",
+      "status": "PASS",
+      "detail": "private receipt is replayable through operation inspection"
+    },
+    {
+      "id": "HARD-ERASE-PAYLOAD-SCRUB-MEMORY",
+      "status": "PASS",
+      "detail": "reference store scrubs retained payload bytes"
+    },
+    {
+      "id": "HARD-ERASE-PAYLOAD-SCRUB-MONGO",
+      "status": "PASS",
+      "detail": "Mongo scrubs retained revision payloads in transaction"
+    },
+    {
+      "id": "HARD-ERASE-CURRENT-ERASED",
+      "status": "PASS",
+      "detail": "hard erase creates terminal erased revision"
+    },
+    {
+      "id": "HARD-ERASE-FENCE-PRESERVED-MEMORY",
+      "status": "PASS",
+      "detail": "reference store preserves fence lineage while deactivating claim"
+    },
+    {
+      "id": "HARD-ERASE-FENCE-PRESERVED-MONGO",
+      "status": "PASS",
+      "detail": "Mongo preserves claim document/fence lineage while deactivating it"
+    },
+    {
+      "id": "HARD-ERASE-JOURNALED-MONGO",
+      "status": "PASS",
+      "detail": "hard erase participates in canonical journal"
+    },
+    {
+      "id": "HARD-ERASE-OP-RECEIPT-MONGO",
+      "status": "PASS",
+      "detail": "hard erase persists/reconciles immutable operation receipt"
+    },
+    {
+      "id": "HARD-ERASE-NO-TTL",
+      "status": "PASS",
+      "detail": "hard erase plan does not use TTL semantics"
+    },
+    {
+      "id": "AUTHORITY-REVISION",
+      "status": "PASS",
+      "detail": "STATE-04 bound to .github@08912f391c0a6672957f40cbd9b0db285f82ed86"
+    },
+    {
+      "id": "AUTHORITY-RETENTION-UNKNOWN",
+      "status": "PASS",
+      "detail": "external retention decision interface remains explicit unresolved authority"
+    },
+    {
+      "id": "RETENTION-EXECUTOR-NOT-ACTIVATED",
+      "status": "PASS",
+      "detail": "no invented retention executor or policy engine"
+    },
+    {
+      "id": "RETENTION-PLAN-REQUIRES-AUTH-REF",
+      "status": "PASS",
+      "detail": "hard erase plan requires external authorization evidence reference"
+    },
+    {
+      "id": "STATE04-CONTRACT-NO-POLICY-INVENTION",
+      "status": "PASS",
+      "detail": "build contract forbids inventing external retention policy"
+    },
+    {
+      "id": "INVARIANT-STATE-LIFECYCLE-001",
+      "status": "PASS",
+      "detail": "required lifecycle/retention invariant preserved"
+    },
+    {
+      "id": "INVARIANT-STATE-RESTORE-001",
+      "status": "PASS",
+      "detail": "required lifecycle/retention invariant preserved"
+    },
+    {
+      "id": "INVARIANT-STATE-ERASE-001",
+      "status": "PASS",
+      "detail": "required lifecycle/retention invariant preserved"
+    },
+    {
+      "id": "INVARIANT-STATE-RETENTION-001",
+      "status": "PASS",
+      "detail": "required lifecycle/retention invariant preserved"
+    },
+    {
+      "id": "INVARIANT-STATE-RETENTION-002",
+      "status": "PASS",
+      "detail": "required lifecycle/retention invariant preserved"
+    },
+    {
+      "id": "INVARIANT-STATE-REV-001",
+      "status": "PASS",
+      "detail": "required lifecycle/retention invariant preserved"
+    },
+    {
+      "id": "INVARIANT-STATE-FENCE-001",
+      "status": "PASS",
+      "detail": "required lifecycle/retention invariant preserved"
+    },
+    {
+      "id": "INVARIANT-STATE-IDEMP-001",
+      "status": "PASS",
+      "detail": "required lifecycle/retention invariant preserved"
+    },
+    {
+      "id": "CURSOR-MAX-BOUND",
+      "status": "PASS",
+      "detail": "worst-case list cursor length=500"
+    },
+    {
+      "id": "NO-CHANGE-STREAMS",
+      "status": "PASS",
+      "detail": "no Change Streams dependency introduced"
+    },
+    {
+      "id": "PUBLIC-NO-MONGO",
+      "status": "PASS",
+      "detail": "domain/public layers contain no Mongo/BSON dependency"
+    },
+    {
+      "id": "NO-DIRECT-PEER-HTTP",
+      "status": "PASS",
+      "detail": "State domain/client introduces no direct peer HTTP"
+    },
+    {
+      "id": "PY-COMPILE",
+      "status": "PASS",
+      "detail": "source and tests compile"
+    }
+  ]
+}

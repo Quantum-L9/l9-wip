@@ -1,0 +1,45 @@
+STATE-03 deterministic checkpoint validation
+Date: 2026-10-01
+Unit: STATE-03_JOURNAL_COLD_RESUME
+Upstream semantic authority: Quantum-L9/.github@08912f391c0a6672957f40cbd9b0db285f82ed86
+
+PASS  python scripts/validate_state03_static.py
+      113/113 deterministic architecture/wiring checks
+      Includes 24/24 JSON Schema Draft 2020-12 meta-validation
+      Includes StateStorePort parity across InProcessStateStore and MongoStateStore
+      Includes all 11 Gate action registrations and typed client surfaces
+      Includes Gate idempotency binding for state.ack
+      Includes cold-resume capture ordering and consumer/filter cursor binding
+      Includes worst-case v1 list cursor size proof: 500 <= 512 characters
+      Includes Mongo event high-water cap and history latest-revision cap
+      Includes atomic ack checkpoint + operation receipt wiring
+      Includes no Change Streams correctness dependency and no public Mongo/BSON leakage
+      Includes exact .github semantic authority revision binding
+
+PASS  python -m compileall -q src tests
+      Source and tests compile under the observed Python runtime.
+
+PASS  JSON parse
+      37 JSON artifacts parsed after validation evidence generation.
+
+PASS  YAML parse
+      16 YAML artifacts parsed with installed PyYAML.
+
+PASS  TOML parse
+      pyproject.toml parsed with stdlib tomllib.
+
+PASS  TODO/FIXME/stub scan
+      No TODO, FIXME, NotImplemented, or pass-only implementation markers found in src/tests.
+
+EXTERNAL / NOT CLAIMED PASS
+- full dependency-backed pytest suite
+- ruff
+- mypy
+- installed-package parity
+- signed real Gate -> State -> Gate round-trip for STATE-03 actions
+- live Mongo replica-set journal and ack transaction execution
+- Mongo failover / ambiguous commit fault injection for state.ack
+- live retention-gap behavior against retained/deleted event records
+- multi-instance/restart validation of production cursor-key configuration and rotation
+
+No unavailable environment gate is represented as PASS.

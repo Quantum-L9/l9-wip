@@ -1,0 +1,55 @@
+schema: l9.state.execution-receipt/v1
+unit: VALIDATE-F001_HARD_ERASE_FENCE
+contract_id: L9-STATE-VALIDATE-01-F001-HARD-ERASE-FENCE
+status: LOCAL_REMEDIATION_COMPLETE_HANDOFF_READY
+date: 2026-10-01
+baseline:
+  work_pack: l9-state-FULL-WORK-PACK-VALIDATE-01
+  validate_finding: VALIDATE-F-001
+implemented:
+  - removed claim-holder identity from the private hard_erase port and plan
+  - added retention-specific memory claim/fence guard
+  - added Mongo exact claim/fence filter that excludes holder identity
+  - added retention-specific Mongo hard-erase claim guard
+  - preserved retention executor principal and external authorization_ref on the private receipt
+  - preserved exact OperationKey replay and fence lineage
+  - added exact-fence, stale-fence, active-claim-without-fence, claimless-after-release, replay, and Mongo-filter regression proofs
+scope_guards:
+  public_schema_changes: false
+  public_action_changes: false
+  Gate_changes: false
+  claim_acquire_renew_release_semantic_changes: false
+  retention_policy_invention: false
+  topology_or_admission_work: false
+  merge_publish_deploy: false
+validation:
+  source_pytest: {status: PASS, result: 73_passed}
+  installed_wheel_pytest: {status: PASS, result: 73_passed}
+  signed_gate_roundtrip_source: {status: PASS, actions: 13}
+  signed_gate_roundtrip_wheel: {status: PASS, actions: 13}
+  validate_f001_static: {status: PASS, checks: 19}
+  mongo_handoff_static: {status: PASS, checks: 20}
+  remed01_static: {status: PASS, checks: 43}
+  state03_static: {status: PASS, checks: 125}
+  state04_static: {status: PASS, checks: 153}
+  compileall: PASS
+  public_schema_bytes_changed: false
+  built_state_wheel_sha256: 25d2bd7e0bffaeddd95ba4952001188a643cce879c3c82648a630219e20a951b
+remaining_external_validation:
+  - ruff_check
+  - ruff_format_check
+  - mypy_src_l9_state
+  - live_transaction_capable_Mongo_replica_set
+  - transient_transaction_fault_injection
+  - ambiguous_commit_reconciliation_fault_injection
+  - primary_stepdown_failover
+  - restart_persistence_and_replay
+  - live_journal_ack_race
+  - live_hard_erase_restart_replay
+  - external_retention_policy_decision_interface_binding
+next_transition:
+  capability: implementation.execute
+  target: Cursor
+  contract: handoff/CURSOR/CURSOR_HANDOFF_CONTRACT.yaml
+  status: authorized
+publish: false

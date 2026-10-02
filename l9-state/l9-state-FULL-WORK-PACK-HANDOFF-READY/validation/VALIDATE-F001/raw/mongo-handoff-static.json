@@ -1,0 +1,107 @@
+{
+  "schema": "l9.state.mongo-handoff-static/v1",
+  "pass": 20,
+  "fail": 0,
+  "checks": [
+    {
+      "id": "MONGO-NO-WITH-TRANSACTION",
+      "status": "PASS",
+      "detail": "State owns transaction retry/ambiguity policy"
+    },
+    {
+      "id": "MONGO-SNAPSHOT-READ",
+      "status": "PASS",
+      "detail": "snapshot read concern configured"
+    },
+    {
+      "id": "MONGO-MAJORITY-WRITE",
+      "status": "PASS",
+      "detail": "majority write concern configured"
+    },
+    {
+      "id": "MONGO-PRIMARY-READ",
+      "status": "PASS",
+      "detail": "primary read preference configured"
+    },
+    {
+      "id": "MONGO-BUDGETED-COMMIT",
+      "status": "PASS",
+      "detail": "commit bounded by ExecutionBudget"
+    },
+    {
+      "id": "MONGO-AMBIGUOUS-RECONCILE",
+      "status": "PASS",
+      "detail": "ambiguous commit enters receipt reconciliation"
+    },
+    {
+      "id": "MONGO-TIMEOUT-RECONCILE",
+      "status": "PASS",
+      "detail": "client commit timeout reconciles instead of replaying semantics"
+    },
+    {
+      "id": "MONGO-TRANSIENT-BOUNDED-RETRY",
+      "status": "PASS",
+      "detail": "transient whole-transaction retry is budget bounded"
+    },
+    {
+      "id": "MONGO-SERVER-TIME",
+      "status": "PASS",
+      "detail": "claim predicates and pipelines use Mongo server time"
+    },
+    {
+      "id": "MONGO-NO-TTL-AUTHORITY",
+      "status": "PASS",
+      "detail": "claim/lifecycle truth does not depend on TTL indexes"
+    },
+    {
+      "id": "MONGO-OP-UNIQUE",
+      "status": "PASS",
+      "detail": "OperationKey uniqueness index declared"
+    },
+    {
+      "id": "MONGO-REV-UNIQUE",
+      "status": "PASS",
+      "detail": "revision uniqueness index declared"
+    },
+    {
+      "id": "MONGO-JOURNAL-UNIQUE",
+      "status": "PASS",
+      "detail": "scope journal sequence uniqueness declared"
+    },
+    {
+      "id": "MONGO-CLAIM-UNIQUE",
+      "status": "PASS",
+      "detail": "one claim lineage document per StateKey"
+    },
+    {
+      "id": "MONGO-ERASE-DEDICATED-FENCE",
+      "status": "PASS",
+      "detail": "hard erase uses claim/fence coordination without holder authorization"
+    },
+    {
+      "id": "MONGO-ERASE-SCRUB",
+      "status": "PASS",
+      "detail": "hard erase scrubs retained revision payloads"
+    },
+    {
+      "id": "MONGO-ERASE-DEACTIVATE",
+      "status": "PASS",
+      "detail": "hard erase deactivates claim while preserving lineage"
+    },
+    {
+      "id": "MONGO-ERASE-EVENT",
+      "status": "PASS",
+      "detail": "hard erase appends canonical event in transaction callback"
+    },
+    {
+      "id": "MONGO-ERASE-RECEIPT",
+      "status": "PASS",
+      "detail": "hard erase persists terminal OperationKey receipt in transaction callback"
+    },
+    {
+      "id": "MONGO-ERASE-REPLAY",
+      "status": "PASS",
+      "detail": "exact hard-erase retry resolves immutable stored receipt"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+schema: l9.state.validate-01-findings/v1
+findings:
+  - id: VALIDATE-F-001
+    severity: high
+    status: confirmed
+    concern: hard_erase_claim_fencing_semantics
+    invariant_refs:
+      - STATE-FENCE-001
+      - STATE-CLAIM-001
+      - STATE-ERASE-001
+      - STATE-RETENTION-002
+    evidence:
+      test: tests/test_lifecycle.py::test_hard_erase_scrubs_payload_preserves_fence_and_makes_identity_terminal
+      expected: committed
+      observed: refused
+      reason_code: CLAIM_HOLDER_MISMATCH
+      source_and_installed_wheel_reproduce: true
+    root_cause: >-
+      prepare_hard_erase_plan binds the retention executor principal as holder_ref, while
+      both StateStore implementations reuse the ordinary transition claim guard. That guard
+      requires holder_ref equality with the active claim holder. The private retention executor
+      is therefore treated as if external retention authority required ownership of the worker's
+      claim, conflating claim coordination with business/retention authority.
+    architectural_effect: >-
+      An externally authorized hard erase cannot complete while a valid active claim belongs to
+      another principal, despite presentation of the exact current claim ID and fencing token.
+      This violates the intended private retention path and prevents its own conformance test.
+    required_resolution: >-
+      Give hard erase a retention-specific claim guard. If an unexpired active claim exists,
+      require its exact claim_id and fencing_token but do not require the retention executor to
+      equal the claim holder. If no active claim exists, require claimless inactive/expired
+      coordination. Keep the executor principal and external authorization_ref on the internal
+      receipt. Preserve monotonic fence lineage and atomically deactivate the claim on successful
+      erase. Apply identical semantics to memory and Mongo adapters. Prefer removing holder_ref
+      from the hard_erase StateStorePort signature so the two identities cannot be conflated.

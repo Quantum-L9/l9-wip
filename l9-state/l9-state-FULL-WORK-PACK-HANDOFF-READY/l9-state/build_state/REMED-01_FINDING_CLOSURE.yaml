@@ -1,0 +1,54 @@
+schema: l9.state.remediation-finding-closure/v1
+contract_id: L9-STATE-REMED-01-COMBINED-REVIEW
+review: REVIEW-01
+status: IMPLEMENTED_PENDING_DELTA_REVIEW
+findings:
+  GAR-F-001:
+    status: RESOLVED_IMPLEMENTATION
+    evidence:
+      - src/l9_state/ports.py: ScopeAuthorizationPort and typed decision/request
+      - src/l9_state/service.py: authorization before protected action and stored receipt lookup
+      - src/l9_state/bindings/gate.py: deterministic tenant-base authorization evidence
+      - tests/test_service.py: exact retry and operation inspection reauthorization regression
+      - tests/test_journal.py: delegated consumer authorization regression
+  GAR-F-002:
+    status: RESOLVED_IMPLEMENTATION
+    evidence:
+      - src/l9_state/service.py: has_prior_position retention-gap distinction
+      - tests/test_journal.py: brand-new consumer starts at earliest retained event
+      - tests/test_journal.py: stale durable ack still requires resync
+  GAR-F-003:
+    status: RESOLVED_IMPLEMENTATION
+    evidence:
+      - src/l9_state/bindings/gate.py: shared _parse_request canonical INVALID_REQUEST translation
+      - src/l9_state/service.py: missing history returns StateProblem OBJECT_NOT_FOUND
+      - tests/test_architecture.py: malformed payload and idempotency mismatch contract regression
+      - tests/test_journal.py: missing history contract regression
+  GAR-F-004:
+    status: RESOLVED_IMPLEMENTATION
+    evidence:
+      - src/l9_state/service.py: effect-aware infrastructure problem mapper
+      - contracts/ERRORS_AND_REASON_CODES.yaml: infrastructure_retry_by_effect
+      - tests/test_infrastructure_problems.py: read/mutation/ambiguity regression
+  GAR-F-005:
+    status: RESOLVED_IMPLEMENTATION
+    evidence:
+      - src/l9_state/models.py: seven schema-required fields have no runtime defaults
+      - tests/test_models.py: generated 24-schema requiredness parity
+      - scripts/validate_remed01_static.py: dependency-light parity proof
+  GAR-F-006:
+    status: RESOLVED_IMPLEMENTATION
+    evidence:
+      - src/l9_state/bindings/gate.py: single STATE_MUTATION_ACTIONS set
+      - src/l9_state/bindings/gate.py: startup _validate_gate_runtime_config fail-closed gate
+      - tests/test_architecture.py: startup idempotency configuration regression
+  GAR-F-007:
+    status: RESOLVED_SUCCESSOR_PROVENANCE
+    evidence:
+      - build_state/REMED-01_AUTHORITY_BINDING.yaml: current .github coordinate
+      - pyproject.toml: Gate_SDK moving v1 consumer contract retained
+      - historical STATE receipts unchanged
+completion_condition:
+  implementation: satisfied
+  delta_review: required_next
+  external_runtime_validation: remains_debt

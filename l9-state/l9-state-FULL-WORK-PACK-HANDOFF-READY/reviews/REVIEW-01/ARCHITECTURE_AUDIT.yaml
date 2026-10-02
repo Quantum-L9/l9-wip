@@ -1,0 +1,333 @@
+schema: l9.gar.architecture-audit/v1
+objective_ref: 'REVIEW-01: combined STATE-01 through STATE-04 architecture and code
+  review'
+target_ref: local-checkpoint:l9-state-STATE-04@sha256:97dd1300a4749487a7a32e648cc0fd27099223a92beb3336ac6e6efe59ce0755
+authority_basis:
+- 516eed8e6f851ad27d7238a4fb273cf84bb7e9b12bd6481dddf02988bcb5b3a7
+evidence_basis:
+- 51ef72d0f926f37402d04665d1b222e6bf2f45994ad71a2ea5d40e30706ce8f9
+ownership_assessment:
+- subject: State product semantic ownership
+  status: ALIGNED
+  basis_refs:
+  - STATE-DOMAIN-001
+  - l9.node-archetype/authoritative-state@1
+  summary: State-specific revision/idempotency/fence/journal/lifecycle semantics remain
+    owned in l9-state.
+- subject: Transport and routing ownership
+  status: ALIGNED
+  basis_refs:
+  - STATE-GATE-001
+  - l9.pattern/semantic-core-gate-adapter@1
+  summary: Gate_SDK owns transport/routing; no peer HTTP is introduced.
+- subject: Persistence provider ownership
+  status: ALIGNED
+  basis_refs:
+  - STATE-PROVIDER-001
+  - l9.pattern/semantic-core-provider-adapter@1
+  summary: Mongo remains a private adapter behind StateStorePort.
+- subject: Authorization decision ownership/evidence
+  status: FINDING
+  basis_refs:
+  - GAR-F-001
+  summary: Implementation does not realize the declared authorization seam and mislabels
+    packet identity as authorization evidence.
+- subject: Retention policy ownership
+  status: ALIGNED
+  basis_refs:
+  - STATE-RETENTION-002
+  summary: State owns erase mechanics but keeps external retention decision policy
+    unbound and does not invent it.
+boundary_assessment:
+- subject: Public vs provider boundary
+  status: ALIGNED
+  basis_refs:
+  - STATE-PROVIDER-001
+  summary: No Mongo/BSON/provider syntax found in public/core contracts.
+- subject: Private hard erase boundary
+  status: ALIGNED
+  basis_refs:
+  - STATE-ERASE-001
+  summary: Hard erase remains internal-only and absent from Gate/StateClient.
+- subject: Canonical State problem boundary
+  status: FINDING
+  basis_refs:
+  - GAR-F-003
+  summary: Expected validation/not-found failures can escape to Gate-generic errors.
+- subject: Gate runtime idempotency precondition
+  status: FINDING
+  basis_refs:
+  - GAR-F-006
+  summary: Handler defense exists but runtime configuration coverage is not repository-validated.
+invariant_assessment:
+- subject: Atomicity, revision, idempotency, fencing and terminal outcome invariants
+  status: ALIGNED
+  basis_refs:
+  - STATE-ATOMIC-001
+  - STATE-REV-001
+  - STATE-IDEMP-001
+  - STATE-FENCE-001
+  - STATE-OUTCOME-001
+  - STATE-AMBIGUITY-001
+  summary: Combined reference/Mongo implementation preserves the locked transaction
+    and operation-finality model under inspected code.
+- subject: Journal/cold-resume contract
+  status: FINDING
+  basis_refs:
+  - GAR-F-002
+  - STATE-JOURNAL-001
+  - STATE-CURSOR-001
+  summary: Core capture/cursor design is aligned, but new-consumer retention semantics
+    violate the event contract.
+- subject: Retry-safety invariant
+  status: FINDING
+  basis_refs:
+  - GAR-F-004
+  - STATE-RETRY-001
+  summary: retry_class is part of the right vocabulary but is emitted with mutation
+    semantics on read failures.
+- subject: Lifecycle/retention mechanics
+  status: ALIGNED
+  basis_refs:
+  - STATE-LIFECYCLE-001
+  - STATE-RESTORE-001
+  - STATE-ERASE-001
+  summary: Tombstone, retained restore, erased terminality, payload scrubbing, identity/fence
+    preservation and non-reuse are coherently wired.
+- subject: Schema/runtime contract parity
+  status: FINDING
+  basis_refs:
+  - GAR-F-005
+  summary: Seven schema-required fields remain optional by runtime default.
+consequence_assessment:
+- subject: Security and receipt provenance
+  status: FINDING
+  basis_refs:
+  - GAR-F-001
+  summary: Current implementation can disclose same-tenant resources/receipts without
+    an explicit current resource authorization decision and records a misleading authorization_ref.
+- subject: Recovery load and consumer onboarding
+  status: FINDING
+  basis_refs:
+  - GAR-F-002
+  summary: Normal event retention can force new consumers into unnecessary cold-resync
+    enumeration.
+- subject: Typed client stability
+  status: FINDING
+  basis_refs:
+  - GAR-F-003
+  - GAR-F-005
+  summary: Expected failures or schema-invalid runtime shapes can surface as validation
+    exceptions instead of stable State contracts.
+- subject: Architecture direction
+  status: ALIGNED
+  basis_refs:
+  - STATE-DOMAIN-001
+  - STATE-PROVIDER-001
+  - STATE-GATE-001
+  summary: Findings are boundary/contract implementation defects; no evidence requires
+    replacing the approved State architecture.
+audit_findings:
+- finding_id: GAR-F-001
+  concern: Authorization and receipt-evidence boundary is not implemented
+  kernel_basis:
+  - l9.kernel.first-order
+  - l9.kernel.formal-reasoning
+  - l9.kernel.second-order
+  contract_basis:
+  - l9.contract.architecture-audit
+  - l9.gar.control.architect-drift-control
+  evidence_refs:
+  - Dev Pack API_CONTRACT.md:21-30 requires current reauthorization before revealing
+    stored receipts.
+  - Dev Pack SECURITY.md:18-30 requires current authorization checks and treats delegation/current
+    policy as authorization context.
+  - Dev Pack PORTS_AND_ADAPTERS.yaml:41-55 declares ScopeAuthorizationPort.
+  authority_refs:
+  - AUTHORITY_RESOLUTION.yaml
+  classification: boundary
+  severity: high
+  confidence: confirmed
+  architectural_effect: A current actor in the same tenant can reach State resources
+    and exact stored receipts without a separately evidenced resource authorization
+    decision. Receipts claim an authorization_ref that is actually a transport packet
+    identifier. This weakens the security boundary and receipt provenance.
+  required_resolution: Implement the locked authorization seam. Make tenant-wide base
+    authorization explicit and evidenced, add optional ScopeAuthorizationPort for
+    stricter/delegated scope policy, reauthorize before all protected reads and exact
+    stored-receipt disclosure, and forbid packet_id alone from masquerading as authorization
+    evidence.
+- finding_id: GAR-F-002
+  concern: Brand-new journal consumers are incorrectly forced to cold resync after
+    retention pruning
+  kernel_basis:
+  - l9.kernel.first-order
+  - l9.kernel.formal-reasoning
+  - l9.kernel.second-order
+  contract_basis:
+  - l9.contract.architecture-audit
+  - l9.gar.control.architect-drift-control
+  evidence_refs:
+  - Dev Pack EVENT_JOURNAL_AND_CURSORS.md:35-40 says no cursor/no ack starts at earliest
+    retained event; only a requested position older than retention requires resync.
+  - src/l9_state/service.py:750-758 sets after_seq=0 when no durable checkpoint exists.
+  - src/l9_state/service.py:782-792 returns resync_required whenever after_seq < retained_from_seq-1.
+  authority_refs:
+  - AUTHORITY_RESOLUTION.yaml
+  classification: invariant
+  severity: high
+  confidence: confirmed
+  architectural_effect: A newly admitted consumer joining after normal event retention
+    cannot start from the earliest retained journal as contracted. It is pushed into
+    unnecessary full enumeration, creating avoidable recovery load and violating the
+    public recovery protocol.
+  required_resolution: Track whether the request has a prior position (cursor or durable
+    ack). Apply retention-gap resync only to prior positions. For a brand-new consumer,
+    return the earliest retained page and an ackable cursor. Add an explicit regression
+    test.
+- finding_id: GAR-F-003
+  concern: Expected State failures can escape the canonical StateProblem boundary
+  kernel_basis:
+  - l9.kernel.first-order
+  - l9.kernel.formal-reasoning
+  - l9.kernel.second-order
+  contract_basis:
+  - l9.contract.architecture-audit
+  - l9.gar.control.architect-drift-control
+  evidence_refs:
+  - src/l9_state/service.py:932-933 raises StateNotFound for missing history instead
+    of returning StateProblem.
+  - src/l9_state/bindings/gate.py handlers directly call model_validate and _require_operation_identity;
+    ValidationError/ValueError are not translated to StateProblem.
+  - StateClient read methods interpret payload status=failed as StateProblem.
+  authority_refs:
+  - AUTHORITY_RESOLUTION.yaml
+  classification: boundary
+  severity: high
+  confidence: confirmed
+  architectural_effect: Malformed requests and a valid missing-history case can cross
+    the node boundary as Gate-generic failures or client exceptions instead of stable
+    State error contracts. This breaks typed clients, reason-code stability, and failure-domain
+    ownership.
+  required_resolution: Add one canonical State ingress/problem translation boundary.
+    Map expected validation/idempotency/not-found conditions to StateProblem with
+    stable codes, keep unexpected defects as Gate/runtime failures, and add end-to-end
+    handler/client contract tests.
+- finding_id: GAR-F-004
+  concern: Infrastructure retry classification is action-agnostic
+  kernel_basis:
+  - l9.kernel.first-order
+  - l9.kernel.formal-reasoning
+  - l9.kernel.second-order
+  contract_basis:
+  - l9.contract.architecture-audit
+  - l9.gar.control.architect-drift-control
+  evidence_refs:
+  - src/l9_state/service.py:72-89 maps non-ambiguous infrastructure failure to retry_class=same_operation.
+  - The mapper is used by state.get/list/events/history/operation.inspect.
+  - Reads have no durable operation receipt identity under API_CONTRACT.md:32-34.
+  authority_refs:
+  - AUTHORITY_RESOLUTION.yaml
+  classification: invariant
+  severity: medium
+  confidence: confirmed
+  architectural_effect: Read clients can be told to perform a same-operation retry
+    even though no mutation OperationKey exists. The public retry vocabulary remains
+    valid, but the emitted semantics are contextually wrong.
+  required_resolution: 'Make infrastructure problem mapping action/effect aware: read
+    unavailability/deadline -> later; definitely-not-committed mutation -> same_operation;
+    ambiguous mutation -> inspect_then_same_operation. Update reason-code documentation
+    and regression tests.'
+- finding_id: GAR-F-005
+  concern: Runtime model requiredness is weaker than the public JSON contracts
+  kernel_basis:
+  - l9.kernel.first-order
+  - l9.kernel.formal-reasoning
+  - l9.kernel.second-order
+  contract_basis:
+  - l9.contract.architecture-audit
+  - l9.gar.control.architect-drift-control
+  evidence_refs:
+  - StateReceipt.reason_codes, StateClaimReceipt.reason_codes, StateAckReceipt.reason_codes,
+    StateProblem.reason_codes default to empty tuple.
+  - StateListPage.states, StateEventPage.events, StateHistoryPage.events default to
+    empty tuple.
+  - All seven fields are required in their corresponding public schemas.
+  authority_refs:
+  - AUTHORITY_RESOLUTION.yaml
+  classification: invariant
+  severity: medium
+  confidence: confirmed
+  architectural_effect: Internal/provider/client parsing can silently admit contract
+    shapes that are invalid on the public wire. That weakens the claim that model
+    and schema validation are deterministic mirrors.
+  required_resolution: Remove runtime defaults from schema-required fields while still
+    allowing explicit empty tuples, and add a generated parity test over all 24 schemas
+    covering required fields at minimum.
+- finding_id: GAR-F-006
+  concern: Gate runtime idempotency precondition is not repository-bound
+  kernel_basis:
+  - l9.kernel.first-order
+  - l9.kernel.formal-reasoning
+  - l9.kernel.second-order
+  contract_basis:
+  - l9.contract.architecture-audit
+  - l9.gar.control.architect-drift-control
+  evidence_refs:
+  - Dev Pack GATE_BINDING.md:11-17 requires configuring Gate runtime idempotency for
+    every mutation.
+  - src/l9_state/bindings/gate.py create_app calls create_node_app without config
+    validation.
+  - Handler-level _require_operation_identity does enforce equality and therefore
+    preserves semantic safety as a second line of defense.
+  authority_refs:
+  - AUTHORITY_RESOLUTION.yaml
+  classification: boundary
+  severity: medium
+  confidence: confirmed
+  architectural_effect: A misconfigured deployment can miss Gate-runtime preflight
+    enforcement and discover the error only inside State handlers. Core idempotency
+    remains protected, but the locked integration contract is not fail-closed at runtime
+    configuration.
+  required_resolution: Validate at startup that the Gate runtime requires idempotency
+    for the complete State mutation action set, while retaining the handler equality
+    check as defense in depth.
+- finding_id: GAR-F-007
+  concern: Checkpoint provenance coordinates are stale but semantically compatible
+  kernel_basis:
+  - l9.kernel.first-order
+  - l9.kernel.formal-reasoning
+  - l9.kernel.second-order
+  contract_basis:
+  - l9.contract.architecture-audit
+  - l9.gar.control.architect-drift-control
+  evidence_refs:
+  - invariants.yaml / README / build metadata bind .github@08912f391c0a6672957f40cbd9b0db285f82ed86.
+  - Current .github is 7d31438a32bf1ce7783b1b896d359e6eb34063d0.
+  - Nine State-relevant canonical files have identical Git blob identities at both
+    revisions.
+  authority_refs:
+  - AUTHORITY_RESOLUTION.yaml
+  classification: consequence
+  severity: low
+  confidence: confirmed
+  architectural_effect: No observed State semantic drift, but successor receipts that
+    continue to cite stale coordinates would weaken currentness/provenance and confuse
+    later ProductManifest/conformance work.
+  required_resolution: Preserve historical checkpoint receipts unchanged, but bind
+    the remediation successor to current .github and current resolved Gate v1 execution
+    evidence/lock coordinates.
+unresolved_unknowns:
+- item: External retention-policy decision interface
+  reason: Exact external policy authority/decision contract is not yet bound. State-owned
+    mechanics are reviewable; RetentionExecutor activation remains intentionally disabled.
+  material: true
+- item: Live runtime behavior under external dependencies
+  reason: No live Mongo replica-set/fault injection, real Gate round trip, or installed-package
+    evidence in this environment.
+  material: true
+- item: Formal EvidenceAssessment receipt
+  reason: evidence-review-engine is unavailable in this runtime; direct artifact evidence
+    is bound instead, so no producer-owned evidence.assessment/v1 is claimed.
+  material: false
+audit_status: REOPEN_REQUIRED

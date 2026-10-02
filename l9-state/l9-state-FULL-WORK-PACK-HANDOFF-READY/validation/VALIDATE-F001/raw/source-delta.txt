@@ -1,0 +1,12 @@
+Files /mnt/data/validate_f001_baseline/l9-state-FULL-WORK-PACK-VALIDATE-01/l9-state/README.md and /mnt/data/validate_f001_work/l9-state-FULL-WORK-PACK-VALIDATE-01/l9-state/README.md differ
+Only in /mnt/data/validate_f001_work/l9-state-FULL-WORK-PACK-VALIDATE-01/l9-state: build
+Files /mnt/data/validate_f001_baseline/l9-state-FULL-WORK-PACK-VALIDATE-01/l9-state/docs/RETENTION_LIFECYCLE.md and /mnt/data/validate_f001_work/l9-state-FULL-WORK-PACK-VALIDATE-01/l9-state/docs/RETENTION_LIFECYCLE.md differ
+Only in /mnt/data/validate_f001_work/l9-state-FULL-WORK-PACK-VALIDATE-01/l9-state/scripts: validate_f001_static.py
+Only in /mnt/data/validate_f001_work/l9-state-FULL-WORK-PACK-VALIDATE-01/l9-state/scripts: validate_mongo_handoff_static.py
+Files /mnt/data/validate_f001_baseline/l9-state-FULL-WORK-PACK-VALIDATE-01/l9-state/src/l9_state/adapters/memory.py and /mnt/data/validate_f001_work/l9-state-FULL-WORK-PACK-VALIDATE-01/l9-state/src/l9_state/adapters/memory.py differ
+Files /mnt/data/validate_f001_baseline/l9-state-FULL-WORK-PACK-VALIDATE-01/l9-state/src/l9_state/adapters/mongodb.py and /mnt/data/validate_f001_work/l9-state-FULL-WORK-PACK-VALIDATE-01/l9-state/src/l9_state/adapters/mongodb.py differ
+Files /mnt/data/validate_f001_baseline/l9-state-FULL-WORK-PACK-VALIDATE-01/l9-state/src/l9_state/adapters/mongodb_contract.py and /mnt/data/validate_f001_work/l9-state-FULL-WORK-PACK-VALIDATE-01/l9-state/src/l9_state/adapters/mongodb_contract.py differ
+Files /mnt/data/validate_f001_baseline/l9-state-FULL-WORK-PACK-VALIDATE-01/l9-state/src/l9_state/ports.py and /mnt/data/validate_f001_work/l9-state-FULL-WORK-PACK-VALIDATE-01/l9-state/src/l9_state/ports.py differ
+Files /mnt/data/validate_f001_baseline/l9-state-FULL-WORK-PACK-VALIDATE-01/l9-state/src/l9_state/retention.py and /mnt/data/validate_f001_work/l9-state-FULL-WORK-PACK-VALIDATE-01/l9-state/src/l9_state/retention.py differ
+Files /mnt/data/validate_f001_baseline/l9-state-FULL-WORK-PACK-VALIDATE-01/l9-state/tests/test_lifecycle.py and /mnt/data/validate_f001_work/l9-state-FULL-WORK-PACK-VALIDATE-01/l9-state/tests/test_lifecycle.py differ
+Files /mnt/data/validate_f001_baseline/l9-state-FULL-WORK-PACK-VALIDATE-01/l9-state/tests/test_mongodb_contract.py and /mnt/data/validate_f001_work/l9-state-FULL-WORK-PACK-VALIDATE-01/l9-state/tests/test_mongodb_contract.py differ

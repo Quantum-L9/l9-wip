@@ -1,0 +1,17 @@
+schema: l9.state.review-delta-finding-closure/v1
+review: REVIEW-01
+remediation_contract: L9-STATE-REMED-01-COMBINED-REVIEW
+status: VERIFIED_CLOSED
+findings:
+  GAR-F-001: VERIFIED_CLOSED
+  GAR-F-002: VERIFIED_CLOSED
+  GAR-F-003: VERIFIED_CLOSED
+  GAR-F-004: VERIFIED_CLOSED
+  GAR-F-005: VERIFIED_CLOSED
+  GAR-F-006: VERIFIED_CLOSED
+  GAR-F-007: VERIFIED_CLOSED_AT_REMED_COORDINATE
+regression_status:
+  state03: PASS
+  state04: PASS
+scope_expansion: false
+architecture_reopen_required: false

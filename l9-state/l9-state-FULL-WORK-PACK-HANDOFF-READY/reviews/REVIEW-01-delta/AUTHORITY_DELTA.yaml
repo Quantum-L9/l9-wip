@@ -1,0 +1,21 @@
+schema: l9.state.review-authority-delta/v1
+prior_remediation_binding:
+  repository: Quantum-L9/.github
+  revision: 7d31438a32bf1ce7783b1b896d359e6eb34063d0
+current_observed_authority:
+  repository: Quantum-L9/.github
+  revision: 43600db3ee43f17fd30d2df589ff6bc0eb8b19d2
+classification: COMPATIBLE_ADDITIVE_IDENTITY_AUTHORITY
+unchanged_material_law:
+  - semantics/authority_model.yaml
+  - semantics/identity_model.yaml
+  - semantics/invariants.yaml
+  - semantics/product_topology.schema.yaml
+  - semantics/contracts.yaml
+added_canonical_sources:
+  - semantics/actor_registry.yaml
+  - semantics/surface_registry.yaml
+impact_on_remed01: NONE
+future_obligation:
+  stage: TOPOLOGY-01 / CONFORM-01
+  requirement: Bind State runtime/receipt principal attribution to the admitted identity-resolution/assertion path and applicable actor/surface registries.

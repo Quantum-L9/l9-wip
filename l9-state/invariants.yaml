@@ -1,0 +1,21 @@
+schema: l9.devpack.repo-invariants/v1
+owner: l9-state
+normative_in_this_pack: true
+invariants:
+- id: L9-008
+  assertion: A state mutation atomically commits new revision, operation receipt and transition/outbox intent.
+  negative_proof: Crash at every commit boundary yields all-or-none, never state without transition identity.
+- id: L9-009
+  assertion: State has no Work Item domain logic; schemas and fences do not confer action authority.
+  negative_proof: Generic storage suite passes with commercial, assistance, technical and synthetic payloads.
+- id: L9-010
+  assertion: Expired lease holders cannot write or effect stale work; fencing is monotonically checked.
+  negative_proof: Paused old worker resumes after reassignment and every conditional commit is refused.
+imported_invariant_ids:
+- L9-004
+- L9-005
+- L9-006
+- L9-007
+- L9-020
+- L9-023
+- L9-030

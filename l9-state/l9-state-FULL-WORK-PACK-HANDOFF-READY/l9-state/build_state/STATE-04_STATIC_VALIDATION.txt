@@ -1,0 +1,37 @@
+STATE-04 static validation
+==========================
+Authority: Quantum-L9/.github@08912f391c0a6672957f40cbd9b0db285f82ed86
+Unit: STATE-04_RETENTION_TOMBSTONE_RESTORE
+
+PASS  static architecture/wiring checks: 153/153
+PASS  public schema JSON parse: 24/24
+PASS  public JSON Schema Draft 2020-12 meta-validation: 24/24
+PASS  public schema bytes unchanged from STATE-03 checkpoint
+PASS  source + tests Python compilation
+PASS  repository JSON parse: 39 files
+PASS  repository YAML parse: 20 files
+PASS  pyproject.toml parse
+PASS  StateStorePort parity: InProcessStateStore + MongoStateStore
+PASS  public Gate action surface includes state.tombstone + state.restore
+PASS  state.internal.hard_erase absent from Gate and StateClient
+PASS  private HardEraseReceipt replay/inspection wiring
+PASS  tombstone retained-payload semantics
+PASS  restore prior-revision/new-revision semantics
+PASS  hard-erase payload scrubbing + erased identity + fence lineage preservation
+PASS  object-ID reuse prohibition
+PASS  external retention-policy decision interface remains explicit unresolved authority
+PASS  RetentionExecutor remains unbound/unactivated
+
+BLOCKED/EXTERNAL (not represented as PASS):
+- full dependency-backed pytest
+- ruff
+- mypy
+- installed-package parity
+- real Gate round-trip for state.tombstone/state.restore
+- live Mongo replica-set lifecycle transactions
+- failover and ambiguous-commit fault injection
+- live hard-erase payload-scrub persistence proof
+- restart/replay verification for private hard-erase OperationKey receipts
+- exact external retention-policy decision contract / RetentionExecutor binding
+
+No publish, merge, release, deployment, node admission, or combined-review acceptance is claimed.

@@ -1,0 +1,47 @@
+schema: l9.state.local-build-contract/v1
+contract_id: L9-STATE-STATE-02-v2.0.0
+authority: l9-state-final-dev-pack-v2.0.0
+mode: BUILD
+review: DEFERRED_BY_USER_UNTIL_STATE_01_AND_STATE_02_COMPLETE
+publish: forbidden
+objective: >-
+  Implement Mongo StateStorePort with exact transaction coupling, immutable revisions,
+  operation reconciliation, and claim/renew/release fencing while preserving the locked
+  provider-neutral State contract.
+in_scope:
+  - PyMongo Async MongoStateStore
+  - required collections and unique indexes
+  - snapshot read concern plus majority write concern transactions
+  - scope-local journal sequence allocation inside mutation transactions
+  - persistent claim lineage
+  - server-authoritative lease predicates using Mongo $$NOW
+  - state.claim
+  - state.renew
+  - state.release
+  - claim-aware state.transition
+  - operation reconciliation after Mongo mutation errors
+  - typed StateProblem for unavailable and ambiguous infrastructure outcomes
+  - deterministic in-process fencing/concurrency tests
+out_of_scope:
+  - state.history
+  - state.events
+  - state.ack
+  - state.list
+  - proactive push or Change Streams correctness
+  - state.tombstone
+  - state.restore
+  - hard erasure
+  - node birth
+  - sibling repository edits
+  - publish merge release deploy
+
+authorized_amendment:
+  id: L9-STATE-STATE-02A-2026-09-27
+  authority: USER_APPROVED
+  scope:
+    - Gate-bound ExecutionBudget
+    - explicit bounded Mongo retry and reconciliation policy
+    - durable conflict/refused terminal receipts
+    - retry-safety versus recovery-guidance taxonomy reconciliation
+    - nine locked operation-execution invariants
+  no_public_schema_change: true

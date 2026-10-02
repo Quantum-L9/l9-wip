@@ -1,0 +1,14 @@
+{
+  "contract_version": "1.0",
+  "object_id": "object.1",
+  "scope_ref": "subject.1",
+  "schema_ref": "urn:example:state:1",
+  "schema_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "payload": {
+    "phase": "ready",
+    "value": 1
+  },
+  "operation_id": "op.create.1",
+  "retention_policy_ref": "retention.standard.v1",
+  "retention_policy_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+}

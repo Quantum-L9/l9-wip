@@ -1,0 +1,114 @@
+schema: l9.state.cursor-handoff-contract/v1
+contract_id: L9-STATE-CURSOR-VALIDATE-REMAINDER-01
+mode: VALIDATE_AND_REPAIR_ONLY
+objective: >-
+  Close the remaining environment-dependent validation gates for the exact l9-state
+  successor after VALIDATE-F-001 remediation. Produce evidence. Modify source only when
+  a failing gate demonstrates a concrete defect, and then make the smallest responsible repair.
+target:
+  product: l9.state
+  source_root: l9-state/
+  predecessor_work_pack: l9-state-FULL-WORK-PACK-VALIDATE-01.zip
+  local_successor_state: VALIDATE-F001_REMEDIATED_HANDOFF_READY
+authority:
+  semantic_root:
+    repository: Quantum-L9/.github
+    revision: 43600db3ee43f17fd30d2df589ff6bc0eb8b19d2
+    note: actor/surface registries are additive; State identity realization remains a later topology/conformance obligation
+  Gate_SDK:
+    consumer_contract: v1
+    observed_release: v1.2.0
+    v1_ref_commit: 7ec6cdf5e26c837057ca35b7324a88de4d499ea3
+    release_asset_sha256: 543d95ba4270f64bf885770fd296340a59c762c21e4d73748dec8da0775a2107
+accepted_architecture:
+  - State owns provider-neutral revisioned durable state semantics
+  - Gate_SDK owns inter-node transport
+  - MongoDB is a private StateStorePort provider
+  - claims are coordination/fencing metadata, not business or retention authority
+  - OperationKey terminal outcomes are immutable
+  - ambiguous commit permits reconciliation only, never blind semantic replay
+  - hard erase is private and requires external retention authorization
+  - hard erase with an active claim requires exact claim_id plus fencing_token but not claim-holder impersonation
+local_evidence_already_closed:
+  source_pytest: 73_passed
+  installed_wheel_pytest: 73_passed
+  signed_gate_roundtrip_source: 13_of_13_passed
+  signed_gate_roundtrip_wheel: 13_of_13_passed
+  validate_f001_static: 19_of_19_passed
+  remed01_static: 43_of_43_passed
+  state03_static: 125_of_125_passed
+  state04_static: 153_of_153_passed
+  mongo_source_handoff_static: 20_of_20_passed
+  public_schema_changes: 0
+preflight_invalidation:
+  - if Quantum-L9/.github main is no longer 43600db3ee43f17fd30d2df589ff6bc0eb8b19d2, stop and re-resolve semantic authority before relying on this handoff
+  - if Gate_SDK refs/tags/v1 is no longer 7ec6cdf5e26c837057ca35b7324a88de4d499ea3, stop and rebind the moving compatibility dependency before running acceptance
+remaining_required_gates:
+  - id: TOOL-RUFF
+    command: ruff check .
+  - id: TOOL-RUFF-FORMAT
+    command: ruff format --check .
+  - id: TOOL-MYPY
+    command: mypy src/l9_state
+  - id: TEST-FULL
+    command: pytest -q
+  - id: BUILD-WHEEL
+    command: python -m build --wheel
+  - id: TEST-INSTALLED-WHEEL
+    requirement: run the complete tests against a clean installation of the newly built wheel, not source imports
+  - id: MONGO-LIVE-CORE
+    command: python handoff/CURSOR/validate_mongo_live.py --uri "$L9_STATE_MONGO_URI"
+    requirement: transaction-capable replica set, writable primary
+  - id: MONGO-FAULT-MATRIX
+    source: handoff/CURSOR/MONGO_VALIDATION_MATRIX.yaml
+  - id: MONGO-RESTART-REPLAY
+    requirement: prove exact OperationKey receipt survives process and Mongo restart
+  - id: MONGO-AMBIGUOUS-COMMIT
+    requirement: inject an ambiguous commit outcome and prove reconciliation without semantic callback replay
+in_scope_repairs_if_and_only_if_a_gate_fails:
+  - src/l9_state/adapters/mongodb.py
+  - src/l9_state/adapters/mongodb_contract.py
+  - src/l9_state/execution.py
+  - source file directly demonstrated by a failing ruff or mypy gate
+  - corresponding narrowly scoped tests and validation evidence
+out_of_scope:
+  - public schema changes
+  - new State actions or capabilities
+  - State architecture redesign
+  - claim acquisition/renew/release semantic redesign
+  - Gate_SDK changes
+  - sibling repository changes
+  - retention-policy invention or RetentionExecutor activation
+  - ProductTopology/ProductManifest work
+  - node birth/admission work
+  - merge publish deploy release
+mutation_rules:
+  - do not modify source merely to make a test easier
+  - do not weaken or delete assertions to obtain green evidence
+  - do not replace server-time semantics with application time
+  - do not replace explicit State transaction/reconciliation logic with PyMongo with_transaction
+  - no semantic callback replay after commit may have occurred
+  - preserve all public JSON schema bytes unless a new architecture decision explicitly authorizes otherwise
+  - preserve exact prior receipts and historical build_state files
+stop_conditions:
+  success:
+    - all remaining required gates pass
+    - no unresolved code finding remains
+    - evidence is saved with exact environment and dependency coordinates
+  repair_required:
+    - stop broad work after identifying a concrete failing invariant
+    - make only the smallest repair allowed above
+    - rerun the failing gate and all transitive regression gates
+  blocked:
+    - preserve the exact unavailable prerequisite or infrastructure limitation
+    - do not convert blocked evidence into PASS
+final_output_required:
+  - concise validation summary
+  - exact commands executed
+  - environment versions
+  - Gate_SDK resolved release/ref
+  - MongoDB server and replica-set topology
+  - all PASS/FAIL/BLOCKED evidence
+  - source diff if any repair was required
+  - revised full work pack
+  - no merge or publish

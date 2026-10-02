@@ -1,0 +1,44 @@
+{
+  "schema": "l9.state.digest-vectors/v1",
+  "algorithm": "RFC8785-JCS+SHA-256",
+  "vectors": [
+    {
+      "id": "state-active-simple-v1",
+      "kind": "state_digest",
+      "input": {
+        "schema_ref": "urn:example:work:v1",
+        "schema_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "lifecycle": "active",
+        "payload": {
+          "count": 1,
+          "name": "alpha",
+          "nested": {"enabled": true}
+        }
+      },
+      "canonical_utf8": "{\"lifecycle\":\"active\",\"payload\":{\"count\":1,\"name\":\"alpha\",\"nested\":{\"enabled\":true}},\"schema_digest\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"schema_ref\":\"urn:example:work:v1\"}",
+      "sha256": "b178165ac248e514bf69b2d0a45849aee2bb616faca163b94e319ce8d2177a93"
+    },
+    {
+      "id": "transition-request-v1",
+      "kind": "request_digest",
+      "action": "state.transition",
+      "domain_request_without_operation_id": {
+        "contract_version": "1.0",
+        "object_id": "object.1",
+        "scope_ref": "subject.1",
+        "expected_revision": 0,
+        "expected_state_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "expected_schema_ref": "urn:example:work:v1",
+        "expected_schema_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "payload": {
+          "count": 2,
+          "name": "alpha",
+          "nested": {"enabled": true}
+        },
+        "transition_label": "advance"
+      },
+      "canonical_utf8": "{\"action\":\"state.transition\",\"domain_request\":{\"contract_version\":\"1.0\",\"expected_revision\":0,\"expected_schema_digest\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"expected_schema_ref\":\"urn:example:work:v1\",\"expected_state_digest\":\"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\",\"object_id\":\"object.1\",\"payload\":{\"count\":2,\"name\":\"alpha\",\"nested\":{\"enabled\":true}},\"scope_ref\":\"subject.1\",\"transition_label\":\"advance\"}}",
+      "sha256": "1ccec1c6fa1e9a70dc601ab704795ad3ce44b015354a1f2fc44a410ce8bf6b7d"
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+schema: l9.state.remediation-contract/v1
+contract_id: L9-STATE-REMED-01-COMBINED-REVIEW
+authority: REVIEW-01 findings only; no feature expansion
+objective: Close REVIEW-01 contract-fidelity and boundary defects without changing
+  the approved State architecture or public capability family.
+target:
+  checkpoint_sha256: 97dd1300a4749487a7a32e648cc0fd27099223a92beb3336ac6e6efe59ce0755
+  baseline: STATE-04
+in_scope:
+- src/l9_state/service.py
+- src/l9_state/bindings/gate.py
+- src/l9_state/models.py
+- src/l9_state/ports.py
+- contracts/ERRORS_AND_REASON_CODES.yaml
+- tests/test_service.py
+- tests/test_journal.py
+- tests/test_models.py
+- tests/test_architecture.py
+- tests/test_infrastructure_problems.py
+- build_state successor metadata / authority binding
+- runtime configuration validation needed to prove Gate mutation idempotency requirements
+out_of_scope:
+- new State actions
+- public schema redesign unless an existing schema is internally contradictory
+- new storage provider
+- Change Streams
+- RetentionExecutor policy invention
+- ProductTopology/Manifest compilation
+- node birth
+- publish/merge/deploy
+work_units:
+- id: R1-AUTHZ
+  finding_refs:
+  - GAR-F-001
+  required_change: 'Realize the existing authorization boundary: explicit tenant-base
+    authorization decision plus optional ScopeAuthorizationPort for stricter/delegated
+    policy; reauthorize protected reads and every stored-receipt disclosure; authorization_ref
+    must identify actual decision/evidence, never packet identity alone.'
+  acceptance:
+  - Exact retry by a currently unauthorized caller cannot reveal stored receipt.
+  - state.operation.inspect is authorization-gated.
+  - Default tenant boundary is explicit and testable rather than inferred from identity.
+  - Delegated consumer access requires authorization decision evidence.
+- id: R2-JOURNAL
+  finding_refs:
+  - GAR-F-002
+  required_change: Differentiate brand-new consumers from stale prior positions before
+    retention-gap handling.
+  acceptance:
+  - No cursor/no ack starts at earliest retained event after pruning.
+  - Stale cursor/ack older than retention still returns resync_required.
+  - Successful page remains ackable.
+- id: R3-PROBLEMS
+  finding_refs:
+  - GAR-F-003
+  - GAR-F-004
+  required_change: Centralize State-owned expected failure translation and make infrastructure
+    retry_class effect-aware.
+  acceptance:
+  - Missing history returns StateProblem(OBJECT_NOT_FOUND,no).
+  - Malformed domain payload/idempotency mismatch returns canonical StateProblem(INVALID_REQUEST,no)
+    rather than Gate-generic failure.
+  - Read infrastructure failures return later.
+  - Mutation definite precommit failures return same_operation.
+  - Ambiguous mutation returns inspect_then_same_operation.
+- id: R4-SCHEMA-PARITY
+  finding_refs:
+  - GAR-F-005
+  required_change: Make runtime requiredness match all public JSON schemas and add
+    generated parity checks.
+  acceptance:
+  - All 24 schema required sets equal runtime model required sets for corresponding
+    models.
+  - Explicit empty collections remain valid where schemas permit.
+- id: R5-GATE-CONFIG
+  finding_refs:
+  - GAR-F-006
+  required_change: Fail closed at node startup unless Gate runtime idempotency requirements
+    cover every State mutation; retain handler equality check.
+  acceptance:
+  - Mutation action set is defined once and checked against NodeRuntimeConfig.
+  - Missing Gate runtime idempotency requirement is a startup/configuration failure.
+- id: R6-PROVENANCE
+  finding_refs:
+  - GAR-F-007
+  required_change: Emit successor authority/dependency evidence at current compatible
+    coordinates without rewriting historical receipts.
+  acceptance:
+  - Successor binds .github@7d31438a32bf1ce7783b1b896d359e6eb34063d0.
+  - Resolved Gate v1 object/package evidence is current; manifest remains moving v1
+    per Gate contract.
+  - Historical checkpoint metadata remains immutable.
+validation_required:
+- Existing deterministic static validators remain green.
+- Add regressions for each finding.
+- No public capability/action expansion.
+- No provider leakage into core.
+- Full external validation debt remains explicit if environment unavailable.
+stop_conditions:
+- Any fix requires changing approved State semantics rather than implementing them.
+- External authorization policy beyond the locked tenant-base/optional-scope boundary
+  would need a new product decision.
+- Any public schema change that is not a direct parity correction requires architect
+  review.
+completion_gate: All GAR-F-001 through GAR-F-007 are RESOLVED with direct evidence,
+  then rerun REVIEW-01 delta review before VALIDATE-01.

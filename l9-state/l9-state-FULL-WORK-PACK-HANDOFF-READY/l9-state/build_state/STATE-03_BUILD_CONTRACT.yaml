@@ -1,0 +1,45 @@
+schema: l9.state.build-contract/v1
+id: L9-STATE-STATE-03-v2.0.0
+status: IMPLEMENTATION_COMPLETE_STATIC_VALIDATION_PASS
+authority:
+  base: l9-state-final-dev-pack-v2.0.0
+  operation_execution_delta: L9-STATE-STATE-02A-2026-09-27
+  upstream_semantics: build_state/SEMANTIC_AUTHORITY_BINDING_STATE03.yaml
+objective: >-
+  Implement the v1 authoritative pull journal and cold-resume protocol without
+  adding a second directory truth, provider-native public cursors, or push/change-stream
+  correctness dependencies.
+in_scope:
+  - state.list
+  - state.events
+  - state.ack
+  - state.history
+  - State-issued opaque provider-independent cursors
+  - consumer-bound monotonic checkpoints
+  - cold-resume high-water capture
+  - bounded history coverage
+  - in-process reference-store conformance semantics
+  - Mongo adapter persistence for journal reads and acknowledgments
+  - Gate binding and typed client wiring
+out_of_scope:
+  - Mongo Change Streams as a correctness mechanism
+  - push subscriptions
+  - STATE-04 tombstone/restore/retention execution
+  - repository/node birth machinery
+  - publication, merge, deployment, or release
+acceptance_contract:
+  - first list page captures a scope journal high-water before enumeration
+  - all list pages preserve the same resume event position
+  - list pagination is seek-based and binds tenant, scope, consumer, purpose, and filters
+  - event cursors bind tenant, scope, consumer, purpose, and journal position
+  - every successful event page returns an ackable cursor, including empty/final pages
+  - retention past an event cursor yields resync_required rather than false completeness
+  - state.ack advances one authorized ConsumerKey monotonically with its operation receipt atomically
+  - ACK_REGRESSION is non-durable and cannot mint an operation receipt
+  - state.history reports bounded, complete, or history_unavailable truthfully
+  - provider tokens and Mongo syntax do not cross the State contract
+  - no Change Streams dependency is introduced
+validation_policy:
+  local_static_and_compile_checks: required
+  unavailable_dependency_backed_runtime_checks: external_validation_debt
+  no_fake_passes: true
